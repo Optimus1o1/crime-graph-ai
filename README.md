@@ -6,10 +6,10 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![PyTorch Geometric](https://img.shields.io/badge/PyTorch-Geometric-ee4c2c?style=for-the-badge&logo=pytorch)](https://pytorch-geometric.readthedocs.io/)
 [![Tailwind CSS v4](https://img.shields.io/badge/TailwindCSS-v4-38bdf8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
-[![Vercel Ready](https://img.shields.io/badge/Deploy-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/)
+[![Render Live](https://img.shields.io/badge/Render-Live%20Demo-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://crime-graph-ai.onrender.com)
 [![Security Hardened](https://img.shields.io/badge/Security-OWASP%20Hardened-emerald?style=for-the-badge&logo=shield)](https://owasp.org/)
 
-[render live link-https://crime-graph-ai.onrender.com]
+> 🚀 **Live Production Deployment**: [https://crime-graph-ai.onrender.com](https://crime-graph-ai.onrender.com)
 
 **CrimeGraph AI** is an enterprise-grade, explainable criminal network analysis and cyber intelligence platform. Engineered for law enforcement agencies, cybercrime divisions, intelligence analysts, and financial crime investigators, it transforms raw, fragmented multi-source intelligence—Call Detail Records (CDRs), hawala financial transactions, ANPR automated license plate cameras, company registries, and physical evidence—into an interactive, multidimensional tactical intelligence matrix.
 
@@ -253,7 +253,7 @@ CrimeGraph AI delivers **9 dedicated intelligence views** and **5 controlled ana
 | **Deep Learning / GNN** | **PyTorch Geometric (PyG)** | Graph Convolutional Networks (GCN) and GraphSAGE models for inductive edge prediction and anomaly detection. |
 | **Database & Identity** | **Supabase (PostgreSQL)** | Cloud-hosted relational persistence, JWT authentication, and Row Level Security (RLS). |
 | **Security & Firewall** | **Starlette + Next Middleware** | Dual-layer sliding-window IP rate limiting (150 req/min), scanner blocklist (`sqlmap`, `nikto`), and OWASP headers. |
-| **Deployment Targets** | **Vercel + Render** | Frontend and API routes on Vercel; Python GNN backend on Render with seamless client-side fallbacks. |
+| **Deployment Target** | **Render (Live Production)** | Full-stack platform live on Render with automated Blueprint deployment, private mesh networking, and client-side offline fallbacks. |
 
 ---
 
@@ -263,7 +263,7 @@ CrimeGraph AI delivers **9 dedicated intelligence views** and **5 controlled ana
    - Comprehensive `.gitignore` strictly blocks all `.env`, `.env*.local`, `*.env`, build directories, and temporary data dumps from Git tracking.
    - Clean `.env.example` provided for safe team onboarding.
 2. **OWASP Content Security Policy (CSP)**:
-   - Configured in `frontend/next.config.mjs` with scoped script-src, style-src, font-src, and connect-src rules.
+   - Configured in `next.config.mjs` with scoped script-src, style-src, font-src, and connect-src rules.
 3. **Anti-Clickjacking & Anti-Sniffing**:
    - `X-Frame-Options: SAMEORIGIN`
    - `X-Content-Type-Options: nosniff`
@@ -287,20 +287,17 @@ CrimeGraph AI delivers **9 dedicated intelligence views** and **5 controlled ana
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Optimus1o1/CrimeGraph_AI.git
-cd CrimeGraph_AI
+git clone https://github.com/Optimus1o1/crime-graph-ai.git
+cd crime-graph-ai
 ```
 
 ### 2. Frontend Setup (Next.js 16)
 ```bash
-# Navigate to frontend
-cd frontend
-
 # Install dependencies
 npm install
 
 # Copy environment template
-cp ../.env.example .env.local
+cp .env.example .env.local
 
 # Run Turbopack development server
 npm run dev
@@ -332,16 +329,11 @@ Backend API interactive docs will be available at `http://localhost:8000/docs`.
 
 ## ☁️ Cloud Deployment Guide
 
-### Deploy Frontend to Vercel (1-Click)
-See the complete step-by-step instructions in [VERCEL_DEPLOYMENT.md](file:///c:/Users/ANIKET/OneDrive/Documents/CrimeGraph_AI/VERCEL_DEPLOYMENT.md).
+### Deploy on Render (1-Click Blueprint)
+The repository includes a ready-to-use [`render.yaml`](./render.yaml) Blueprint that automatically provisions both the Next.js Frontend and the FastAPI Backend on Render's Free Tier.
 
-```bash
-# Deploy with Vercel CLI from project root
-vercel --prod
-```
-
-### Deploy Backend to Render
-The repository includes a ready-to-use [`render.yaml`](file:///c:/Users/ANIKET/OneDrive/Documents/CrimeGraph_AI/render.yaml) blueprint that automatically provisions the Python FastAPI service on Render.
+- 🚀 **Live Production Platform**: [https://crime-graph-ai.onrender.com](https://crime-graph-ai.onrender.com)
+- 📖 **Complete Step-by-Step Guide**: See [RENDER_DEPLOYMENT.md](./RENDER_DEPLOYMENT.md) for full instructions on 1-click Blueprint and manual deployment.
 
 ---
 
