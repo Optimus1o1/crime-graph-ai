@@ -232,10 +232,10 @@ export default function Home() {
       {/* ============================================================ */}
       {/* UNIFIED TACTICAL CYBER HEADER (Matching Specification Screens) */}
       {/* ============================================================ */}
-      <header className="h-14 bg-[#050812] border-b border-cyan-900/40 px-4 flex items-center justify-between z-40 shrink-0 select-none shadow-[0_4px_25px_rgba(0,0,0,0.8)]">
+      <header className="h-16 bg-[#050814] border-b border-cyan-900/40 px-5 flex items-center justify-between z-40 shrink-0 select-none shadow-[0_4px_25px_rgba(0,0,0,0.8)]">
         
         {/* Left: CG_AI Emblem & View Title / Subtitle */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div className="flex items-center gap-3 shrink-0">
           <CrimeGraphLogo 
             size="sm" 
             variant="emblem" 
@@ -246,79 +246,79 @@ export default function Home() {
           />
 
           <div className="flex flex-col justify-center min-w-0">
-            <h1 className="text-xs sm:text-sm font-mono font-black tracking-wider text-white uppercase leading-none truncate max-w-[150px] sm:max-w-[280px] md:max-w-none">
+            <h1 className="text-sm sm:text-base font-bold tracking-wider text-white uppercase leading-tight truncate max-w-[170px] sm:max-w-[320px] md:max-w-none">
               {currentTitle.title}
             </h1>
-            <span className="hidden sm:block text-[9px] font-mono text-cyan-400 tracking-widest uppercase mt-0.5 truncate">
+            <span className="hidden sm:block text-xs font-mono text-cyan-400 tracking-wider uppercase mt-0.5 truncate">
               {currentTitle.subtitle}
             </span>
           </div>
         </div>
 
-        {/* Center: Monospace Global Entity Search Bar */}
+        {/* Center: Global Entity Search Bar */}
         <form 
           onSubmit={handleSearchSubmit}
-          className="hidden md:flex items-center w-full max-w-md mx-4"
+          className="hidden md:flex items-center w-full max-w-md mx-6"
         >
           <div className="relative w-full">
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="QUERY_ENTITY [UID / CODENAME]..."
-              className="w-full bg-[#020509] border border-cyan-900/50 focus:border-cyan-400 rounded px-3 py-1.5 pl-8 text-xs font-mono text-cyan-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 transition shadow-inner cyber-input-focus"
+              placeholder="Query entity [UID, codename, plate, phone]..."
+              className="w-full h-10 bg-[#020509]/90 border border-cyan-900/50 focus:border-cyan-400 rounded-lg px-4 pl-10 text-sm font-sans text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 transition shadow-inner"
             />
-            <Search className="w-3.5 h-3.5 text-cyan-500/70 absolute left-2.5 top-2" />
+            <Search className="w-4 h-4 text-cyan-500/70 absolute left-3.5 top-3" />
           </div>
         </form>
 
         {/* Right: Operation Badge, Notification Pill & User Clearance Card */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 font-mono text-xs">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           
           {/* Operation Classification Pill */}
-          <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded bg-cyan-950/60 border border-cyan-500/40 text-cyan-300 text-[11px] font-bold">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse-dot shadow-[0_0_6px_#00e5ff]" />
+          <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-950/60 border border-cyan-500/40 text-cyan-300 text-xs font-bold tracking-wide">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse-dot shadow-[0_0_8px_#00e5ff]" />
             <span>OP: RED CORRIDOR</span>
           </div>
 
           {/* Red Alert Notification Pill (9+) */}
           <div 
             onClick={() => setActiveView('dashboard')}
-            className="flex items-center gap-1 px-2 py-0.5 rounded bg-red-950/90 border border-red-500/60 text-red-300 text-[11px] font-bold cursor-pointer shadow-[0_0_8px_rgba(239,68,68,0.3)] hover:scale-105 transition"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-950/90 border border-red-500/60 text-red-300 text-xs font-bold cursor-pointer shadow-[0_0_10px_rgba(239,68,68,0.35)] hover:scale-105 transition"
             title="9+ Critical Intel Telemetry Alerts"
           >
-            <Bell className="w-3 h-3 text-red-400 animate-bounce" />
-            <span>9+</span>
+            <Bell className="w-3.5 h-3.5 text-red-400 animate-bounce" />
+            <span>9+ ALERTS</span>
           </div>
 
           {/* Quick AI Copilot Trigger */}
           <button
             onClick={() => setIsCopilotOpen(true)}
-            className="px-2 sm:px-2.5 py-1 bg-indigo-950/80 hover:bg-indigo-900 border border-indigo-500/50 rounded text-indigo-200 text-[11px] font-bold transition flex items-center gap-1.5 cursor-pointer shadow-[0_0_12px_rgba(129,140,248,0.3)] cyber-btn-glow hover:scale-105"
+            className="px-3.5 py-1.5 bg-indigo-950/90 hover:bg-indigo-900 border border-indigo-500/50 rounded-lg text-indigo-200 text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-[0_0_14px_rgba(129,140,248,0.35)] cyber-btn-glow hover:scale-105"
             title="Launch AI Investigation Copilot"
           >
-            <Bot className="w-3.5 h-3.5 text-indigo-400 animate-pulse" />
-            <span className="hidden sm:inline">AI COPILOT</span>
+            <Bot className="w-4 h-4 text-indigo-400 animate-pulse" />
+            <span className="hidden sm:inline font-sans">AI COPILOT</span>
           </button>
 
           {/* User Profile / Supabase Auth Badge */}
-          <div className="flex items-center gap-2 pl-2 border-l border-cyan-900/40">
+          <div className="flex items-center gap-2.5 pl-2.5 border-l border-cyan-900/40">
             <div 
               onClick={() => setIsAuthModalOpen(true)}
               className="hidden lg:flex flex-col text-right cursor-pointer hover:opacity-80 transition"
               title="Click to view security clearance"
             >
-              <span className="text-[10px] sm:text-[11px] font-bold text-white leading-none">
+              <span className="text-xs font-bold text-white leading-tight">
                 {currentUser?.username || 'ANALYST_KAHN'}
               </span>
-              <span className="text-[8px] sm:text-[9px] text-cyan-400 tracking-wider">
+              <span className="text-[11px] font-mono text-cyan-400 font-medium tracking-wider">
                 {currentUser?.badge_id || 'SEC_LEVEL_4'}
               </span>
             </div>
 
             <div 
               onClick={() => setIsAuthModalOpen(true)}
-              className="w-7 h-7 rounded-full bg-cyan-950 border border-cyan-400 flex items-center justify-center text-cyan-200 font-black text-xs shadow-[0_0_10px_#00e5ff] cursor-pointer hover:scale-110 transition shrink-0 animate-breathe-glow"
+              className="w-8 h-8 rounded-lg bg-cyan-950 border border-cyan-400 flex items-center justify-center text-cyan-200 font-black text-xs shadow-[0_0_10px_#00e5ff] cursor-pointer hover:scale-110 transition shrink-0 animate-breathe-glow"
               title="Open Supabase Account & Registration Modal"
             >
               {currentUser?.username ? currentUser.username[0].toUpperCase() : 'K'}
@@ -326,7 +326,7 @@ export default function Home() {
 
             <button
               onClick={() => setIsAuthModalOpen(true)}
-              className="hidden sm:inline-flex px-2.5 py-0.5 bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/50 hover:border-cyan-400 rounded text-[10px] font-mono text-cyan-300 font-bold transition cursor-pointer cyber-btn-glow"
+              className="hidden sm:inline-flex px-3 py-1 bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/50 hover:border-cyan-400 rounded-lg text-xs font-mono text-cyan-300 font-bold transition cursor-pointer cyber-btn-glow"
               title="Sign In / Register with Supabase"
             >
               AUTH
@@ -342,10 +342,10 @@ export default function Home() {
                 setCurrentUser(null)
                 setIsAuthenticated(false)
               }}
-              className="p-1 rounded text-slate-500 hover:text-red-400 transition cursor-pointer ml-0.5 sm:ml-1"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-950/40 transition cursor-pointer ml-0.5"
               title="Sign Out to Login Screen"
             >
-              <LogOut className="w-3.5 h-3.5" />
+              <LogOut className="w-4 h-4" />
             </button>
           </div>
 

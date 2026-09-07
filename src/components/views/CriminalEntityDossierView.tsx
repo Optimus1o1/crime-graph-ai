@@ -118,32 +118,32 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
   const current = suspectsData[selectedSuspectId]
 
   return (
-    <div className="flex-1 flex flex-col p-3.5 gap-3.5 overflow-y-auto bg-[#04070D] text-slate-100 font-sans select-none">
+    <div className="flex-1 flex flex-col p-4 sm:p-5 gap-4 sm:gap-5 overflow-y-auto bg-[#04070D] text-slate-100 font-sans select-none">
       
       {/* ============================================================ */}
       {/* 1. SUSPECT DOSSIER HERO BANNER */}
       {/* ============================================================ */}
-      <div className="cyber-panel p-4 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-l-4 border-l-red-500">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg overflow-hidden border border-cyan-400/80 shadow-[0_0_15px_rgba(0,229,255,0.35)] shrink-0 bg-[#060A14] flex items-center justify-center">
+      <div className="cyber-panel p-5 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-l-4 border-l-red-500 bg-[#080d1a]/80 shadow-lg">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl overflow-hidden border border-cyan-400/80 shadow-[0_0_15px_rgba(0,229,255,0.35)] shrink-0 bg-[#060A14] flex items-center justify-center">
             <img src="/images/crimegraph_logo_emblem.jpg" alt="CrimeGraph AI Insignia" className="w-full h-full object-cover" />
           </div>
           <div>
-            <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-red-950 text-red-300 border border-red-500/50 font-bold">
+            <div className="flex items-center gap-2.5 mb-1.5 flex-wrap">
+              <span className="text-xs font-mono px-2.5 py-0.5 rounded-md bg-red-950 text-red-300 border border-red-500/50 font-bold">
                 HIGH RISK PROFILE
               </span>
               <span className="text-xs font-mono text-cyan-400 font-bold">
                 {current.id}
               </span>
-              <span className="text-slate-500">|</span>
+              <span className="text-slate-600">|</span>
               <span className="text-xs font-mono text-red-400 font-bold">
                 RATING: {current.rating}
               </span>
             </div>
 
             <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-xl sm:text-2xl font-black font-mono tracking-wide text-white">
+              <h1 className="text-2xl sm:text-3xl font-black font-sans tracking-wide text-white">
                 {current.name}
               </h1>
 
@@ -151,7 +151,7 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
               <select
                 value={selectedSuspectId}
                 onChange={e => setSelectedSuspectId(e.target.value as any)}
-                className="bg-[#0b101c] border border-cyan-500/40 rounded px-2 py-1 text-xs text-cyan-300 font-mono outline-none cursor-pointer"
+                className="bg-[#0b101c] border border-cyan-500/50 rounded-lg px-3 py-1.5 text-xs sm:text-sm text-cyan-300 font-mono outline-none cursor-pointer hover:border-cyan-400 transition"
               >
                 <option value="kahn">Sayed Khan (Coordinator)</option>
                 <option value="viktor">Viktor Rao (Kingpin)</option>
@@ -159,31 +159,31 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
               </select>
             </div>
 
-            <p className="text-xs text-slate-400 font-mono mt-0.5">
+            <p className="text-xs sm:text-sm text-slate-300 font-sans mt-1">
               {current.aliases}
             </p>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-2 font-mono text-xs flex-wrap">
+        <div className="flex items-center gap-2.5 text-xs sm:text-sm flex-wrap">
           <button
             onClick={() => setIsReportModalOpen(true)}
-            className="px-3 py-1.5 rounded bg-cyan-950 hover:bg-cyan-900 border border-cyan-500/60 text-cyan-200 font-bold transition flex items-center gap-1.5 cursor-pointer shadow-[0_0_10px_rgba(0,229,255,0.2)]"
+            className="px-4 py-2 rounded-lg bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/60 text-cyan-200 font-bold transition flex items-center gap-2 cursor-pointer shadow-[0_0_12px_rgba(0,229,255,0.25)]"
           >
-            <FileText className="w-3.5 h-3.5 text-cyan-400" />
+            <FileText className="w-4 h-4 text-cyan-400" />
             <span>GENERATE REPORT</span>
           </button>
           
           <button
             onClick={() => setIsWatchlisted(!isWatchlisted)}
-            className={`px-3 py-1.5 rounded border transition flex items-center gap-1.5 cursor-pointer ${
+            className={`px-4 py-2 rounded-lg border transition flex items-center gap-2 cursor-pointer font-bold ${
               isWatchlisted
-                ? 'bg-amber-950 text-amber-300 border-amber-500 font-bold shadow-[0_0_10px_rgba(245,158,11,0.3)]'
+                ? 'bg-amber-950/80 text-amber-300 border-amber-500 shadow-[0_0_12px_rgba(245,158,11,0.3)]'
                 : 'bg-slate-900 hover:bg-slate-800 border-slate-700 text-slate-200'
             }`}
           >
-            <BookmarkPlus className="w-3.5 h-3.5 text-amber-400" />
+            <BookmarkPlus className="w-4 h-4 text-amber-400" />
             <span>{isWatchlisted ? 'ON WATCHLIST' : 'ADD WATCHLIST'}</span>
           </button>
         </div>
@@ -192,20 +192,20 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
       {/* ============================================================ */}
       {/* 2. THREE-COLUMN DOSSIER BODY */}
       {/* ============================================================ */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 flex-1 min-h-[450px]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 min-h-[480px]">
         
         {/* Left Column (4 cols): Biometrics & Last Known Location Map */}
-        <div className="lg:col-span-4 flex flex-col gap-3.5">
+        <div className="lg:col-span-4 flex flex-col gap-4">
           
           {/* Biometric Identification */}
-          <div className="cyber-panel p-3.5 rounded-lg flex flex-col gap-2.5">
-            <div className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider font-bold border-b border-cyan-900/30 pb-1.5 flex items-center justify-between">
-              <span>BIOMETRIC IDENTIFICATION & MUGSHOT</span>
-              <Fingerprint className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="cyber-panel p-4 rounded-xl flex flex-col gap-3 bg-[#080d1a]/80 shadow-lg border border-cyan-900/40">
+            <div className="text-xs font-mono text-cyan-300 uppercase tracking-wider font-bold border-b border-cyan-900/40 pb-2 flex items-center justify-between">
+              <span>BIOMETRIC IDENTIFICATION</span>
+              <Fingerprint className="w-4 h-4 text-cyan-400" />
             </div>
 
             {/* Suspect Photo with Cyber HUD Scanner Overlay */}
-            <div className="relative w-full h-48 rounded-lg overflow-hidden border border-cyan-500/50 bg-[#020509] group shadow-inner">
+            <div className="relative w-full h-52 rounded-xl overflow-hidden border border-cyan-500/50 bg-[#020509] group shadow-inner">
               <img 
                 src={current.photo || '/images/suspect_sayed_khan.jpg'} 
                 alt={current.name}
@@ -215,39 +215,39 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
               <div className="absolute inset-0 bg-gradient-to-t from-[#020509] via-transparent to-transparent pointer-events-none" />
               
               {/* Top HUD Badges */}
-              <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/80 border border-cyan-400 text-[9px] font-mono text-cyan-300 font-bold">
+              <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-md bg-black/80 border border-cyan-400 text-xs font-mono text-cyan-300 font-bold">
                 FACE_REC: 99.4%
               </div>
-              <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-red-950/90 border border-red-500 text-[9px] font-mono text-red-300 font-bold animate-pulse">
+              <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md bg-red-950/90 border border-red-500 text-xs font-mono text-red-300 font-bold animate-pulse">
                 RED NOTICE
               </div>
 
               {/* Bottom Biometric Tag */}
-              <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[9px] font-mono text-slate-200 bg-black/70 px-2 py-1 rounded backdrop-blur-sm border border-slate-800">
+              <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-xs font-mono text-slate-200 bg-black/80 px-2.5 py-1.5 rounded-lg backdrop-blur-sm border border-slate-700">
                 <span>BIO_SIG: #77482-B</span>
                 <span className="text-cyan-400 font-bold">{current.id}</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-              <div className="bg-[#020509] p-2 rounded border border-slate-800">
-                <div className="text-[9px] text-slate-500">HEIGHT</div>
-                <div className="font-bold text-slate-100">{current.height}</div>
+            <div className="grid grid-cols-2 gap-2.5 text-xs sm:text-sm">
+              <div className="bg-[#020509] p-2.5 rounded-lg border border-slate-800">
+                <div className="text-xs text-slate-400 font-medium">HEIGHT</div>
+                <div className="font-bold text-slate-100 text-sm mt-0.5">{current.height}</div>
               </div>
-              <div className="bg-[#020509] p-2 rounded border border-slate-800">
-                <div className="text-[9px] text-slate-500">GENDER</div>
-                <div className="font-bold text-slate-100">{current.gender}</div>
+              <div className="bg-[#020509] p-2.5 rounded-lg border border-slate-800">
+                <div className="text-xs text-slate-400 font-medium">GENDER</div>
+                <div className="font-bold text-slate-100 text-sm mt-0.5">{current.gender}</div>
               </div>
-              <div className="bg-[#020509] p-2 rounded border border-slate-800 col-span-2">
-                <div className="text-[9px] text-slate-500">FINGERPRINTS</div>
-                <div className="font-bold text-emerald-400 text-[11px]">
+              <div className="bg-[#020509] p-2.5 rounded-lg border border-slate-800 col-span-2">
+                <div className="text-xs text-slate-400 font-medium">FINGERPRINTS</div>
+                <div className="font-bold text-emerald-400 text-xs font-mono mt-0.5">
                   {current.fingerprints}
                 </div>
               </div>
-              <div className="bg-[#020509] p-2 rounded border border-slate-800 col-span-2">
-                <div className="text-[9px] text-slate-500">LAST KNOWN LOC</div>
-                <div className="font-bold text-slate-100 text-[11px] flex items-center gap-1">
-                  <MapPin className="w-3 h-3 text-red-400 shrink-0" />
+              <div className="bg-[#020509] p-2.5 rounded-lg border border-slate-800 col-span-2">
+                <div className="text-xs text-slate-400 font-medium">LAST KNOWN LOCATION</div>
+                <div className="font-semibold text-slate-100 text-xs sm:text-sm flex items-center gap-1.5 mt-0.5 font-sans">
+                  <MapPin className="w-3.5 h-3.5 text-red-400 shrink-0" />
                   <span>{current.location}</span>
                 </div>
               </div>
@@ -255,13 +255,13 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
           </div>
 
           {/* Last Known Location Sensor Map (Polar HUD) */}
-          <div className="cyber-panel p-3.5 rounded-lg flex-1 flex flex-col">
-            <div className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider font-bold mb-2 flex items-center justify-between">
+          <div className="cyber-panel p-4 rounded-xl flex-1 flex flex-col bg-[#080d1a]/80 shadow-lg border border-cyan-900/40">
+            <div className="text-xs font-mono text-cyan-300 uppercase tracking-wider font-bold mb-2.5 flex items-center justify-between">
               <span>LAST KNOWN LOCATION SENSOR MAP</span>
-              <Compass className="w-3.5 h-3.5 text-cyan-400" />
+              <Compass className="w-4 h-4 text-cyan-400" />
             </div>
 
-            <div className="flex-1 bg-[#020509] rounded border border-cyan-900/40 relative overflow-hidden min-h-[160px] shadow-[inset_0_0_20px_rgba(0,0,0,0.8)]">
+            <div className="flex-1 bg-[#020509] rounded-lg border border-cyan-900/40 relative overflow-hidden min-h-[170px] shadow-[inset_0_0_20px_rgba(0,0,0,0.8)]">
               <Radar3DCanvas 
                 targetName={current.name}
                 coordinates="28.6562° N, 77.2410° E"
@@ -274,16 +274,16 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
         </div>
 
         {/* Middle Column (4 cols): Edge Topology & Shell Pipeline */}
-        <div className="lg:col-span-4 flex flex-col gap-3.5">
+        <div className="lg:col-span-4 flex flex-col gap-4">
           
           {/* Communication Edge Topology */}
-          <div className="cyber-panel p-3.5 rounded-lg flex-1 flex flex-col">
-            <div className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider font-bold mb-2 flex items-center justify-between border-b border-cyan-900/30 pb-1.5">
-              <span>COMMUNICATION EDGE TOPOLOGY [CDR CO-LOCATIONS]</span>
-              <Radio className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="cyber-panel p-4 rounded-xl flex-1 flex flex-col bg-[#080d1a]/80 shadow-lg border border-cyan-900/40">
+            <div className="text-xs font-mono text-cyan-300 uppercase tracking-wider font-bold mb-2.5 flex items-center justify-between border-b border-cyan-900/40 pb-2">
+              <span>COMMUNICATION EDGE TOPOLOGY</span>
+              <Radio className="w-4 h-4 text-cyan-400" />
             </div>
 
-            <div className="flex-1 bg-[#020509] rounded border border-cyan-900/40 relative overflow-hidden min-h-[140px] shadow-[inset_0_0_20px_rgba(0,0,0,0.8)]">
+            <div className="flex-1 bg-[#020509] rounded-lg border border-cyan-900/40 relative overflow-hidden min-h-[150px] shadow-[inset_0_0_20px_rgba(0,0,0,0.8)]">
               <EntityTopology3DCanvas 
                 targetLabel={current.name}
                 targetId={current.id}
@@ -293,25 +293,25 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
           </div>
 
           {/* Shell Transaction Pipeline Correlator */}
-          <div className="cyber-panel p-3.5 rounded-lg flex flex-col gap-2 border-l-4 border-l-amber-400">
-            <div className="text-[10px] font-mono text-amber-400 uppercase tracking-wider font-bold flex items-center justify-between border-b border-amber-900/30 pb-1.5">
-              <span>SHELL TRANSACTION PIPELINE CORRELATOR</span>
-              <DollarSign className="w-3.5 h-3.5 text-amber-400" />
+          <div className="cyber-panel p-4 rounded-xl flex flex-col gap-2.5 border-l-4 border-l-amber-400 bg-[#080d1a]/80 shadow-lg border border-cyan-900/40">
+            <div className="text-xs font-mono text-amber-300 uppercase tracking-wider font-bold flex items-center justify-between border-b border-amber-900/30 pb-2">
+              <span>SHELL TRANSACTION CORRELATOR</span>
+              <DollarSign className="w-4 h-4 text-amber-400" />
             </div>
 
-            <div className="bg-[#020509] p-2.5 rounded border border-amber-500/30 text-xs font-mono space-y-1.5">
+            <div className="bg-[#020509] p-3 rounded-lg border border-amber-500/30 text-xs font-sans space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-slate-400 text-[10px]">TRANSFER AMOUNT:</span>
-                <span className="text-amber-400 font-bold text-sm">{current.transferAmount}</span>
+                <span className="text-slate-400 text-xs font-medium">TRANSFER AMOUNT:</span>
+                <span className="text-amber-400 font-bold font-mono text-base">{current.transferAmount}</span>
               </div>
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-slate-300">ORIGIN: {current.transferOrigin}</span>
-                <ArrowRight className="w-3 h-3 text-amber-400" />
-                <span className="text-slate-200 font-bold">{current.transferTarget}</span>
+              <div className="flex items-center justify-between text-xs sm:text-sm">
+                <span className="text-slate-300 font-medium">ORIGIN: {current.transferOrigin}</span>
+                <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
+                <span className="text-slate-100 font-bold">{current.transferTarget}</span>
               </div>
-              <div className="flex items-center justify-between text-[10px] text-slate-500 pt-1 border-t border-slate-800">
+              <div className="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-800 font-mono">
                 <span>DATE: {current.transferDate}</span>
-                <span className="text-emerald-400">STATUS: RECONCILED</span>
+                <span className="text-emerald-400 font-semibold">STATUS: RECONCILED</span>
               </div>
             </div>
           </div>
@@ -319,21 +319,21 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
         </div>
 
         {/* Right Column (4 cols): Tactical Intel Activity Timeline */}
-        <div className="lg:col-span-4 cyber-panel p-3.5 rounded-lg flex flex-col">
-          <div className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider font-bold mb-3 flex items-center justify-between border-b border-cyan-900/30 pb-1.5">
+        <div className="lg:col-span-4 cyber-panel p-4 rounded-xl flex flex-col bg-[#080d1a]/80 shadow-lg border border-cyan-900/40">
+          <div className="text-xs font-mono text-cyan-300 uppercase tracking-wider font-bold mb-3 flex items-center justify-between border-b border-cyan-900/40 pb-2">
             <span>TACTICAL INTEL ACTIVITY TIMELINE</span>
-            <Clock className="w-3.5 h-3.5 text-cyan-400" />
+            <Clock className="w-4 h-4 text-cyan-400" />
           </div>
 
-          <div className="flex-1 flex flex-col gap-3 font-mono text-xs overflow-y-auto pr-1">
+          <div className="flex-1 flex flex-col gap-3.5 overflow-y-auto pr-1">
             {current.timeline.map((ev, idx) => (
-              <div key={idx} className={`border-l-2 ${ev.border} pl-3 relative py-0.5`}>
-                <div className={`absolute -left-[5px] top-1.5 w-2 h-2 rounded-full ${ev.dot}`} />
+              <div key={idx} className={`border-l-2 ${ev.border} pl-3.5 relative py-1`}>
+                <div className={`absolute -left-[5px] top-2 w-2 h-2 rounded-full ${ev.dot}`} />
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-100 font-bold">{ev.title}</span>
-                  <span className="text-slate-500 text-[10px]">{ev.time}</span>
+                  <span className="text-slate-100 font-bold text-xs sm:text-sm font-sans">{ev.title}</span>
+                  <span className="text-slate-400 text-xs font-mono">{ev.time}</span>
                 </div>
-                <div className="text-[11px] text-slate-400 leading-snug mt-0.5">
+                <div className="text-xs sm:text-sm text-slate-300 leading-relaxed mt-0.5 font-sans font-normal">
                   {ev.desc}
                 </div>
               </div>
@@ -342,10 +342,10 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
 
           <button
             onClick={() => onNavigate('evidence')}
-            className="w-full mt-3 py-2 bg-[#020509] hover:bg-slate-800 border border-cyan-500/40 rounded text-cyan-300 font-mono text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer"
+            className="w-full mt-4 py-2.5 bg-[#020509] hover:bg-slate-800 border border-cyan-500/40 rounded-lg text-cyan-300 font-sans text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-md"
           >
             <span>VIEW COMPLETE FORENSIC TRAIL</span>
-            <ExternalLink className="w-3.5 h-3.5" />
+            <ExternalLink className="w-4 h-4" />
           </button>
         </div>
 
