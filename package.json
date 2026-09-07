@@ -1,0 +1,22 @@
+{
+  "name": "crimegraph-ai",
+  "version": "2.1.0",
+  "private": true,
+  "description": "CrimeGraph AI — Enterprise Explainable Criminal Network Analysis & Intelligence Platform",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "start": "npm --prefix frontend run start",
+    "lint": "npm --prefix frontend run lint"
+  },
+  "keywords": [
+    "crimegraph",
+    "cyber-intelligence",
+    "graph-neural-networks",
+    "threejs",
+    "nextjs",
+    "fastapi"
+  ],
+  "author": "Optimus1o1",
+  "license": "MIT"
+}

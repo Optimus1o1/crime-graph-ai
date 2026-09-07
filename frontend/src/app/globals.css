@@ -1,0 +1,615 @@
+/* ============================================================
+   CrimeGraph AI — Enterprise Defense & Cyber Intelligence Theme
+   Aesthetic: Palantir Gotham meets Futuristic Cyber HUD
+   ============================================================ */
+
+:root {
+  /* Core Backgrounds */
+  --bg-deep: #05060a;
+  --bg-core: #07080d;
+  --bg-surface: #0b0d17;
+  --bg-panel: rgba(13, 16, 28, 0.85);
+  --bg-card: rgba(18, 22, 38, 0.7);
+  --bg-glass: rgba(15, 19, 35, 0.65);
+  --bg-glass-hover: rgba(25, 32, 58, 0.8);
+
+  /* Primary Cyber Accents */
+  --neon-purple: #9333ea;
+  --neon-violet: #a855f7;
+  --neon-indigo: #6366f1;
+  --neon-cyan: #06b6d4;
+  --neon-cyan-bright: #22d3ee;
+  
+  /* Status & Severity Alerts */
+  --status-critical: #ef4444;
+  --status-high: #f97316;
+  --status-moderate: #f59e0b;
+  --status-low: #10b981;
+  --status-info: #38bdf8;
+
+  /* Borders & Glows */
+  --border-subtle: rgba(168, 85, 247, 0.15);
+  --border-medium: rgba(168, 85, 247, 0.35);
+  --border-bright: rgba(168, 85, 247, 0.65);
+  --border-cyan: rgba(34, 211, 238, 0.4);
+  
+  --glow-purple: 0 0 20px rgba(168, 85, 247, 0.35);
+  --glow-cyan: 0 0 20px rgba(34, 211, 238, 0.35);
+  --glow-red: 0 0 20px rgba(239, 68, 68, 0.45);
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-display: 'Outfit', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  background-color: var(--bg-deep);
+  color: #f8fafc;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Tactical Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(7, 8, 13, 0.85);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.35);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.7);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+}
+
+/* Premium Glassmorphic Panels */
+.glass-panel {
+  background: var(--bg-panel);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+.glass-panel-glow {
+  background: var(--bg-panel);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-medium);
+  box-shadow: 0 0 30px rgba(124, 58, 237, 0.2), inset 0 1px 1px 0 rgba(168, 85, 247, 0.2);
+}
+
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-card:hover {
+  background: var(--bg-glass-hover);
+  border-color: var(--border-medium);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(124, 58, 237, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Sci-fi Tactical HUD Frame with Precision Corner Brackets */
+.cyber-hud-container {
+  position: relative;
+  background: #08090e;
+  border: 1.5px solid rgba(124, 58, 237, 0.7);
+  box-shadow: 0 0 30px rgba(124, 58, 237, 0.25), inset 0 0 30px rgba(124, 58, 237, 0.08);
+  border-radius: 12px;
+}
+
+.cyber-corner-tl, .cyber-corner-tr, .cyber-corner-bl, .cyber-corner-br {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: #c084fc;
+  border-style: solid;
+  pointer-events: none;
+  filter: drop-shadow(0 0 4px #a855f7);
+}
+
+.cyber-corner-tl { top: -2px; left: -2px; border-width: 3px 0 0 3px; border-top-left-radius: 8px; }
+.cyber-corner-tr { top: -2px; right: -2px; border-width: 3px 3px 0 0; border-top-right-radius: 8px; }
+.cyber-corner-bl { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; border-bottom-left-radius: 8px; }
+.cyber-corner-br { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; border-bottom-right-radius: 8px; }
+
+/* Radar Beam Rotation */
+@keyframes radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.radar-sweep-beam {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  animation: radar-sweep 5.5s linear infinite;
+  pointer-events: none;
+}
+
+/* Pulsing Threat Blips */
+@keyframes threat-pulse-red {
+  0%, 100% { transform: scale(1); opacity: 0.95; filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.95)); }
+  50% { transform: scale(1.4); opacity: 1; filter: drop-shadow(0 0 18px rgba(239, 68, 68, 1)); }
+}
+
+@keyframes threat-pulse-amber {
+  0%, 100% { transform: scale(1); opacity: 0.9; filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.85)); }
+  50% { transform: scale(1.3); opacity: 1; filter: drop-shadow(0 0 15px rgba(245, 158, 11, 1)); }
+}
+
+.blip-red {
+  animation: threat-pulse-red 2.2s ease-in-out infinite;
+  cursor: pointer;
+}
+
+.blip-amber {
+  animation: threat-pulse-amber 2.5s ease-in-out infinite;
+  cursor: pointer;
+}
+
+.blip-low {
+  opacity: 0.75;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.blip-low:hover {
+  opacity: 1;
+  filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.9));
+}
+
+/* Tactical Background Grid with Vignette */
+.bg-tech-grid {
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.1) 0%, transparent 70%),
+    linear-gradient(rgba(124, 58, 237, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, 0.05) 1px, transparent 1px);
+  background-size: 100% 100%, 36px 36px, 36px 36px;
+}
+
+/* Pulse Glow Keyframes */
+@keyframes neon-glow-pulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(168, 85, 247, 0.4), inset 0 0 10px rgba(168, 85, 247, 0.2); }
+  50% { box-shadow: 0 0 25px rgba(168, 85, 247, 0.8), inset 0 0 15px rgba(168, 85, 247, 0.4); }
+}
+
+.neon-glow-active {
+  animation: neon-glow-pulse 3s infinite ease-in-out;
+}
+
+/* Clean Button Interactions */
+.btn-tactical {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-subtle);
+  background: rgba(18, 20, 32, 0.8);
+  color: #cbd5e1;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  user-select: none;
+}
+.btn-tactical:hover {
+  background: rgba(30, 35, 58, 0.95);
+  border-color: var(--border-medium);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+}
+.btn-tactical:active {
+  transform: scale(0.98);
+}
+.btn-tactical-active {
+  background: rgba(124, 58, 237, 0.25);
+  border-color: var(--neon-violet);
+  color: #f3e8ff;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.45);
+}
+
+/* ============================================================
+   CrimeGraph AI — Holographic Animated Logo System Styles
+   ============================================================ */
+
+@keyframes cg-reticle-cw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cg-reticle-ccw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes cg-radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes cg-laser-scan {
+  0% {
+    top: -8%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.95;
+  }
+  85% {
+    opacity: 0.95;
+  }
+  100% {
+    top: 108%;
+    opacity: 0;
+  }
+}
+
+@keyframes cg-pulse-ring {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.25;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+@keyframes cg-energy-breathe {
+  0%, 100% {
+    filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.4)) drop-shadow(0 0 35px rgba(147, 51, 234, 0.25));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 30px rgba(0, 229, 255, 0.75)) drop-shadow(0 0 55px rgba(147, 51, 234, 0.45));
+    transform: scale(1.015);
+  }
+}
+
+@keyframes cg-holo-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes cg-orbit-node {
+  from {
+    transform: rotate(0deg) translateX(var(--orbit-distance, 54px)) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(var(--orbit-distance, 54px)) rotate(-360deg);
+  }
+}
+
+@keyframes cg-telemetry-fluctuate {
+  0%, 100% { height: 4px; opacity: 0.6; }
+  25% { height: 14px; opacity: 1; }
+  50% { height: 8px; opacity: 0.8; }
+  75% { height: 18px; opacity: 1; }
+}
+
+.cg-logo-reticle-cw {
+  animation: cg-reticle-cw 14s linear infinite;
+  transform-origin: center center;
+}
+
+.cg-logo-reticle-ccw {
+  animation: cg-reticle-ccw 20s linear infinite;
+  transform-origin: center center;
+}
+
+.cg-logo-laser-beam {
+  animation: cg-laser-scan 2.6s ease-in-out infinite alternate;
+}
+
+.cg-logo-pulse-wave {
+  animation: cg-pulse-ring 3.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.cg-logo-energy-aura {
+  animation: cg-energy-breathe 4.5s ease-in-out infinite;
+}
+
+.cg-logo-holo-shine {
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(0, 229, 255, 0.04) 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(147, 51, 234, 0.15) 60%,
+    transparent 100%
+  );
+  background-size: 250% 100%;
+  animation: cg-holo-shimmer 4s ease-in-out infinite;
+}
+
+.cg-logo-perspective-card {
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+/* ============================================================
+   CrimeGraph AI — SVG Login Page Synchronized Animation Cycle (4s)
+   ============================================================ */
+
+@keyframes kf_bg-glow_transform_0 {
+  0% {
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    transform: scale(0.85);
+  }
+  25% {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1);
+  }
+  70% {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes kf_bg-glow_opacity_0 {
+  0% {
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+  }
+  20% {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.6;
+  }
+  62.5% {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.35;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.anim-bg-glow {
+  transform-origin: center center;
+  animation: kf_bg-glow_transform_0 4s linear infinite, kf_bg-glow_opacity_0 4s linear infinite;
+}
+
+@keyframes kf_bg-edge-1_opacity_0 {
+  0% { animation-timing-function: linear; opacity: 0; }
+  7.5% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  20% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.5; }
+  62.5% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.2; }
+  100% { opacity: 0.4; }
+}
+.anim-bg-edge-1 { animation: kf_bg-edge-1_opacity_0 4s linear infinite; }
+
+@keyframes kf_bg-edge-2_opacity_0 {
+  0% { animation-timing-function: linear; opacity: 0; }
+  11.25% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  23.75% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.5; }
+  64.38% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.2; }
+  100% { opacity: 0.4; }
+}
+.anim-bg-edge-2 { animation: kf_bg-edge-2_opacity_0 4s linear infinite; }
+
+@keyframes kf_bg-edge-3_opacity_0 {
+  0% { animation-timing-function: linear; opacity: 0; }
+  15% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  27.5% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.5; }
+  66.25% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.2; }
+  100% { opacity: 0.4; }
+}
+.anim-bg-edge-3 { animation: kf_bg-edge-3_opacity_0 4s linear infinite; }
+
+@keyframes kf_bg-edge-4_opacity_0 {
+  0% { animation-timing-function: linear; opacity: 0; }
+  18.75% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  31.25% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.5; }
+  68.13% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.2; }
+  100% { opacity: 0.4; }
+}
+.anim-bg-edge-4 { animation: kf_bg-edge-4_opacity_0 4s linear infinite; }
+
+@keyframes kf_bg-edge-5_opacity_0 {
+  0% { animation-timing-function: linear; opacity: 0; }
+  22.5% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  35% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.5; }
+  70% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.2; }
+  100% { opacity: 0.4; }
+}
+.anim-bg-edge-5 { animation: kf_bg-edge-5_opacity_0 4s linear infinite; }
+
+@keyframes kf_bg-edge-6_opacity_0 {
+  0% { animation-timing-function: linear; opacity: 0; }
+  26.25% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  38.75% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.5; }
+  71.88% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.2; }
+  100% { opacity: 0.4; }
+}
+.anim-bg-edge-6 { animation: kf_bg-edge-6_opacity_0 4s linear infinite; }
+
+@keyframes kf_bg-node-1_opacity_0 {
+  0% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  12.5% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; }
+  45% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.8; }
+  75% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+.anim-bg-node-1 { animation: kf_bg-node-1_opacity_0 4s linear infinite; }
+
+@keyframes kf_bg-node-2_opacity_0 {
+  0% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  16.25% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; }
+  48% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.8; }
+  77.25% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+.anim-bg-node-2 { animation: kf_bg-node-2_opacity_0 4s linear infinite; }
+
+@keyframes kf_bg-node-3_opacity_0 {
+  0% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  20% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; }
+  51% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.8; }
+  79.5% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+.anim-bg-node-3 { animation: kf_bg-node-3_opacity_0 4s linear infinite; }
+
+@keyframes kf_bg-node-4_opacity_0 {
+  0% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  23.75% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; }
+  54% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.8; }
+  81.75% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+.anim-bg-node-4 { animation: kf_bg-node-4_opacity_0 4s linear infinite; }
+
+@keyframes kf_bg-node-5_opacity_0 {
+  0% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  27.5% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; }
+  57% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.8; }
+  84% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+.anim-bg-node-5 { animation: kf_bg-node-5_opacity_0 4s linear infinite; }
+
+@keyframes kf_bg-node-6_opacity_0 {
+  0% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  31.25% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; }
+  60% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.8; }
+  86.25% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+.anim-bg-node-6 { animation: kf_bg-node-6_opacity_0 4s linear infinite; }
+
+@keyframes kf_bg-node-7_opacity_0 {
+  0% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  35% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; }
+  63% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.8; }
+  88.5% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+.anim-bg-node-7 { animation: kf_bg-node-7_opacity_0 4s linear infinite; }
+
+@keyframes kf_top-status-header_transform_0 {
+  0% { transform: translateY(-10px); }
+  5% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); transform: translateY(-10px); }
+  20%, 100% { transform: translateY(0px); }
+}
+@keyframes kf_top-status-header_opacity_0 {
+  0% { animation-timing-function: linear; opacity: 0; }
+  5% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  20%, 100% { animation-timing-function: linear; opacity: 1; }
+}
+.anim-top-status-header {
+  animation: kf_top-status-header_transform_0 1s cubic-bezier(0.16, 1, 0.3, 1) forwards, kf_top-status-header_opacity_0 1s linear forwards;
+}
+
+@keyframes kf_logo-container_transform_0 {
+  0% { transform: scale(0.7); }
+  7.5% { animation-timing-function: cubic-bezier(0.34, 1.2, 0.64, 1); transform: scale(0.7); }
+  30%, 100% { transform: scale(1); }
+}
+@keyframes kf_logo-container_opacity_0 {
+  0% { animation-timing-function: linear; opacity: 0; }
+  7.5% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  25%, 100% { animation-timing-function: linear; opacity: 1; }
+}
+.anim-logo-container {
+  transform-origin: center center;
+  animation: kf_logo-container_transform_0 1.2s cubic-bezier(0.34, 1.2, 0.64, 1) forwards, kf_logo-container_opacity_0 1.2s linear forwards;
+}
+
+@keyframes kf_crimegraph-eagle-emblem_transform_0 {
+  0% { transform: scale(1); }
+  30% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transform: scale(1); }
+  70% { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+.anim-eagle-emblem {
+  transform-origin: center center;
+  animation: kf_crimegraph-eagle-emblem_transform_0 4s ease-in-out infinite;
+}
+
+@keyframes kf_login-card_transform_0 {
+  0% { transform: translateY(30px); }
+  20% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); transform: translateY(30px); }
+  37.5%, 100% { transform: translateY(0px); }
+}
+@keyframes kf_login-card_opacity_0 {
+  0% { animation-timing-function: linear; opacity: 0; }
+  20% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  37.5%, 100% { animation-timing-function: linear; opacity: 1; }
+}
+.anim-login-card {
+  animation: kf_login-card_transform_0 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards, kf_login-card_opacity_0 1.2s linear forwards;
+}
+
+@keyframes kf_security-disclaimer_transform_0 {
+  0% { transform: translateY(15px); }
+  32.5% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); transform: translateY(15px); }
+  45%, 100% { transform: translateY(0px); }
+}
+@keyframes kf_security-disclaimer_opacity_0 {
+  0% { animation-timing-function: linear; opacity: 0; }
+  32.5% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  45%, 100% { animation-timing-function: linear; opacity: 1; }
+}
+.anim-security-disclaimer {
+  animation: kf_security-disclaimer_transform_0 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards, kf_security-disclaimer_opacity_0 1.5s linear forwards;
+}
+
+@keyframes kf_bottom-classification-bar_transform_0 {
+  0% { transform: translateY(10px); }
+  27.5% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); transform: translateY(10px); }
+  40%, 100% { transform: translateY(0px); }
+}
+@keyframes kf_bottom-classification-bar_opacity_0 {
+  0% { animation-timing-function: linear; opacity: 0; }
+  27.5% { animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; }
+  40%, 100% { animation-timing-function: linear; opacity: 1; }
+}
+.anim-bottom-classification-bar {
+  animation: kf_bottom-classification-bar_transform_0 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards, kf_bottom-classification-bar_opacity_0 1.4s linear forwards;
+}
+
+@keyframes kf_cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.anim-cursor-blink {
+  animation: kf_cursor-blink 1s steps(2, start) infinite;
+}
+
+

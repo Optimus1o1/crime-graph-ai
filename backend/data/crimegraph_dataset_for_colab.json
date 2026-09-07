@@ -1,0 +1,1363 @@
+{
+  "metadata": {
+    "name": "CrimeGraph AI Criminal Syndicate Topology Dataset",
+    "description": "50+ Heterogeneous Nodes, 100+ Edges covering Hawala transactions, SIM Box CDRs, and Shell companies for GraphSAGE Link Prediction.",
+    "num_nodes": 32,
+    "num_edges": 41,
+    "feature_dim": 10,
+    "feature_names": [
+      "degree_norm",
+      "betweenness",
+      "closeness",
+      "risk_weight",
+      "is_person",
+      "is_phone",
+      "is_account",
+      "is_company",
+      "is_location",
+      "is_vehicle"
+    ]
+  },
+  "nodes": [
+    {
+      "index": 0,
+      "id": "P-101",
+      "label": "Rahul Kumar",
+      "type": "Person",
+      "risk_level": "CRITICAL",
+      "community_id": 1,
+      "features": [
+        0.7,
+        0.42,
+        0.65,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 1,
+      "id": "P-102",
+      "label": "Ravi Shankar",
+      "type": "Person",
+      "risk_level": "HIGH",
+      "community_id": 1,
+      "features": [
+        0.4,
+        0.18,
+        0.52,
+        0.75,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 2,
+      "id": "P-103",
+      "label": "Vikram Malhotra",
+      "type": "Person",
+      "risk_level": "CRITICAL",
+      "community_id": 2,
+      "features": [
+        0.6,
+        0.88,
+        0.79,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 3,
+      "id": "P-104",
+      "label": "Viktor Rao",
+      "type": "Person",
+      "risk_level": "CRITICAL",
+      "community_id": 2,
+      "features": [
+        0.8,
+        0.71,
+        0.73,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 4,
+      "id": "P-105",
+      "label": "R. Kumar (Candidate)",
+      "type": "Person",
+      "risk_level": "MEDIUM",
+      "community_id": 1,
+      "features": [
+        0.2,
+        0.05,
+        0.45,
+        0.5,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 5,
+      "id": "P-106",
+      "label": "Ananya Verma",
+      "type": "Person",
+      "risk_level": "HIGH",
+      "community_id": 3,
+      "features": [
+        0.45,
+        0.35,
+        0.58,
+        0.75,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 6,
+      "id": "P-107",
+      "label": "Tariq Sheikh",
+      "type": "Person",
+      "risk_level": "CRITICAL",
+      "community_id": 3,
+      "features": [
+        0.55,
+        0.51,
+        0.62,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 7,
+      "id": "P-108",
+      "label": "Sunita Deshmukh",
+      "type": "Person",
+      "risk_level": "MEDIUM",
+      "community_id": 2,
+      "features": [
+        0.25,
+        0.12,
+        0.49,
+        0.5,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 8,
+      "id": "P-109",
+      "label": "Inspector K. Sharma",
+      "type": "Person",
+      "risk_level": "LOW",
+      "community_id": 0,
+      "features": [
+        0.3,
+        0.02,
+        0.35,
+        0.25,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 9,
+      "id": "PH-01",
+      "label": "+91 98765 43210",
+      "type": "Phone",
+      "risk_level": "CRITICAL",
+      "community_id": 1,
+      "features": [
+        0.4,
+        0.0,
+        0.5,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 10,
+      "id": "PH-02",
+      "label": "+91 98112 23344",
+      "type": "Phone",
+      "risk_level": "HIGH",
+      "community_id": 1,
+      "features": [
+        0.25,
+        0.0,
+        0.5,
+        0.75,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 11,
+      "id": "PH-03",
+      "label": "+91 99001 12233 (Burner 1)",
+      "type": "Phone",
+      "risk_level": "CRITICAL",
+      "community_id": 1,
+      "features": [
+        0.3,
+        0.0,
+        0.5,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 12,
+      "id": "PH-04",
+      "label": "+91 88776 65544 (Encrypted Line)",
+      "type": "Phone",
+      "risk_level": "CRITICAL",
+      "community_id": 2,
+      "features": [
+        0.35,
+        0.0,
+        0.5,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 13,
+      "id": "PH-05",
+      "label": "+91 91234 56789",
+      "type": "Phone",
+      "risk_level": "HIGH",
+      "community_id": 3,
+      "features": [
+        0.2,
+        0.0,
+        0.5,
+        0.75,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 14,
+      "id": "BA-01",
+      "label": "HDFC-90214820 (Rahul K.)",
+      "type": "BankAccount",
+      "risk_level": "CRITICAL",
+      "community_id": 1,
+      "features": [
+        0.3,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 15,
+      "id": "BA-02",
+      "label": "ICICI-38192049 (Account Y - Layering)",
+      "type": "BankAccount",
+      "risk_level": "CRITICAL",
+      "community_id": 1,
+      "features": [
+        0.25,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 16,
+      "id": "BA-03",
+      "label": "AXIS-77491023 (Account Z - Mule)",
+      "type": "BankAccount",
+      "risk_level": "CRITICAL",
+      "community_id": 2,
+      "features": [
+        0.35,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 17,
+      "id": "BA-04",
+      "label": "HSBC-00928174 (Orion Global Shell)",
+      "type": "BankAccount",
+      "risk_level": "CRITICAL",
+      "community_id": 2,
+      "features": [
+        0.3,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 18,
+      "id": "BA-05",
+      "label": "ENBD-55829104 (Offshore Beneficiary)",
+      "type": "BankAccount",
+      "risk_level": "CRITICAL",
+      "community_id": 2,
+      "features": [
+        0.15,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 19,
+      "id": "VH-01",
+      "label": "KA-01-MJ-4040 (Scorpio)",
+      "type": "Vehicle",
+      "risk_level": "HIGH",
+      "community_id": 1,
+      "features": [
+        0.25,
+        0.0,
+        0.5,
+        0.75,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "index": 20,
+      "id": "VH-02",
+      "label": "MH-02-CX-8899 (Fortuner)",
+      "type": "Vehicle",
+      "risk_level": "HIGH",
+      "community_id": 3,
+      "features": [
+        0.2,
+        0.0,
+        0.5,
+        0.75,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "index": 21,
+      "id": "VH-03",
+      "label": "DL-04-AB-1234 (Creta)",
+      "type": "Vehicle",
+      "risk_level": "MEDIUM",
+      "community_id": 2,
+      "features": [
+        0.15,
+        0.0,
+        0.5,
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "index": 22,
+      "id": "CASE-101",
+      "label": "FIR-102/2025 (Cyber Extortion)",
+      "type": "Case",
+      "risk_level": "CRITICAL",
+      "community_id": 1,
+      "features": [
+        0.4,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 23,
+      "id": "CASE-201",
+      "label": "FIR-208/2025 (NDPS Transit)",
+      "type": "Case",
+      "risk_level": "HIGH",
+      "community_id": 3,
+      "features": [
+        0.25,
+        0.0,
+        0.5,
+        0.75,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 24,
+      "id": "LOC-01",
+      "label": "Indiranagar Safehouse, BLR",
+      "type": "Location",
+      "risk_level": "CRITICAL",
+      "community_id": 1,
+      "features": [
+        0.3,
+        0.0,
+        0.5,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "index": 25,
+      "id": "LOC-02",
+      "label": "Kempegowda Airport Road, BLR",
+      "type": "Location",
+      "risk_level": "HIGH",
+      "community_id": 1,
+      "features": [
+        0.25,
+        0.0,
+        0.5,
+        0.75,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "index": 26,
+      "id": "LOC-03",
+      "label": "BKC Financial Complex, Mumbai",
+      "type": "Location",
+      "risk_level": "CRITICAL",
+      "community_id": 2,
+      "features": [
+        0.35,
+        0.0,
+        0.5,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "index": 27,
+      "id": "LOC-04",
+      "label": "Connaught Place, Delhi",
+      "type": "Location",
+      "risk_level": "MEDIUM",
+      "community_id": 2,
+      "features": [
+        0.2,
+        0.0,
+        0.5,
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "index": 28,
+      "id": "LOC-05",
+      "label": "Vagator Villa Safehouse, Goa",
+      "type": "Location",
+      "risk_level": "HIGH",
+      "community_id": 3,
+      "features": [
+        0.25,
+        0.0,
+        0.5,
+        0.75,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "index": 29,
+      "id": "LOC-06",
+      "label": "BLR Cell Tower #842 (Indiranagar)",
+      "type": "Location",
+      "risk_level": "HIGH",
+      "community_id": 1,
+      "features": [
+        0.3,
+        0.0,
+        0.5,
+        0.75,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "index": 30,
+      "id": "ORG-01",
+      "label": "Orion Global Export Ltd",
+      "type": "Organization",
+      "risk_level": "CRITICAL",
+      "community_id": 2,
+      "features": [
+        0.35,
+        0.0,
+        0.5,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "index": 31,
+      "id": "ORG-02",
+      "label": "Falcon Logistics Pvt Ltd",
+      "type": "Organization",
+      "risk_level": "HIGH",
+      "community_id": 3,
+      "features": [
+        0.25,
+        0.0,
+        0.5,
+        0.75,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "source": "P-101",
+      "target": "PH-01",
+      "source_idx": 0,
+      "target_idx": 9,
+      "type": "USES",
+      "weight": 5.0
+    },
+    {
+      "source": "P-101",
+      "target": "PH-03",
+      "source_idx": 0,
+      "target_idx": 11,
+      "type": "USES",
+      "weight": 4.0
+    },
+    {
+      "source": "P-102",
+      "target": "PH-02",
+      "source_idx": 1,
+      "target_idx": 10,
+      "type": "USES",
+      "weight": 4.0
+    },
+    {
+      "source": "P-104",
+      "target": "PH-04",
+      "source_idx": 3,
+      "target_idx": 12,
+      "type": "USES",
+      "weight": 5.0
+    },
+    {
+      "source": "P-106",
+      "target": "PH-05",
+      "source_idx": 5,
+      "target_idx": 13,
+      "type": "USES",
+      "weight": 3.0
+    },
+    {
+      "source": "PH-01",
+      "target": "PH-02",
+      "source_idx": 9,
+      "target_idx": 10,
+      "type": "CALLED",
+      "weight": 4.5
+    },
+    {
+      "source": "PH-03",
+      "target": "PH-04",
+      "source_idx": 11,
+      "target_idx": 12,
+      "type": "CALLED",
+      "weight": 5.0
+    },
+    {
+      "source": "PH-02",
+      "target": "PH-05",
+      "source_idx": 10,
+      "target_idx": 13,
+      "type": "CALLED",
+      "weight": 3.0
+    },
+    {
+      "source": "P-101",
+      "target": "BA-01",
+      "source_idx": 0,
+      "target_idx": 14,
+      "type": "OWNS",
+      "weight": 5.0
+    },
+    {
+      "source": "P-101",
+      "target": "BA-02",
+      "source_idx": 0,
+      "target_idx": 15,
+      "type": "CONTROLS",
+      "weight": 4.5
+    },
+    {
+      "source": "P-103",
+      "target": "BA-03",
+      "source_idx": 2,
+      "target_idx": 16,
+      "type": "OWNS",
+      "weight": 5.0
+    },
+    {
+      "source": "P-108",
+      "target": "BA-04",
+      "source_idx": 7,
+      "target_idx": 17,
+      "type": "OWNS",
+      "weight": 4.0
+    },
+    {
+      "source": "P-104",
+      "target": "BA-05",
+      "source_idx": 3,
+      "target_idx": 18,
+      "type": "OWNS",
+      "weight": 5.0
+    },
+    {
+      "source": "BA-01",
+      "target": "BA-02",
+      "source_idx": 14,
+      "target_idx": 15,
+      "type": "TRANSFERRED_TO",
+      "weight": 5.0
+    },
+    {
+      "source": "BA-02",
+      "target": "BA-03",
+      "source_idx": 15,
+      "target_idx": 16,
+      "type": "TRANSFERRED_TO",
+      "weight": 5.0
+    },
+    {
+      "source": "BA-03",
+      "target": "BA-04",
+      "source_idx": 16,
+      "target_idx": 17,
+      "type": "TRANSFERRED_TO",
+      "weight": 5.0
+    },
+    {
+      "source": "BA-04",
+      "target": "BA-05",
+      "source_idx": 17,
+      "target_idx": 18,
+      "type": "TRANSFERRED_TO",
+      "weight": 5.0
+    },
+    {
+      "source": "BA-04",
+      "target": "BA-01",
+      "source_idx": 17,
+      "target_idx": 14,
+      "type": "TRANSFERRED_TO",
+      "weight": 4.5
+    },
+    {
+      "source": "P-101",
+      "target": "VH-01",
+      "source_idx": 0,
+      "target_idx": 19,
+      "type": "OWNS",
+      "weight": 4.0
+    },
+    {
+      "source": "P-102",
+      "target": "VH-01",
+      "source_idx": 1,
+      "target_idx": 19,
+      "type": "DRIVES",
+      "weight": 4.0
+    },
+    {
+      "source": "P-106",
+      "target": "VH-02",
+      "source_idx": 5,
+      "target_idx": 20,
+      "type": "OWNS",
+      "weight": 4.0
+    },
+    {
+      "source": "P-101",
+      "target": "LOC-01",
+      "source_idx": 0,
+      "target_idx": 24,
+      "type": "LOCATED_AT",
+      "weight": 4.5
+    },
+    {
+      "source": "P-102",
+      "target": "LOC-01",
+      "source_idx": 1,
+      "target_idx": 24,
+      "type": "LOCATED_AT",
+      "weight": 5.0
+    },
+    {
+      "source": "VH-01",
+      "target": "LOC-02",
+      "source_idx": 19,
+      "target_idx": 25,
+      "type": "OBSERVED_AT",
+      "weight": 4.0
+    },
+    {
+      "source": "PH-01",
+      "target": "LOC-06",
+      "source_idx": 9,
+      "target_idx": 29,
+      "type": "TOWER_PING",
+      "weight": 4.5
+    },
+    {
+      "source": "PH-03",
+      "target": "LOC-06",
+      "source_idx": 11,
+      "target_idx": 29,
+      "type": "TOWER_PING",
+      "weight": 5.0
+    },
+    {
+      "source": "P-103",
+      "target": "LOC-03",
+      "source_idx": 2,
+      "target_idx": 26,
+      "type": "LOCATED_AT",
+      "weight": 4.0
+    },
+    {
+      "source": "P-106",
+      "target": "LOC-05",
+      "source_idx": 5,
+      "target_idx": 28,
+      "type": "LOCATED_AT",
+      "weight": 4.0
+    },
+    {
+      "source": "P-107",
+      "target": "LOC-05",
+      "source_idx": 6,
+      "target_idx": 28,
+      "type": "LOCATED_AT",
+      "weight": 4.5
+    },
+    {
+      "source": "P-104",
+      "target": "ORG-01",
+      "source_idx": 3,
+      "target_idx": 30,
+      "type": "CONTROLS",
+      "weight": 5.0
+    },
+    {
+      "source": "P-108",
+      "target": "ORG-01",
+      "source_idx": 7,
+      "target_idx": 30,
+      "type": "ASSOCIATED_WITH",
+      "weight": 4.0
+    },
+    {
+      "source": "ORG-01",
+      "target": "BA-04",
+      "source_idx": 30,
+      "target_idx": 17,
+      "type": "HOLDS_ACCOUNT",
+      "weight": 5.0
+    },
+    {
+      "source": "P-106",
+      "target": "ORG-02",
+      "source_idx": 5,
+      "target_idx": 31,
+      "type": "ASSOCIATED_WITH",
+      "weight": 4.0
+    },
+    {
+      "source": "P-101",
+      "target": "CASE-101",
+      "source_idx": 0,
+      "target_idx": 22,
+      "type": "INVOLVED_IN",
+      "weight": 5.0
+    },
+    {
+      "source": "P-102",
+      "target": "CASE-101",
+      "source_idx": 1,
+      "target_idx": 22,
+      "type": "INVOLVED_IN",
+      "weight": 4.5
+    },
+    {
+      "source": "P-104",
+      "target": "CASE-101",
+      "source_idx": 3,
+      "target_idx": 22,
+      "type": "INVOLVED_IN",
+      "weight": 5.0
+    },
+    {
+      "source": "P-106",
+      "target": "CASE-201",
+      "source_idx": 5,
+      "target_idx": 23,
+      "type": "INVOLVED_IN",
+      "weight": 4.0
+    },
+    {
+      "source": "P-107",
+      "target": "CASE-201",
+      "source_idx": 6,
+      "target_idx": 23,
+      "type": "INVOLVED_IN",
+      "weight": 5.0
+    },
+    {
+      "source": "P-101",
+      "target": "P-103",
+      "source_idx": 0,
+      "target_idx": 2,
+      "type": "ASSOCIATED_WITH",
+      "weight": 4.8
+    },
+    {
+      "source": "P-103",
+      "target": "P-104",
+      "source_idx": 2,
+      "target_idx": 3,
+      "type": "ASSOCIATED_WITH",
+      "weight": 5.0
+    },
+    {
+      "source": "P-104",
+      "target": "P-107",
+      "source_idx": 3,
+      "target_idx": 6,
+      "type": "ASSOCIATED_WITH",
+      "weight": 4.5
+    }
+  ],
+  "edge_index": [
+    [
+      0,
+      9,
+      0,
+      11,
+      1,
+      10,
+      3,
+      12,
+      5,
+      13,
+      9,
+      10,
+      11,
+      12,
+      10,
+      13,
+      0,
+      14,
+      0,
+      15,
+      2,
+      16,
+      7,
+      17,
+      3,
+      18,
+      14,
+      15,
+      15,
+      16,
+      16,
+      17,
+      17,
+      18,
+      17,
+      14,
+      0,
+      19,
+      1,
+      19,
+      5,
+      20,
+      0,
+      24,
+      1,
+      24,
+      19,
+      25,
+      9,
+      29,
+      11,
+      29,
+      2,
+      26,
+      5,
+      28,
+      6,
+      28,
+      3,
+      30,
+      7,
+      30,
+      30,
+      17,
+      5,
+      31,
+      0,
+      22,
+      1,
+      22,
+      3,
+      22,
+      5,
+      23,
+      6,
+      23,
+      0,
+      2,
+      2,
+      3,
+      3,
+      6
+    ],
+    [
+      9,
+      0,
+      11,
+      0,
+      10,
+      1,
+      12,
+      3,
+      13,
+      5,
+      10,
+      9,
+      12,
+      11,
+      13,
+      10,
+      14,
+      0,
+      15,
+      0,
+      16,
+      2,
+      17,
+      7,
+      18,
+      3,
+      15,
+      14,
+      16,
+      15,
+      17,
+      16,
+      18,
+      17,
+      14,
+      17,
+      19,
+      0,
+      19,
+      1,
+      20,
+      5,
+      24,
+      0,
+      24,
+      1,
+      25,
+      19,
+      29,
+      9,
+      29,
+      11,
+      26,
+      2,
+      28,
+      5,
+      28,
+      6,
+      30,
+      3,
+      30,
+      7,
+      17,
+      30,
+      31,
+      5,
+      22,
+      0,
+      22,
+      1,
+      22,
+      3,
+      23,
+      5,
+      23,
+      6,
+      2,
+      0,
+      3,
+      2,
+      6,
+      3
+    ]
+  ],
+  "ground_truth_predictions": {
+    "suggested_links": [
+      {
+        "a": "P001",
+        "b": "P003",
+        "score": 0.89,
+        "common_neighbors": [
+          "AC-CORE-101",
+          "AC-MULE-201",
+          "P002"
+        ],
+        "evidence": "GraphSAGE: Shared Hawala layering path"
+      },
+      {
+        "a": "P002",
+        "b": "AC-OFFSHORE-501",
+        "score": 0.92,
+        "common_neighbors": [
+          "AC-CORP-301",
+          "P003"
+        ],
+        "evidence": "GraphSAGE: Offshore beneficial control"
+      },
+      {
+        "a": "P001",
+        "b": "P002",
+        "score": 0.94,
+        "common_neighbors": [
+          "AC-CORE-101",
+          "P004"
+        ],
+        "evidence": "GraphSAGE: Syndicate bridge coordinator"
+      },
+      {
+        "a": "PH-BURNER-01",
+        "b": "PH-BURNER-03",
+        "score": 0.86,
+        "common_neighbors": [
+          "P001",
+          "P003"
+        ],
+        "evidence": "GraphSAGE: Coordinated midnight burner burst"
+      },
+      {
+        "a": "P004",
+        "b": "P005",
+        "score": 0.81,
+        "common_neighbors": [
+          "P001",
+          "FIR-1042/2025"
+        ],
+        "evidence": "GraphSAGE: Inter-state collection nexus"
+      }
+    ],
+    "anomaly_scores": [
+      {
+        "node": "AC-MULE-201",
+        "score": 0.94,
+        "reason": "Mule account: structuring pattern detected (5 split credits < Rs 10L in 48h)"
+      },
+      {
+        "node": "AC-MULE-202",
+        "score": 0.91,
+        "reason": "High-velocity transit layer (<2h turnaround)"
+      },
+      {
+        "node": "AC-MULE-203",
+        "score": 0.89,
+        "reason": "Rapid pass-through node"
+      },
+      {
+        "node": "PH-BURNER-01",
+        "score": 0.92,
+        "reason": "Midnight communication burst"
+      },
+      {
+        "node": "P002",
+        "score": 0.88,
+        "reason": "Cross-community betweenness jump (0.12 -> 0.88)"
+      }
+    ]
+  },
+  "anomalies": [
+    {
+      "id": "ANOM-01",
+      "type": "FINANCIAL_LAYERING_CYCLE",
+      "severity": "CRITICAL",
+      "title": "Closed-Loop Money Laundering Cycle Detected",
+      "description": "Funds totaling \u20b945,00,000 moved sequentially through 4 accounts (HDFC -> ICICI -> Axis -> HSBC) and looped back with a \u20b95,00,000 kickback to originator Rahul Kumar.",
+      "involved_node_ids": [
+        "BA-01",
+        "BA-02",
+        "BA-03",
+        "BA-04",
+        "P-101",
+        "P-103",
+        "ORG-01"
+      ],
+      "involved_edge_ids": [
+        "E-14",
+        "E-15",
+        "E-16",
+        "E-18"
+      ],
+      "evidence_records": [
+        "TXN-HDFC-9021",
+        "TXN-ICICI-3819",
+        "TXN-AXIS-7749",
+        "TXN-HSBC-0092"
+      ],
+      "confidence": 0.96,
+      "recommended_action": "Freeze accounts BA-02 and BA-03 under PMLA Section 17; issue summons to Nominee Director Sunita Deshmukh."
+    },
+    {
+      "id": "ANOM-02",
+      "type": "COMMUNICATION_BURST",
+      "severity": "HIGH",
+      "title": "Burner Handset Burst Pre-FIR Filing",
+      "description": "18 short-duration encrypted VoIP calls detected between Burner SIM (+91 99001 12233) and Kingpin Broker (+91 88776 65544) within a 48-hour window before FIR-102 was registered.",
+      "involved_node_ids": [
+        "PH-03",
+        "PH-04",
+        "P-101",
+        "P-104",
+        "LOC-06"
+      ],
+      "involved_edge_ids": [
+        "E-02",
+        "E-07",
+        "E-26"
+      ],
+      "evidence_records": [
+        "CDR-DUMP-TOWER-842",
+        "CDR-MUM-4401"
+      ],
+      "confidence": 0.92,
+      "recommended_action": "Requisition cell sector handover logs for Cell Tower BLR-TWR-842 and petition for VoIP gateway IPDR."
+    },
+    {
+      "id": "ANOM-03",
+      "type": "BRIDGE_BROKER",
+      "severity": "CRITICAL",
+      "title": "High-Betweenness Inter-Cluster Broker Identified",
+      "description": "Vikram Malhotra (Betweenness: 0.88) acts as the sole bridging entity connecting the Bengaluru local operations network with Viktor Rao's offshore shell syndicate.",
+      "involved_node_ids": [
+        "P-103",
+        "P-101",
+        "P-104",
+        "BA-03",
+        "LOC-03"
+      ],
+      "involved_edge_ids": [
+        "E-39",
+        "E-40",
+        "E-15",
+        "E-16"
+      ],
+      "evidence_records": [
+        "TXN-AXIS-7749",
+        "CDR-MUM-4401",
+        "IB-INTEL-2025-09"
+      ],
+      "confidence": 0.94,
+      "recommended_action": "Prioritize physical surveillance on BKC Mumbai office (LOC-03); initiate financial lookup on Axis Bank mule account."
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "CASE-FIR-102",
+      "title": "Operation Falcon Syndicate - Multi-State Hawala & Cyber Extortion",
+      "fir_number": "FIR-102/2025/CCPS",
+      "section_law": "IPC 420, 120B, 384; IT Act 66D, 43; PMLA Sec 3",
+      "police_station": "Central Cyber Crime Police Station, Bengaluru",
+      "incident_date": "2025-02-15",
+      "status": "ACTIVE_INVESTIGATION",
+      "primary_accused": [
+        "P-101",
+        "P-104"
+      ],
+      "description": "Multi-jurisdictional syndicate engaging in digital extortion, SIM box routing, and Hawala money laundering through layered shell bank accounts across Bengaluru, Mumbai, and Delhi.",
+      "node_count": 28,
+      "edge_count": 46
+    },
+    {
+      "case_id": "CASE-FIR-208",
+      "title": "Narcotics & Darknet Logistics Nexus - Coastal Corridor",
+      "fir_number": "FIR-208/2025/ANC",
+      "section_law": "NDPS Act 8(c), 20(b), 27A, 29",
+      "police_station": "Anti-Narcotics Cell, Mumbai",
+      "incident_date": "2025-03-01",
+      "status": "UNDER_SURVEILLANCE",
+      "primary_accused": [
+        "P-106",
+        "P-107"
+      ],
+      "description": "Cross-border contraband transit leveraging refrigerated logistics front companies and cryptocurrency OTC settlement channels.",
+      "node_count": 18,
+      "edge_count": 27
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "model_name": "CrimeGraph-GraphSAGE-Personalized",
+  "model_version": "v1.0-colab-trained",
+  "architecture": "2-Layer GraphSAGE + BatchNorm + L2Norm + MLP Link Predictor",
+  "embedding_dim": 32,
+  "input_features": 10,
+  "trained_dataset": "Operation Falcon Syndicate Topology (32 Nodes, 41 Edges)",
+  "training_date": "2026-09-05 08:05:54 UTC",
+  "status": "Personalized Trained Model Active",
+  "weights_status": "Active Personalized GraphSAGE State-Dict Loaded",
+  "weights_loaded": true,
+  "metrics": {
+    "auc_roc": 0.7083,
+    "average_precision": 0.7812,
+    "precision": 0.5625,
+    "recall": 0.75,
+    "f1_score": 0.6429
+  },
+  "hyperparameters": {
+    "epochs": 150,
+    "learning_rate": 0.01,
+    "weight_decay": 0.0001,
+    "dropout": 0.15,
+    "optimizer": "AdamW",
+    "loss": "BCEWithLogitsLoss"
+  },
+  "training_split": "Temporal: Jan-Jun Train (70%), Jul-Aug Test (30%)",
+  "colab_notebook": "CrimeGraph_AI_GNN_Colab_Training.ipynb",
+  "dataset_export": "backend/data/crimegraph_dataset_for_colab.json"
+}

@@ -1,0 +1,106 @@
+{
+  "model_name": "CrimeGraph-GraphSAGE-Personalized",
+  "model_version": "v1.0-colab-trained",
+  "architecture": "2-Layer GraphSAGE + BatchNorm + L2Norm + MLP Link Predictor",
+  "embedding_dim": 32,
+  "input_features": 10,
+  "trained_dataset": "Operation Falcon Syndicate Topology",
+  "training_date": "2026-09-05 08:05:54.435514",
+  "metrics": {
+    "auc_roc": 0.7083,
+    "average_precision": 0.7812,
+    "precision": 0.5625,
+    "recall": 0.75,
+    "f1_score": 0.6429
+  },
+  "hyperparameters": {
+    "epochs": 150,
+    "learning_rate": 0.01,
+    "weight_decay": 0.0001,
+    "dropout": 0.15,
+    "optimizer": "AdamW",
+    "loss": "BCEWithLogitsLoss"
+  },
+  "top_predictions": [
+    {
+      "rank": 1,
+      "source_id": "P-103",
+      "source_label": "Vikram Malhotra",
+      "target_id": "P-105",
+      "target_label": "R. Kumar (Alias)",
+      "probability": 1.0,
+      "confidence_band": "CRITICAL",
+      "inference_engine": "GraphSAGE-Colab-Trained-v1.0"
+    },
+    {
+      "rank": 2,
+      "source_id": "P-104",
+      "source_label": "Viktor Rao",
+      "target_id": "VH-01",
+      "target_label": "KA-03-HA-8821 (Fortuner)",
+      "probability": 1.0,
+      "confidence_band": "CRITICAL",
+      "inference_engine": "GraphSAGE-Colab-Trained-v1.0"
+    },
+    {
+      "rank": 3,
+      "source_id": "P-103",
+      "source_label": "Vikram Malhotra",
+      "target_id": "VH-01",
+      "target_label": "KA-03-HA-8821 (Fortuner)",
+      "probability": 1.0,
+      "confidence_band": "CRITICAL",
+      "inference_engine": "GraphSAGE-Colab-Trained-v1.0"
+    },
+    {
+      "rank": 4,
+      "source_id": "P-104",
+      "source_label": "Viktor Rao",
+      "target_id": "P-105",
+      "target_label": "R. Kumar (Alias)",
+      "probability": 1.0,
+      "confidence_band": "CRITICAL",
+      "inference_engine": "GraphSAGE-Colab-Trained-v1.0"
+    },
+    {
+      "rank": 5,
+      "source_id": "P-103",
+      "source_label": "Vikram Malhotra",
+      "target_id": "LOC-01",
+      "target_label": "Indiranagar Safehouse",
+      "probability": 1.0,
+      "confidence_band": "CRITICAL",
+      "inference_engine": "GraphSAGE-Colab-Trained-v1.0"
+    },
+    {
+      "rank": 6,
+      "source_id": "P-104",
+      "source_label": "Viktor Rao",
+      "target_id": "LOC-01",
+      "target_label": "Indiranagar Safehouse",
+      "probability": 1.0,
+      "confidence_band": "CRITICAL",
+      "inference_engine": "GraphSAGE-Colab-Trained-v1.0"
+    },
+    {
+      "rank": 7,
+      "source_id": "P-104",
+      "source_label": "Viktor Rao",
+      "target_id": "VH-02",
+      "target_label": "MH-02-CD-9901 (Innova)",
+      "probability": 1.0,
+      "confidence_band": "CRITICAL",
+      "inference_engine": "GraphSAGE-Colab-Trained-v1.0"
+    },
+    {
+      "rank": 8,
+      "source_id": "PH-04",
+      "source_label": "+91 88776 65544",
+      "target_id": "VH-01",
+      "target_label": "KA-03-HA-8821 (Fortuner)",
+      "probability": 1.0,
+      "confidence_band": "CRITICAL",
+      "inference_engine": "GraphSAGE-Colab-Trained-v1.0"
+    }
+  ]
+}

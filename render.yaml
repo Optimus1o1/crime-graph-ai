@@ -1,0 +1,42 @@
+# ============================================================
+# CrimeGraph AI — Render Deployment Blueprint
+# Deploy both Next.js Frontend Gateway & FastAPI Backend
+# ============================================================
+services:
+  # 1. Next.js Enterprise Frontend & API Gateway
+  - type: web
+    name: crimegraph-frontend
+    env: node
+    plan: starter
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+
+  # 2. FastAPI Analytical & GNN Machine Learning Backend
+  - type: web
+    name: crimegraph-backend
+    env: python
+    plan: starter
+    rootDir: .
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: python -m uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: "*"

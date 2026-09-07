@@ -1,0 +1,82 @@
+{
+  "suggested_links": [
+    {
+      "a": "P001",
+      "b": "P003",
+      "score": 0.89,
+      "common_neighbors": [
+        "AC-CORE-101",
+        "AC-MULE-201",
+        "P002"
+      ],
+      "evidence": "GraphSAGE: Shared Hawala layering path"
+    },
+    {
+      "a": "P002",
+      "b": "AC-OFFSHORE-501",
+      "score": 0.92,
+      "common_neighbors": [
+        "AC-CORP-301",
+        "P003"
+      ],
+      "evidence": "GraphSAGE: Offshore beneficial control"
+    },
+    {
+      "a": "P001",
+      "b": "P002",
+      "score": 0.94,
+      "common_neighbors": [
+        "AC-CORE-101",
+        "P004"
+      ],
+      "evidence": "GraphSAGE: Syndicate bridge coordinator"
+    },
+    {
+      "a": "PH-BURNER-01",
+      "b": "PH-BURNER-03",
+      "score": 0.86,
+      "common_neighbors": [
+        "P001",
+        "P003"
+      ],
+      "evidence": "GraphSAGE: Coordinated midnight burner burst"
+    },
+    {
+      "a": "P004",
+      "b": "P005",
+      "score": 0.81,
+      "common_neighbors": [
+        "P001",
+        "FIR-1042/2025"
+      ],
+      "evidence": "GraphSAGE: Inter-state collection nexus"
+    }
+  ],
+  "anomaly_scores": [
+    {
+      "node": "AC-MULE-201",
+      "score": 0.94,
+      "reason": "Mule account: structuring pattern detected (5 split credits < Rs 10L in 48h)"
+    },
+    {
+      "node": "AC-MULE-202",
+      "score": 0.91,
+      "reason": "High-velocity transit layer (<2h turnaround)"
+    },
+    {
+      "node": "AC-MULE-203",
+      "score": 0.89,
+      "reason": "Rapid pass-through node"
+    },
+    {
+      "node": "PH-BURNER-01",
+      "score": 0.92,
+      "reason": "Midnight communication burst"
+    },
+    {
+      "node": "P002",
+      "score": 0.88,
+      "reason": "Cross-community betweenness jump (0.12 -> 0.88)"
+    }
+  ]
+}
