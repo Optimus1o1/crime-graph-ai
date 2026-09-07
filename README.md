@@ -51,38 +51,125 @@ Modern criminal syndicates operate across decentralized, covert channels—using
 
 ---
 
-## ⚙️ How It Works
+## 🏛️ Comprehensive System Architecture
 
-The platform operates through an end-to-end intelligence synthesis pipeline:
+CrimeGraph AI is engineered around a **decoupled, multi-tier defense architecture** that guarantees high availability, sub-second query latency, and zero data leakage:
 
 ```mermaid
-graph TD
-    A[Raw Intelligence Ingestion<br>CDRs, Hawala Logs, ANPR Feeds, Bank Statements] --> B[Data Normalization & Sanitization]
-    B --> C[Entity Resolution Engine<br>Jaro-Winkler, Levenshtein, Phone Canonicalization]
-    C --> D[Heterogeneous Knowledge Graph<br>Persons, Phones, Accounts, Vehicles, Companies, Locations]
+graph TB
+    subgraph ClientTier["1. PRESENTATION & CLIENT TIER (Next.js 16 + React 19)"]
+        UI_Shell["Next.js 16 Tactical HUD Shell<br>Turbopack App Router • Responsive Cyber Rail"]
+        Cytoscape_Engine["Cytoscape.js 2D Workbench<br>CoSE • Concentric • Mastermind Mode"]
+        ThreeJS_Canvases["Three.js Hardware-Accelerated 3D Engines<br>• Holographic Network • 3D Urban Twin • Volumetric Radar"]
+        Zustand_Store["Zustand Reactive State Store<br>Offline Cache • Optimistic UI • Fallback Graph Engine"]
+    end
+
+    subgraph GatewayTier["2. EDGE GATEWAY & SECURITY TIER (Vercel Edge / Node.js)"]
+        Edge_Proxy["Next.js Edge API Router / Reverse Proxy<br>Routes 40+ REST Endpoints"]
+        Rate_Limiter["Sliding-Window Rate Limiter<br>150 req/min per IP • Anti-DoS Protection"]
+        Scanner_Shield["Vulnerability Scanner Shield<br>Blocks sqlmap, nikto, masscan, acunetix"]
+        OWASP_Headers["OWASP Hardened Security Layer<br>Strict CSP • X-Frame-Options • HSTS Preload"]
+        Auth_Validator["Session & Clearance Validator<br>JWT Verification • Role-Based Access Control"]
+    end
+
+    subgraph BackendTier["3. CORE INTELLIGENCE & ANALYTICS TIER (FastAPI + Python 3.11)"]
+        FastAPI_Core["FastAPI High-Throughput Gateway<br>Async REST API • Pydantic Schema Validation"]
+        Graph_Service["NetworkX Graph Theory Engine<br>PageRank • Betweenness • Louvain Communities"]
+        Entity_Resolution["Entity Resolution Service<br>Jaro-Winkler • Levenshtein • Phone Normalization"]
+        Timeline_GIS["Temporal Timeline & GIS Engine<br>Spatial Clustering • Chronological Event Replay"]
+        Evidence_Vault["Forensic Evidence & Chain-of-Custody<br>SHA-256 Cryptographic Chaining"]
+    end
+
+    subgraph AITier["4. DEEP LEARNING & GNN PREDICTION TIER (PyTorch Geometric)"]
+        GNN_Model["Graph Neural Network Engine<br>2-Layer GraphSAGE / GCN Inductive Embedding"]
+        Link_Predictor["Link Formation Predictor<br>Dot-Product Edge Scorer • Anomaly Detector"]
+        GNN_Explainer["GNNExplainer Subgraph Engine<br>Node Feature Masking • Edge Attribution Scoring"]
+    end
+
+    subgraph StorageTier["5. DATA PERSISTENCE & CRYPTOGRAPHIC LEDGER TIER"]
+        Supabase_DB["Supabase Cloud Database<br>PostgreSQL with Row-Level Security (RLS)"]
+        Hash_Ledger["Cryptographic Evidence Ledger<br>Sequential SHA-256 Merkle Block Hash Chains"]
+        Local_Cache["In-Memory & Local Storage Fallback<br>Zero-Downtime Offline Resilience"]
+    end
+
+    %% Tier connections
+    UI_Shell --> Edge_Proxy
+    Cytoscape_Engine --> Zustand_Store
+    ThreeJS_Canvases --> Zustand_Store
+    Zustand_Store <--> Edge_Proxy
     
-    D --> E[Graph Analytics Engine<br>PageRank, Betweenness, Louvain Communities]
-    D --> F[Graph Neural Network Model<br>PyTorch Geometric GCN/GraphSAGE]
+    Edge_Proxy --> Rate_Limiter
+    Rate_Limiter --> Scanner_Shield
+    Scanner_Shield --> OWASP_Headers
+    OWASP_Headers --> Auth_Validator
+    Auth_Validator --> FastAPI_Core
     
-    F --> G[Predictive Link Inference<br>Probability Scores & Anomaly Flags]
-    G --> H[GNNExplainer Engine<br>Subgraph Extraction & Feature Attribution]
+    FastAPI_Core --> Graph_Service
+    FastAPI_Core --> Entity_Resolution
+    FastAPI_Core --> Timeline_GIS
+    FastAPI_Core --> Evidence_Vault
     
-    E --> I[Tactical Cyber HUD Console<br>Next.js 16 + React 19 + Tailwind v4]
-    H --> I
-    D --> J[3D WebGL Visualization Engine<br>Three.js Hardware Acceleration]
-    J --> I
+    Graph_Service <--> GNN_Model
+    GNN_Model --> Link_Predictor
+    Link_Predictor --> GNN_Explainer
+    GNN_Explainer --> FastAPI_Core
     
-    I --> K[Cryptographic Audit Vault<br>SHA-256 Hash Chain & Supabase Cloud Sync]
+    FastAPI_Core <--> Supabase_DB
+    Evidence_Vault <--> Hash_Ledger
+    Zustand_Store <--> Local_Cache
 ```
 
-### Key Stages:
+---
 
-1. **Ingestion & Resolution**: Heterogeneous data records are parsed and mapped into standard entity schemas. The **Entity Resolution Service** evaluates phonetic similarity, phone normalization (`+91` formats), and shared co-location coordinates to flag duplicate alias identities.
-2. **Graph Topology Computation**: NetworkX constructs the full graph in-memory, computing degree distribution, Betweenness Centrality (identifying critical communication brokers), PageRank (identifying syndicate kingpins), and modularity-based Louvain community clustering.
-3. **Graph Neural Network Inference**: Graph Convolutional Networks (GCN) and GraphSAGE models evaluate inductive node embeddings to calculate link formation probabilities between unlinked suspects.
-4. **Explainable Subgraph Generation**: Rather than delivering black-box predictions, the platform runs `GNNExplainer` to isolate the 2-hop computation subgraph and rank the topological and contextual features driving each confidence score.
-5. **Tactical Rendering**: Next.js dynamically streams the 9 specialized dashboard modules on demand. Three.js canvases render 3D holographic models, arterial road networks, and photon particle channels using decoupled reactive refs for 60 FPS performance.
-6. **Forensic Integrity**: Every node update, edge creation, entity merge, or report export is recorded into a sequential SHA-256 hash chain, ensuring tamper-evident chain of custody for courtroom presentation.
+### Layer-by-Layer Subsystem Specifications
+
+#### 1. Presentation & Client Tier
+- **Framework**: Next.js 16.3.4 (App Router) paired with React 19.2.0.
+- **Dynamic Chunk Streaming**: Heavy visualization libraries (Three.js WebGL and Cytoscape.js) are strictly decoupled and streamed dynamically (`ssr: false`) with tactical HUD loading skeletons to ensure the primary dashboard loads in under 500ms.
+- **WebGL Context Decoupling**: Three.js canvases use reactive state refs (`useRef`) to decouple animation frames from UI state. Toggling auto-rotation, sweeping radars, or selecting suspect nodes executes at 60 FPS without destroying or reallocating WebGL buffers.
+- **Global State & Offline Fallback**: The Zustand store caches active syndicate graph snapshots in `localStorage`. If the backend service is offline, cold-starting, or unreachable, CrimeGraph AI automatically falls back to its embedded client-side graph engine with zero broken UI states.
+
+#### 2. Edge Gateway & Security Tier
+- **Reverse Proxy Routing**: Next.js API routes act as an edge reverse-proxy forwarding requests to the Python FastAPI backend (`/api/*` $\rightarrow$ `backend:8000/*`).
+- **Sliding-Window Rate Limiter**: Monitors incoming IP addresses using a 60-second sliding window capped at 150 requests/minute to prevent scraping and denial-of-service attempts.
+- **Automated Threat Blocking**: Inspects incoming `User-Agent` headers and returns immediate `403 Forbidden` responses for automated penetration testing tools (`sqlmap`, `nikto`, `masscan`, `w3af`, `acunetix`, `havij`).
+- **OWASP Compliance**: Enforces hardened headers including strict `Content-Security-Policy`, `X-Frame-Options: SAMEORIGIN` (anti-clickjacking), `X-Content-Type-Options: nosniff` (anti-MIME-sniffing), and 2-year `Strict-Transport-Security` (HSTS).
+
+#### 3. Core Intelligence & Analytics Tier
+- **Gateway**: FastAPI asynchronous REST service executing with Uvicorn workers.
+- **Network Topology Analysis**: NetworkX calculates graph-theoretic metrics in real time:
+  - **Betweenness Centrality**: Flags financial brokers and hawala transit operators.
+  - **PageRank & Degree**: Identifies syndicate coordinators and central kingpins.
+  - **Louvain Modularity**: Clusters nodes into criminal syndicates and sub-factions.
+- **Multimodal Entity Resolution**: Employs Jaro-Winkler distance, Levenshtein edit distance, phone canonicalization (`+91` E.164 standard), and spatial-temporal co-location to resolve aliases to unique physical entities.
+
+#### 4. Deep Learning & GNN Prediction Tier
+- **Architecture**: 2-Layer Graph Convolutional Network (GCN) and GraphSAGE implemented in **PyTorch Geometric (PyG)**.
+- **Inductive Node Embeddings**: Combines structural topological features (degree, centrality, clustering coefficient) with entity attribute vectors (risk rating, entity type, transaction frequency) into a 64-dimensional latent embedding space.
+- **Link Formation Inference**: Computes dot-product similarity scores between node pairs, applying an empirical threshold ($\tau = 0.85$) to predict hidden or unrecorded criminal links.
+- **Explainability (GNNExplainer)**: Extracts the 2-hop computational subgraph for each predicted link, computing edge importance weights and ranking top predictive features for plain-English courtroom explanation.
+
+#### 5. Storage & Cryptographic Ledger Tier
+- **Relational Cloud Persistence**: Supabase PostgreSQL database storing case records, warrants, suspect dossiers, and user accounts protected by Row-Level Security (RLS).
+- **Cryptographic Evidence Chain of Custody**: Every digital evidence item is hashed using SHA-256 and chained into a tamper-evident audit ledger. Each audit block contains:
+  $$\text{Block Hash} = \text{SHA256}(\text{Index} + \text{PrevBlockHash} + \text{Timestamp} + \text{Action} + \text{PayloadHash} + \text{InvestigatorBadge})$$
+  Any alteration of prior evidence records instantly invalidates the entire chain, guaranteeing forensic defensibility in judicial proceedings.
+
+---
+
+## ⚙️ How It Works (Data Pipeline & Life Cycle)
+
+The lifecycle of an investigation from ingestion to legal export follows an automated 5-stage pipeline:
+
+```
+[Raw Intelligence] ➔ [Entity Resolution] ➔ [Knowledge Graph] ➔ [GNN Inference & XAI] ➔ [Forensic Ledger]
+```
+
+1. **Multi-Source Ingestion**: CDR call logs, hawala transfers, ANPR license plate detections, and registered bank accounts are ingested into the platform.
+2. **Identity Resolution**: The Entity Resolution Engine merges aliases (e.g. `R. Kumar` $\leftrightarrow$ `Rahul Kumar`) while preserving provenance trails.
+3. **Graph Topology Computation**: NetworkX constructs the heterogeneous multi-relational graph and computes centrality scores.
+4. **Predictive GNN Inference**: PyTorch Geometric infers hidden connections and anomalous communications, generating explainable feature masks.
+5. **Interactive Exploration & Custody**: Investigators explore the 2D/3D dual-canvas interface, run what-if disruption simulations, and export cryptographically sealed case dossiers.
 
 ---
 
