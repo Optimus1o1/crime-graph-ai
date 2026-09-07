@@ -9,6 +9,8 @@
 [![Vercel Ready](https://img.shields.io/badge/Deploy-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/)
 [![Security Hardened](https://img.shields.io/badge/Security-OWASP%20Hardened-emerald?style=for-the-badge&logo=shield)](https://owasp.org/)
 
+[render live link-https://crime-graph-ai.onrender.com]
+
 **CrimeGraph AI** is an enterprise-grade, explainable criminal network analysis and cyber intelligence platform. Engineered for law enforcement agencies, cybercrime divisions, intelligence analysts, and financial crime investigators, it transforms raw, fragmented multi-source intelligence—Call Detail Records (CDRs), hawala financial transactions, ANPR automated license plate cameras, company registries, and physical evidence—into an interactive, multidimensional tactical intelligence matrix.
 
 Designed with a high-contrast **tactical cyber HUD aesthetic** (inspired by Palantir Gotham and aerospace defense consoles), CrimeGraph AI merges graph theory, Graph Neural Networks (GNNs), hardware-accelerated 3D WebGL visualizations, and tamper-evident cryptographic chain of custody into a unified command environment.
