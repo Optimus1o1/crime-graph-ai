@@ -5,6 +5,10 @@ Investigator Query -> Tool Execution (Graph, Evidence, Timeline, Anomalies) -> C
 Produces the standardized 7-part explainable intelligence report:
 ANSWER | EVIDENCE | GRAPH CORRELATION | REASONING | CONFIDENCE | GAPS | SUGGESTED NEXT STEPS | SOURCES
 """
+import os
+import json
+import urllib.request
+import urllib.error
 from typing import Dict, Any, List, Optional
 import re
 from backend.models.schemas import (
@@ -18,6 +22,10 @@ from backend.services.timeline_service import timeline_service
 
 class AIOrchestrator:
     def orchestrate_investigation(self, query: str, case_id: Optional[str] = "CASE-FIR-102") -> AIOrchestratedResponse:
+        gemini_res = self._try_gemini_investigation(query, case_id)
+        if gemini_res:
+            return gemini_res
+
         q = query.lower().strip()
         tools_executed: List[AIToolCall] = []
 
@@ -253,6 +261,66 @@ class AIOrchestrator:
             sources=["FIR-102/2025", "TXN-HDFC-9021", "CDR-BLR-8891"],
             tools_executed=tools
         )
+
+    def _try_gemini_investigation(self, query: str, case_id: Optional[str] = "CASE-FIR-102") -> Optional[AIOrchestratedResponse]:
+        api_key = os.getenv("GEMINI_API_KEY")
+        if not api_key:
+            return None
+
+        try:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={api_key}"
+            system_instruction = (
+                "You are CrimeGraph AI Copilot, an elite Forensic Intelligence Analyst. "
+                "The syndicate has 112 nodes across North (Harish Qureshi P002, Pooja Tiwari P001), "
+                "South (P017, P018), Finance (P031, AC-MULE-201, AC100), and Bridge (Mastermind Vikram Shetty P043). "
+                "You must respond strictly with JSON having: answer (string), graph_correlation (string), "
+                "confidence (float 0-1), reasoning (array of {step_number, observation, evidence_citation, confidence_contribution}), "
+                "gaps (string), suggested_next_steps (array of string), sources (array of string)."
+            )
+            payload = {
+                "contents": [{"role": "user", "parts": [{"text": query}]}],
+                "systemInstruction": {"parts": [{"text": system_instruction}]},
+                "generationConfig": {
+                    "temperature": 0.2,
+                    "responseMimeType": "application/json"
+                }
+            }
+            req = urllib.request.Request(
+                url,
+                data=json.dumps(payload).encode("utf-8"),
+                headers={"Content-Type": "application/json"}
+            )
+            with urllib.request.urlopen(req, timeout=8) as response:
+                if response.status == 200:
+                    resp_data = json.loads(response.read().decode("utf-8"))
+                    text = resp_data["candidates"][0]["content"]["parts"][0]["text"]
+                    parsed = json.loads(text)
+
+                    reasoning_steps = [
+                        XAIReasoningStep(
+                            step_number=s.get("step_number", i + 1),
+                            observation=s.get("observation", ""),
+                            evidence_citation=s.get("evidence_citation", "GEMINI-SYNTHESIS"),
+                            confidence_contribution=s.get("confidence_contribution", "+25%")
+                        ) for i, s in enumerate(parsed.get("reasoning", []))
+                    ]
+
+                    return AIOrchestratedResponse(
+                        query=query,
+                        answer=parsed.get("answer", "Intelligence synthesized."),
+                        evidence=[],
+                        graph_correlation=parsed.get("graph_correlation", "Active Topology Conduits"),
+                        reasoning=reasoning_steps,
+                        confidence=float(parsed.get("confidence", 0.92)),
+                        gaps=parsed.get("gaps", "None reported."),
+                        suggested_next_steps=parsed.get("suggested_next_steps", ["Review graph in workbench"]),
+                        sources=parsed.get("sources", ["GEMINI-1.5-FLASH-LIVE"]),
+                        tools_executed=[
+                            AIToolCall(tool="gemini_llm_reasoner", operation="multi_modal_synthesis", parameters={"query": query})
+                        ]
+                    )
+        except Exception:
+            return None
 
 
 ai_orchestrator = AIOrchestrator()
