@@ -91,6 +91,21 @@ export default function Graph3DCanvas() {
     return FALLBACK_3D_EDGES
   }, [storeEdges])
 
+  // Determine direct connected neighbors of selected entity
+  const connectedNeighborIds = useMemo(() => {
+    if (!selectedNodeId) return new Set<string>()
+    const set = new Set<string>()
+    set.add(selectedNodeId)
+    activeEdges.forEach(e => {
+      if (e.source === selectedNodeId) set.add(e.target)
+      if (e.target === selectedNodeId) set.add(e.source)
+    })
+    return set
+  }, [selectedNodeId, activeEdges])
+
+  const connectedNeighborIdsRef = useRef(connectedNeighborIds)
+  connectedNeighborIdsRef.current = connectedNeighborIds
+
   useEffect(() => {
     const container = mountRef.current
     if (!container) return
@@ -446,6 +461,19 @@ export default function Graph3DCanvas() {
     const linesMesh = new THREE.LineSegments(edgeGeo, edgeMatMap.DEFAULT)
     scene.add(linesMesh)
 
+    // Dedicated Highlighted Edges for Selected Criminal
+    const hlLinePositions = new Float32Array(activeEdges.length * 6)
+    const hlLineGeo = new THREE.BufferGeometry()
+    hlLineGeo.setAttribute('position', new THREE.BufferAttribute(hlLinePositions, 3))
+    const hlLinesMesh = new THREE.LineSegments(hlLineGeo, new THREE.LineBasicMaterial({
+      color: 0x00ffff,
+      linewidth: 3,
+      transparent: true,
+      opacity: 0.95,
+      blending: THREE.AdditiveBlending
+    }))
+    scene.add(hlLinesMesh)
+
     // Data Flow Particles (Photons traversing 3D edges)
     const particleCount = edgeDataPairs.length * 3
     const particleGeo = new THREE.BufferGeometry()
@@ -477,12 +505,14 @@ export default function Graph3DCanvas() {
     let prevMouse = { x: 0, y: 0 }
     let spherical = { radius: 460, theta: 0.4, phi: 1.2 }
 
+    const currentLookAt = new THREE.Vector3(0, 10, 0)
+
     const updateCameraFromSpherical = () => {
       spherical.phi = Math.max(0.1, Math.min(Math.PI - 0.1, spherical.phi))
       camera.position.x = spherical.radius * Math.sin(spherical.phi) * Math.sin(spherical.theta)
       camera.position.y = spherical.radius * Math.cos(spherical.phi)
       camera.position.z = spherical.radius * Math.sin(spherical.phi) * Math.cos(spherical.theta)
-      camera.lookAt(0, 10, 0)
+      camera.lookAt(currentLookAt)
     }
     updateCameraFromSpherical()
 
@@ -582,14 +612,63 @@ export default function Graph3DCanvas() {
       const delta = clock.getDelta()
       const elapsed = clock.getElapsedTime()
 
+      // Camera lookAt tracking towards selected criminal target
+      const selId = selectedNodeIdRef.current
+      const targetLook = (selId && nodePositions.get(selId)) ? nodePositions.get(selId)! : new THREE.Vector3(0, 10, 0)
+      currentLookAt.lerp(targetLook, 0.05)
+      camera.lookAt(currentLookAt)
+
       // Auto rotation
       if (autoRotateRef.current && !isDragging) {
         spherical.theta += 0.0018
         updateCameraFromSpherical()
       }
 
-      // Animate node meshes (rings, beacons, selection reticles)
+      // Update Highlighted Connections for selected criminal
+      if (selectedNodeIdRef.current) {
+        let hlCount = 0
+        const hlArr = (hlLineGeo.attributes.position as THREE.BufferAttribute).array as Float32Array
+        activeEdges.forEach(edge => {
+          if (edge.source === selectedNodeIdRef.current || edge.target === selectedNodeIdRef.current) {
+            const u = nodePositions.get(edge.source)
+            const v = nodePositions.get(edge.target)
+            if (u && v && hlCount < activeEdges.length) {
+              hlArr[hlCount * 6] = u.x
+              hlArr[hlCount * 6 + 1] = u.y
+              hlArr[hlCount * 6 + 2] = u.z
+              hlArr[hlCount * 6 + 3] = v.x
+              hlArr[hlCount * 6 + 4] = v.y
+              hlArr[hlCount * 6 + 5] = v.z
+              hlCount++
+            }
+          }
+        })
+        hlLineGeo.setDrawRange(0, hlCount * 2)
+        ;(hlLineGeo.attributes.position as THREE.BufferAttribute).needsUpdate = true
+        hlLinesMesh.visible = true
+        ;(linesMesh.material as THREE.Material).opacity = 0.12
+      } else {
+        hlLinesMesh.visible = false
+        ;(linesMesh.material as THREE.Material).opacity = 0.35
+      }
+
+      // Animate node meshes (rings, beacons, selection reticles, connection isolation)
       nodeMeshes.forEach(group => {
+        const isSelected = selId === group.userData.id
+        const isConnected = connectedNeighborIdsRef.current?.has(group.userData.id)
+
+        if (selId) {
+          if (isSelected) {
+            group.scale.setScalar(1.3)
+          } else if (isConnected) {
+            group.scale.setScalar(1.12)
+          } else {
+            group.scale.setScalar(0.85)
+          }
+        } else {
+          group.scale.setScalar(1.0)
+        }
+
         const ring = group.getObjectByName('rotatingRing')
         if (ring) {
           ring.rotation.z += 0.02
@@ -605,12 +684,11 @@ export default function Graph3DCanvas() {
         }
         const reticle = group.getObjectByName('selectionReticle') as THREE.Mesh
         if (reticle) {
-          const isSelected = selectedNodeIdRef.current === group.userData.id
           if (isSelected) {
             reticle.visible = true
-            ;(reticle.material as THREE.Material).opacity = 0.8
-            reticle.rotation.y += 0.03
-            reticle.rotation.x += 0.015
+            ;(reticle.material as THREE.Material).opacity = 0.95
+            reticle.rotation.y += 0.04
+            reticle.rotation.x += 0.02
           } else {
             reticle.visible = false
           }
@@ -726,6 +804,27 @@ export default function Graph3DCanvas() {
           <span className="text-slate-300">SUV Logistics (Headlight Chassis)</span>
         </div>
       </div>
+
+      {/* Top Center: Active Target Lock HUD in 3D */}
+      {selectedNodeId && (
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-[#060a14]/95 border border-cyan-400/70 rounded-lg px-4 py-2 font-mono text-xs shadow-[0_0_25px_rgba(0,229,255,0.4)] z-20 flex items-center gap-3 animate-in fade-in zoom-in duration-200">
+          <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping" />
+          <div>
+            <div className="text-[9px] text-cyan-400 font-bold uppercase tracking-wider">
+              3D ISOLATION ACTIVE · {Math.max(0, connectedNeighborIds.size - 1)} DIRECT CONNECTIONS
+            </div>
+            <div className="text-white font-bold text-sm">
+              {activeNodes.find(n => n.id === selectedNodeId)?.label || selectedNodeId}
+            </div>
+          </div>
+          <button
+            onClick={() => selectNode(null)}
+            className="ml-2 px-2 py-1 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-slate-500 text-slate-400 hover:text-white text-[10px] transition cursor-pointer"
+          >
+            VIEW ALL
+          </button>
+        </div>
+      )}
 
       {/* Bottom Center Hover Tooltip */}
       {hoveredNode && (
