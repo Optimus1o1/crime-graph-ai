@@ -20,56 +20,26 @@ import {
   Box
 } from 'lucide-react'
 
-// Default fallback 3D syndicate topology if store nodes are still loading
-const FALLBACK_3D_NODES = [
-  { id: 'P-101', label: 'Rahul Kumar', type: 'Person', risk: 'CRITICAL', comm: '1', degree: 14, betweenness: 0.42 },
-  { id: 'P-102', label: 'Ravi Shankar', type: 'Person', risk: 'HIGH', comm: '1', degree: 8, betweenness: 0.18 },
-  { id: 'P-103', label: 'Vikram Malhotra', type: 'Person', risk: 'CRITICAL', comm: '2', degree: 12, betweenness: 0.88 },
-  { id: 'P-104', label: 'Viktor Rao', type: 'Person', risk: 'CRITICAL', comm: '2', degree: 16, betweenness: 0.71 },
-  { id: 'P-105', label: 'R. Kumar (Alias)', type: 'Person', risk: 'HIGH', comm: '1', degree: 5, betweenness: 0.22 },
-  { id: 'P-106', label: 'Ananya Verma', type: 'Person', risk: 'HIGH', comm: '3', degree: 7, betweenness: 0.35 },
-  { id: 'P-107', label: 'Tariq Sheikh', type: 'Person', risk: 'CRITICAL', comm: '3', degree: 9, betweenness: 0.45 },
-  { id: 'PH-01', label: '+91 98450 11223', type: 'Phone', risk: 'HIGH', comm: '1', degree: 6, betweenness: 0.20 },
-  { id: 'PH-03', label: '+91 99001 12233 (Burner)', type: 'Phone', risk: 'CRITICAL', comm: '1', degree: 9, betweenness: 0.65 },
-  { id: 'PH-04', label: '+91 88776 65544', type: 'Phone', risk: 'CRITICAL', comm: '2', degree: 8, betweenness: 0.58 },
-  { id: 'BA-01', label: 'HDFC Mule 50100', type: 'Account', risk: 'CRITICAL', comm: '1', degree: 10, betweenness: 0.55 },
-  { id: 'BA-02', label: 'ICICI Layering 00210', type: 'Account', risk: 'HIGH', comm: '1', degree: 7, betweenness: 0.48 },
-  { id: 'BA-03', label: 'Axis Transit 91201', type: 'Account', risk: 'CRITICAL', comm: '2', degree: 9, betweenness: 0.62 },
-  { id: 'BA-05', label: 'Offshore Emirates A/C', type: 'Account', risk: 'CRITICAL', comm: '2', degree: 11, betweenness: 0.75 },
-  { id: 'ORG-01', label: 'Orion Global Export Ltd', type: 'Company', risk: 'CRITICAL', comm: '2', degree: 12, betweenness: 0.69 },
-  { id: 'ORG-02', label: 'Apex Logistics Pvt Ltd', type: 'Company', risk: 'HIGH', comm: '3', degree: 8, betweenness: 0.38 },
-  { id: 'LOC-01', label: 'Indiranagar Safehouse', type: 'Location', risk: 'CRITICAL', comm: '1', degree: 8, betweenness: 0.40 },
-  { id: 'LOC-03', label: 'BKC Corporate Suite', type: 'Location', risk: 'CRITICAL', comm: '2', degree: 9, betweenness: 0.58 },
-  { id: 'VH-01', label: 'KA-03-HA-8821 (Fortuner)', type: 'Vehicle', risk: 'HIGH', comm: '1', degree: 5, betweenness: 0.28 },
-  { id: 'VH-02', label: 'MH-02-CD-9901 (Innova)', type: 'Vehicle', risk: 'HIGH', comm: '3', degree: 4, betweenness: 0.22 },
-]
+import graphData from '@/data/graphData.json'
 
-const FALLBACK_3D_EDGES = [
-  { source: 'P-101', target: 'P-102', kind: 'CALL', label: 'Coordination' },
-  { source: 'P-101', target: 'PH-01', kind: 'CALL', label: 'Device Link' },
-  { source: 'P-101', target: 'PH-03', kind: 'CALL', label: 'Burner Handset' },
-  { source: 'P-101', target: 'BA-01', kind: 'TRANSFER', label: '₹45L Mule Deposit' },
-  { source: 'P-101', target: 'LOC-01', kind: 'LOCATION', label: 'Safehouse Hub' },
-  { source: 'P-101', target: 'VH-01', kind: 'VEHICLE', label: 'Registered Vehicle' },
-  { source: 'P-102', target: 'LOC-01', kind: 'LOCATION', label: 'Enforcer Post' },
-  { source: 'P-103', target: 'PH-04', kind: 'CALL', label: 'Direct Comm' },
-  { source: 'P-103', target: 'BA-03', kind: 'TRANSFER', label: 'Hawala Bridge' },
-  { source: 'P-103', target: 'ORG-01', kind: 'COMPANY', label: 'Director Stake' },
-  { source: 'P-103', target: 'LOC-03', kind: 'LOCATION', label: 'Mumbai Office' },
-  { source: 'P-104', target: 'BA-05', kind: 'TRANSFER', label: 'Offshore Beneficial' },
-  { source: 'P-104', target: 'ORG-01', kind: 'COMPANY', label: 'Secret Owner' },
-  { source: 'P-104', target: 'LOC-03', kind: 'LOCATION', label: 'Command Suite' },
-  { source: 'PH-03', target: 'PH-04', kind: 'CALL', label: 'Midnight CDR Burst' },
-  { source: 'BA-01', target: 'BA-02', kind: 'TRANSFER', label: 'Layering 1' },
-  { source: 'BA-02', target: 'BA-03', kind: 'TRANSFER', label: 'Layering 2' },
-  { source: 'BA-03', target: 'BA-05', kind: 'TRANSFER', label: 'Offshore Wire' },
-  { source: 'BA-03', target: 'ORG-01', kind: 'TRANSFER', label: 'Trade Invoicing' },
-  { source: 'P-106', target: 'P-107', kind: 'CALL', label: 'Narcotics Transit' },
-  { source: 'P-106', target: 'ORG-02', kind: 'COMPANY', label: 'Cold Storage' },
-  { source: 'P-107', target: 'ORG-02', kind: 'COMPANY', label: 'Logistics Fleet' },
-  { source: 'ORG-01', target: 'ORG-02', kind: 'TRANSFER', label: 'Inter-Firm Hawala' },
-  { source: 'VH-01', target: 'LOC-01', kind: 'LOCATION', label: 'Parked At' },
-]
+// Comprehensive 3D syndicate topology (367 nodes, 1201 relationships)
+const FALLBACK_3D_NODES = (graphData.nodes || []).map((n: any) => ({
+  id: n.id,
+  label: n.label || n.id,
+  type: n.type || 'Person',
+  risk: n.risk ? n.risk.toUpperCase() : 'HIGH',
+  comm: String(n.comm ?? '1'),
+  degree: n.degree || 4,
+  betweenness: n.betweenness || 0.1
+}))
+
+const FALLBACK_3D_EDGES = (graphData.edges || []).map((e: any) => ({
+  source: e.source,
+  target: e.target,
+  kind: e.kind || e.type || 'ASSOCIATED_WITH',
+  label: e.label || 'Linked'
+}))
+
 
 export default function Graph3DCanvas() {
   const mountRef = useRef<HTMLDivElement>(null)

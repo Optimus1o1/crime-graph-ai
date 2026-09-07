@@ -130,26 +130,28 @@ function djb2(s: string): string {
   return x.toString(16).padStart(8, '0')
 }
 
+import graphData from '@/data/graphData.json'
+
 const API = '/api' // Next.js App Router API routes
 
 export const useStore = create<AppState>((set, get) => ({
-  nodes: [],
-  edges: [],
-  stats: {},
-  loaded: false,
+  nodes: (graphData.nodes || []) as GraphNode[],
+  edges: (graphData.edges || []) as GraphEdge[],
+  stats: graphData.stats || { total_nodes: 367, total_edges: 1201, communities: 6 },
+  loaded: true,
   selectedNodeId: null,
   selectedNodeData: null,
   aiOverlay: false,
   anomalyOverlay: false,
   mastermindMode: false,
   pathResult: null,
-  suggestedLinks: [],
-  anomalyFlags: [],
+  suggestedLinks: (graphData.predict_links || []) as SuggestedLink[],
+  anomalyFlags: (graphData.anomaly_flags || []) as AnomalyFlag[],
   auditEntries: [],
   lastHash: '00000000',
   panelView: 'overview',
   explainData: null,
-  centralityData: [],
+  centralityData: graphData.centrality || [],
   role: 'Investigator',
 
   loadGraph: async () => {

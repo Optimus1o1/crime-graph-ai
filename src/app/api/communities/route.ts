@@ -1,5 +1,7 @@
 import { forwardGet } from '@/lib/api-forwarder'
+import graphData from '@/data/graphData.json'
 
 export async function GET() {
-  return forwardGet('/communities', [])
+  return forwardGet('/communities', graphData.communities)
 }
+
