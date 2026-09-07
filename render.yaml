@@ -7,7 +7,7 @@ services:
   - type: web
     name: crimegraph-frontend
     env: node
-    plan: starter
+    plan: free
     rootDir: .
     buildCommand: npm install && npm run build
     startCommand: npm run start
@@ -23,15 +23,20 @@ services:
         sync: false
       - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
         sync: false
+      - key: FASTAPI_BASE_URL
+        fromService:
+          type: web
+          name: crimegraph-backend
+          property: hostport
 
   # 2. FastAPI Analytical & GNN Machine Learning Backend
   - type: web
     name: crimegraph-backend
     env: python
-    plan: starter
+    plan: free
     rootDir: .
-    buildCommand: pip install -r backend/requirements.txt
-    startCommand: python -m uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    buildCommand: pip install --upgrade pip && pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     envVars:
       - key: PYTHON_VERSION

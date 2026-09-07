@@ -1,6 +1,14 @@
 import { NextResponse } from 'next/server'
 
-const FASTAPI_BASE = process.env.FASTAPI_BASE_URL || 'http://127.0.0.1:8000'
+export function getFastApiBase(): string {
+  let raw = process.env.FASTAPI_BASE_URL || 'http://127.0.0.1:8000'
+  if (raw && !raw.startsWith('http://') && !raw.startsWith('https://')) {
+    raw = `http://${raw}`
+  }
+  return raw.replace(/\/$/, '')
+}
+
+const FASTAPI_BASE = getFastApiBase()
 
 export async function forwardGet(endpoint: string, fallbackData: any = {}) {
   try {

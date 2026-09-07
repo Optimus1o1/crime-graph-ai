@@ -1,4 +1,4 @@
-import { forwardPost } from '@/lib/api-forwarder'
+import { forwardPost, getFastApiBase } from '@/lib/api-forwarder'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
 
     // 1. Try FastAPI backend first
     try {
-      const FASTAPI_BASE = process.env.FASTAPI_BASE_URL || 'http://127.0.0.1:8000'
+      const FASTAPI_BASE = getFastApiBase()
       const res = await fetch(`${FASTAPI_BASE}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
