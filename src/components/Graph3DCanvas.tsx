@@ -150,12 +150,15 @@ export default function Graph3DCanvas() {
       if (node.id === 'P-101' || node.id === 'P001') {
         // Center Coordinator
         nodePositions.set(node.id, new THREE.Vector3(-40, 25, 30))
-      } else if (node.id === 'P-104' || node.id === 'P003') {
-        // Kingpin in Upper Tier
+      } else if (node.id === 'P-104' || node.id === 'P043' || node.id === 'P003') {
+        // Mastermind / Kingpin in Upper Tier
         nodePositions.set(node.id, new THREE.Vector3(70, 75, -50))
-      } else if (node.id === 'P-103' || node.id === 'P002') {
-        // Bridge Broker
+      } else if (node.id === 'P-103' || node.id === 'P002' || node.id === 'P018') {
+        // Bridge Broker / Hidden Link Pair
         nodePositions.set(node.id, new THREE.Vector3(15, -15, 60))
+      } else if (node.id === 'AC-MULE-201' || node.id === 'BA-01') {
+        // Primary Mule Hub
+        nodePositions.set(node.id, new THREE.Vector3(-60, -35, 40))
       } else {
         let x = radius * Math.cos(theta) * Math.sin(phi)
         let y = (radius * Math.sin(theta) * Math.sin(phi) * 0.6) + (comm === 2 ? 40 : -20)

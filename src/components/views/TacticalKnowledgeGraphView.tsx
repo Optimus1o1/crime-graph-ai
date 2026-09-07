@@ -53,42 +53,40 @@ export default function TacticalKnowledgeGraphView({ onNavigate }: TacticalKnowl
   const [isEdgeOpen, setIsEdgeOpen] = useState(false)
   const [isTimelineOpen, setIsTimelineOpen] = useState(false)
 
-  // Sayed Khan fallback or real selected node
-  const isSayedSelected = !selectedNodeData || selectedNodeData.label.toLowerCase().includes('sayed') || selectedNodeData.id === 'S-201' || selectedNodeData.id === 'P001'
-
-  const activeNode = isSayedSelected ? {
-    id: 'ALPHA-201',
-    label: 'SAYED KHAN',
-    type: 'Person (Target)',
-    risk: '94 / 100',
-    betweenness: '0.4820',
-    degree: 14,
-    aliases: ["'The Baker'", "'Hawala Uncle'", "'Kahn S.'"],
-    devices: [
-      { id: 'CELL-827-0929', status: 'Active CDR', active: true },
-      { id: 'CELL-011-8842', status: 'Inactive', active: false },
-      { id: 'IMEI-88910-210', status: 'Burner', active: true }
-    ],
-    telemetry: [
-      { text: 'IP login cluster from Chandni Chowk', time: '10:14', color: 'text-cyan-400' },
-      { text: 'Hawala transaction $45k approved', time: '09:50', color: 'text-amber-400' },
-      { text: 'Call with AB-089 (384s duration)', time: 'Yesterday', color: 'text-slate-400' }
-    ]
-  } : {
+  // Mastermind Vikram Shetty fallback or real selected node
+  const activeNode = selectedNodeData ? {
     id: selectedNodeData.id,
     label: selectedNodeData.label,
     type: selectedNodeData.type,
     risk: selectedNodeData.risk || '75 / 100',
-    betweenness: selectedNodeData.betweenness?.toFixed(4) || '0.1240',
+    betweenness: typeof selectedNodeData.betweenness === 'number' ? selectedNodeData.betweenness.toFixed(4) : (selectedNodeData.betweenness || '0.1240'),
     degree: selectedNodeData.degree || 5,
-    aliases: [selectedNodeData.comm ? `Cluster ${selectedNodeData.comm}` : 'Operative', 'Cell Member'],
+    aliases: [selectedNodeData.comm ? `Syndicate: ${selectedNodeData.comm.toUpperCase()}` : 'Operative', 'Key Figure'],
     devices: [
-      { id: `DEV-${selectedNodeData.id.slice(0, 6)}`, status: 'Linked Device', active: true },
-      { id: 'SIM-CO-LOC-01', status: 'Tower Ping', active: false }
+      { id: `PH-${selectedNodeData.id}`, status: 'Active Telemetry', active: true },
+      { id: 'SIM-CO-LOC-01', status: 'Cell Tower Ping', active: false }
     ],
     telemetry: [
-      { text: `Network Degree ${selectedNodeData.degree || 4} with betweenness rank #${selectedNodeData.betweenness_rank || 12}`, time: 'Live', color: 'text-cyan-400' },
-      { text: `Coordinated in Hawala Sub-Set community ${selectedNodeData.comm || '0'}`, time: '12h ago', color: 'text-amber-400' }
+      { text: `Network Degree ${selectedNodeData.degree || 4} with betweenness rank #${selectedNodeData.betweenness_rank || 1}`, time: 'Live', color: 'text-cyan-400' },
+      { text: `Coordinated in cluster ${selectedNodeData.comm || 'bridge'}`, time: '12h ago', color: 'text-amber-400' }
+    ]
+  } : {
+    id: 'P043',
+    label: 'VIKRAM SHETTY',
+    type: 'Person (Suspected Coordinator / Mastermind)',
+    risk: '98 / 100',
+    betweenness: '0.0980',
+    degree: 3,
+    aliases: ["'The Architect'", "'Cross-Syndicate Broker'", "'Mastermind'"],
+    devices: [
+      { id: 'PH043 (9822000111)', status: 'Active CDR', active: true },
+      { id: 'CELL-ENC-9901', status: 'Inactive', active: false },
+      { id: 'IMEI-88910-210', status: 'Burner', active: true }
+    ],
+    telemetry: [
+      { text: 'Single structural bridge connecting North, South, and Finance cells', time: '10:14', color: 'text-cyan-400' },
+      { text: 'Rank #1 Betweenness Broker with degree 3 low visibility signature', time: '09:50', color: 'text-amber-400' },
+      { text: 'Planted GraphSAGE prediction target verified', time: 'Live GNN', color: 'text-slate-400' }
     ]
   }
 
@@ -371,8 +369,8 @@ export default function TacticalKnowledgeGraphView({ onNavigate }: TacticalKnowl
           <div className="space-y-2 mt-auto pt-2 border-t border-cyan-900/30">
             <button
               onClick={() => {
-                tracePath('P001', 'P003')
-                alert('Dual shortest-path traced between Target and Syndicate Kingpin')
+                tracePath('P001', 'MH-12-4421')
+                alert('Dual path traced: P001 -> P003 -> AC-MULE-201 -> AC117 -> P032 -> MH-12-4421 (FIR Scene)')
               }}
               className="w-full py-1.5 bg-[#090F1E] hover:bg-cyan-950 border border-cyan-500/40 rounded-lg text-cyan-300 font-mono text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer"
             >

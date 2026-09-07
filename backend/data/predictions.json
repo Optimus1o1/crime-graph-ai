@@ -1,82 +1,198 @@
 {
   "suggested_links": [
     {
-      "a": "P001",
-      "b": "P003",
-      "score": 0.89,
+      "a": "P002",
+      "b": "P013",
+      "score": 0.933,
       "common_neighbors": [
-        "AC-CORE-101",
-        "AC-MULE-201",
-        "P002"
-      ],
-      "evidence": "GraphSAGE: Shared Hawala layering path"
+        "P008",
+        "P010",
+        "P006",
+        "P005"
+      ]
     },
     {
       "a": "P002",
-      "b": "AC-OFFSHORE-501",
-      "score": 0.92,
+      "b": "P018",
+      "score": 0.931,
       "common_neighbors": [
-        "AC-CORP-301",
-        "P003"
-      ],
-      "evidence": "GraphSAGE: Offshore beneficial control"
+        "P006",
+        "P020",
+        "P005",
+        "P004",
+        "P021"
+      ]
     },
     {
-      "a": "P001",
-      "b": "P002",
-      "score": 0.94,
+      "a": "P013",
+      "b": "P016",
+      "score": 0.911,
       "common_neighbors": [
-        "AC-CORE-101",
+        "P010",
+        "P001",
+        "P009"
+      ]
+    },
+    {
+      "a": "P013",
+      "b": "P018",
+      "score": 0.903,
+      "common_neighbors": [
+        "P005",
+        "P006"
+      ]
+    },
+    {
+      "a": "P002",
+      "b": "P015",
+      "score": 0.889,
+      "common_neighbors": [
+        "P010",
+        "P005",
+        "P004",
+        "P016"
+      ]
+    },
+    {
+      "a": "P008",
+      "b": "P016",
+      "score": 0.869,
+      "common_neighbors": [
+        "P007",
+        "P002",
+        "P001",
+        "P009"
+      ]
+    },
+    {
+      "a": "P008",
+      "b": "P010",
+      "score": 0.869,
+      "common_neighbors": [
+        "P013",
+        "P002"
+      ]
+    },
+    {
+      "a": "P005",
+      "b": "P021",
+      "score": 0.864,
+      "common_neighbors": [
+        "P002",
+        "P018"
+      ]
+    },
+    {
+      "a": "P005",
+      "b": "P016",
+      "score": 0.864,
+      "common_neighbors": [
+        "P010",
+        "P002",
+        "P001",
+        "P015"
+      ]
+    },
+    {
+      "a": "P018",
+      "b": "P023",
+      "score": 0.863,
+      "common_neighbors": [
+        "P030",
+        "P019",
+        "P028",
+        "P020"
+      ]
+    },
+    {
+      "a": "P013",
+      "b": "P015",
+      "score": 0.852,
+      "common_neighbors": [
+        "P010",
+        "P005"
+      ]
+    },
+    {
+      "a": "P015",
+      "b": "P018",
+      "score": 0.844,
+      "common_neighbors": [
+        "P005",
         "P004"
-      ],
-      "evidence": "GraphSAGE: Syndicate bridge coordinator"
+      ]
     },
     {
-      "a": "PH-BURNER-01",
-      "b": "PH-BURNER-03",
-      "score": 0.86,
+      "a": "P021",
+      "b": "P023",
+      "score": 0.84,
       "common_neighbors": [
-        "P001",
-        "P003"
-      ],
-      "evidence": "GraphSAGE: Coordinated midnight burner burst"
+        "P020",
+        "P028",
+        "P025"
+      ]
     },
     {
-      "a": "P004",
-      "b": "P005",
-      "score": 0.81,
+      "a": "P006",
+      "b": "P010",
+      "score": 0.839,
       "common_neighbors": [
-        "P001",
-        "FIR-1042/2025"
-      ],
-      "evidence": "GraphSAGE: Inter-state collection nexus"
+        "P014",
+        "P013",
+        "P002"
+      ]
+    },
+    {
+      "a": "P019",
+      "b": "P021",
+      "score": 0.836,
+      "common_neighbors": [
+        "P028",
+        "P027",
+        "P022",
+        "P018"
+      ]
     }
   ],
   "anomaly_scores": [
     {
       "node": "AC-MULE-201",
-      "score": 0.94,
-      "reason": "Mule account: structuring pattern detected (5 split credits < Rs 10L in 48h)"
+      "type": "account",
+      "score": 0.96,
+      "reason": "Probable mule account: 5 split credits < \u20b910,000 in 48h, emptied in \u20b940,000 debit (structuring pattern)"
     },
     {
-      "node": "AC-MULE-202",
-      "score": 0.91,
-      "reason": "High-velocity transit layer (<2h turnaround)"
-    },
-    {
-      "node": "AC-MULE-203",
-      "score": 0.89,
-      "reason": "Rapid pass-through node"
-    },
-    {
-      "node": "PH-BURNER-01",
+      "node": "PH001",
+      "type": "phone",
       "score": 0.92,
-      "reason": "Midnight communication burst"
+      "reason": "Cross-jurisdiction match: SIM cited in FIR-1042 (Nagpur) and FIR-2087 (Pune)"
+    },
+    {
+      "node": "P043",
+      "type": "person",
+      "score": 0.91,
+      "reason": "Suspected coordinator: low direct visibility, high betweenness bridge (#3 rank) connecting all 3 syndicates"
     },
     {
       "node": "P002",
+      "type": "person",
       "score": 0.88,
-      "reason": "Cross-community betweenness jump (0.12 -> 0.88)"
+      "reason": "Cross-community covert communication conduit with P018 (5 shared unrecorded contacts)"
+    },
+    {
+      "node": "MH-12-4421",
+      "type": "vehicle",
+      "score": 0.85,
+      "reason": "Corroborating physical asset: sighted near crime scene in FIR-1042, owned by terminal mule chain beneficiary"
     }
-  ]
+  ],
+  "verification": {
+    "hidden_pair": [
+      "P002",
+      "P018"
+    ],
+    "hidden_pair_rank": 2,
+    "mastermind": "P043",
+    "mule_account": "AC-MULE-201"
+  }
 }
