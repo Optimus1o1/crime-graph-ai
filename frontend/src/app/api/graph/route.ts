@@ -1,9 +1,0 @@
-import { forwardGet } from '@/lib/api-forwarder'
-import { NextRequest } from 'next/server'
-
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url)
-  const caseId = searchParams.get('case_id')
-  const endpoint = caseId ? `/graph?case_id=${caseId}` : '/graph'
-  return forwardGet(endpoint, { nodes: [], edges: [], stats: {} })
-}

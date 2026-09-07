@@ -8,7 +8,7 @@ services:
     name: crimegraph-frontend
     env: node
     plan: starter
-    rootDir: frontend
+    rootDir: .
     buildCommand: npm install && npm run build
     startCommand: npm run start
     healthCheckPath: /api/health
