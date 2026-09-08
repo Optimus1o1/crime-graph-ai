@@ -92,7 +92,7 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
       name: 'RAHUL KUMAR',
       rating: '82% HIGH (FRONT OPERATIVE)',
       aliases: 'Aliases: "RK Logistics" • "Mule Handler"',
-      photo: '/images/suspect_sayed_khan.jpg',
+      photo: '/images/suspect_rahul_kumar.jpg',
       height: '172 cm',
       gender: 'MALE',
       fingerprints: 'ON RECORD [DELHI POLICE]',
@@ -205,25 +205,52 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
             </div>
 
             {/* Suspect Photo with Cyber HUD Scanner Overlay */}
-            <div className="relative w-full h-52 rounded-xl overflow-hidden border border-cyan-500/50 bg-[#020509] group shadow-inner">
+            <div className="relative w-full h-72 sm:h-80 rounded-xl overflow-hidden border border-cyan-500/60 bg-[#020509] group shadow-[0_0_20px_rgba(0,229,255,0.15)]">
               <img 
                 src={current.photo || '/images/suspect_sayed_khan.jpg'} 
                 alt={current.name}
-                className="w-full h-full object-cover object-top opacity-90 transition group-hover:scale-105"
+                className="w-full h-full object-cover object-[center_35%] opacity-95 transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="scanline pointer-events-none" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#020509] via-transparent to-transparent pointer-events-none" />
+              
+              {/* Dynamic Biometric Face Tracking Reticle Overlay */}
+              <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+                {/* Facial Recognition Target Box */}
+                <div className="w-44 h-48 sm:w-48 sm:h-52 border border-cyan-400/40 rounded-lg relative -translate-y-2">
+                  {/* Corner Reticles */}
+                  <span className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-cyan-400" />
+                  <span className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-cyan-400" />
+                  <span className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-cyan-400" />
+                  <span className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-cyan-400" />
+                  
+                  {/* Biometric Point Crosshairs */}
+                  <div className="absolute top-1/3 left-1/4 w-1.5 h-1.5 rounded-full bg-cyan-400/70 animate-ping" />
+                  <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 rounded-full bg-cyan-400/70 animate-ping" />
+                  <div className="absolute bottom-1/3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan-400/70" />
+                  
+                  {/* Facial Mesh Wireframe Center Tag */}
+                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded bg-cyan-950/90 border border-cyan-500/50 text-[10px] font-mono text-cyan-300 whitespace-nowrap">
+                    FACIAL MESH: 128 PTS
+                  </div>
+                </div>
+              </div>
+
+              {/* Animated Laser Scanline */}
+              <div className="absolute inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse shadow-[0_0_10px_#00e5ff] top-1/3 pointer-events-none" />
+              <div className="scanline pointer-events-none opacity-40" />
+
+              {/* Subtle Bottom Vignette */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#020509]/90 via-transparent to-black/20 pointer-events-none" />
               
               {/* Top HUD Badges */}
-              <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-md bg-black/80 border border-cyan-400 text-xs font-mono text-cyan-300 font-bold">
+              <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-md bg-black/80 border border-cyan-400 text-xs font-mono text-cyan-300 font-bold backdrop-blur-sm">
                 FACE_REC: 99.4%
               </div>
-              <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md bg-red-950/90 border border-red-500 text-xs font-mono text-red-300 font-bold animate-pulse">
+              <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md bg-red-950/90 border border-red-500 text-xs font-mono text-red-300 font-bold animate-pulse backdrop-blur-sm">
                 RED NOTICE
               </div>
 
               {/* Bottom Biometric Tag */}
-              <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-xs font-mono text-slate-200 bg-black/80 px-2.5 py-1.5 rounded-lg backdrop-blur-sm border border-slate-700">
+              <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-xs font-mono text-slate-200 bg-black/85 px-3 py-1.5 rounded-lg backdrop-blur-md border border-slate-700/80">
                 <span>BIO_SIG: #77482-B</span>
                 <span className="text-cyan-400 font-bold">{current.id}</span>
               </div>
