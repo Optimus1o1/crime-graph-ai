@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import EntityTopology3DCanvas from '../EntityTopology3DCanvas'
 import Radar3DCanvas from '../Radar3DCanvas'
+import BiometricFingerprintModal from '../BiometricFingerprintModal'
 import { 
   User, 
   Fingerprint, 
@@ -30,6 +31,7 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
   const [selectedSuspectId, setSelectedSuspectId] = useState<'kahn' | 'viktor' | 'rahul'>('kahn')
   const [isWatchlisted, setIsWatchlisted] = useState(true)
   const [isReportModalOpen, setIsReportModalOpen] = useState(false)
+  const [isFingerprintModalOpen, setIsFingerprintModalOpen] = useState(false)
 
   const suspectsData = {
     kahn: {
@@ -200,8 +202,19 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
           {/* Biometric Identification */}
           <div className="cyber-panel p-4 rounded-xl flex flex-col gap-3 bg-[#080d1a]/80 shadow-lg border border-cyan-900/40">
             <div className="text-xs font-mono text-cyan-300 uppercase tracking-wider font-bold border-b border-cyan-900/40 pb-2 flex items-center justify-between">
-              <span>BIOMETRIC IDENTIFICATION</span>
-              <Fingerprint className="w-4 h-4 text-cyan-400" />
+              <span className="flex items-center gap-1.5">
+                <ShieldAlert className="w-4 h-4 text-cyan-400" />
+                <span>BIOMETRIC IDENTIFICATION</span>
+              </span>
+              <button
+                type="button"
+                onClick={() => setIsFingerprintModalOpen(true)}
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-950/90 hover:bg-cyan-900 border border-cyan-500/60 text-cyan-300 hover:text-cyan-200 text-xs font-mono font-bold transition cursor-pointer shadow-[0_0_12px_rgba(0,229,255,0.25)] group"
+                title="Launch Automated Fingerprint Identification System (AFIS) Comparator"
+              >
+                <Fingerprint className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform animate-pulse" />
+                <span>SCAN AFIS</span>
+              </button>
             </div>
 
             {/* Suspect Photo with Cyber HUD Scanner Overlay */}
@@ -265,12 +278,29 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
                 <div className="text-xs text-slate-400 font-medium">GENDER</div>
                 <div className="font-bold text-slate-100 text-sm mt-0.5">{current.gender}</div>
               </div>
-              <div className="bg-[#020509] p-2.5 rounded-lg border border-slate-800 col-span-2">
-                <div className="text-xs text-slate-400 font-medium">FINGERPRINTS</div>
-                <div className="font-bold text-emerald-400 text-xs font-mono mt-0.5">
-                  {current.fingerprints}
+              <button
+                type="button"
+                onClick={() => setIsFingerprintModalOpen(true)}
+                className="bg-[#020509] hover:bg-[#071124] p-2.5 rounded-lg border border-slate-800 hover:border-cyan-500/60 col-span-2 text-left transition group cursor-pointer"
+                title="Click to launch AFIS Biometric Comparator"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="text-xs text-slate-400 font-medium flex items-center gap-1.5">
+                    <Fingerprint className="w-3.5 h-3.5 text-cyan-400" />
+                    <span>FINGERPRINT BIOMETRICS (AFIS)</span>
+                  </div>
+                  <span className="text-[11px] font-mono text-cyan-400 group-hover:text-cyan-300 flex items-center gap-1 font-bold">
+                    <span>VERIFY AFIS</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </span>
                 </div>
-              </div>
+                <div className="font-bold text-emerald-400 text-xs font-mono mt-1 flex items-center justify-between">
+                  <span>{current.fingerprints}</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-950/90 text-emerald-300 border border-emerald-500/40">
+                    MATCH: 99.8%
+                  </span>
+                </div>
+              </button>
               <div className="bg-[#020509] p-2.5 rounded-lg border border-slate-800 col-span-2">
                 <div className="text-xs text-slate-400 font-medium">LAST KNOWN LOCATION</div>
                 <div className="font-semibold text-slate-100 text-xs sm:text-sm flex items-center gap-1.5 mt-0.5 font-sans">
@@ -435,6 +465,13 @@ export default function CriminalEntityDossierView({ onNavigate }: CriminalEntity
           </div>
         </div>
       )}
+
+      {/* Biometric AFIS Comparator Modal */}
+      <BiometricFingerprintModal
+        isOpen={isFingerprintModalOpen}
+        onClose={() => setIsFingerprintModalOpen(false)}
+        suspect={current}
+      />
 
     </div>
   )
