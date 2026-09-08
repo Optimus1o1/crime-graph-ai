@@ -58,9 +58,17 @@ export interface AuditEntry {
 }
 
 export interface SuggestedLink {
-  a: string
-  b: string
-  score: number
+  a?: string
+  b?: string
+  source?: string
+  target?: string
+  source_label?: string
+  target_label?: string
+  score?: number
+  probability?: number
+  common_neighbors?: string[]
+  evidence?: string
+  [key: string]: any
 }
 
 export interface AnomalyFlag {

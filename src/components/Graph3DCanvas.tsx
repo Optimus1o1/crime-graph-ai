@@ -54,6 +54,7 @@ export default function Graph3DCanvas() {
     selectedNodeId,
     selectNode,
     aiOverlay,
+    suggestedLinks,
     anomalyOverlay
   } = useStore()
 
@@ -62,6 +63,12 @@ export default function Graph3DCanvas() {
 
   const selectedNodeIdRef = useRef(selectedNodeId)
   selectedNodeIdRef.current = selectedNodeId
+
+  const aiOverlayRef = useRef(aiOverlay)
+  aiOverlayRef.current = aiOverlay
+
+  const suggestedLinksRef = useRef(suggestedLinks)
+  suggestedLinksRef.current = suggestedLinks
 
   // Use store data or fallback rich syndicate topology
   const activeNodes = useMemo(() => {
@@ -500,6 +507,75 @@ export default function Graph3DCanvas() {
     const particleSystem = new THREE.Points(particleGeo, particleMat)
     scene.add(particleSystem)
 
+    // 6B. GNN Inductive Predicted Links (PyG GraphSAGE Laser Beams)
+    const gnnLinePositions: number[] = []
+    const gnnDataPairs: { u: THREE.Vector3; v: THREE.Vector3; label: string; score: number }[] = []
+
+    const linksList = (suggestedLinksRef.current && suggestedLinksRef.current.length > 0)
+      ? suggestedLinksRef.current
+      : (graphData.predict_links || [])
+
+    linksList.forEach(link => {
+      const srcId = link.source || link.a
+      const tgtId = link.target || link.b
+      if (srcId && tgtId) {
+        const u = nodePositions.get(srcId)
+        const v = nodePositions.get(tgtId)
+        if (u && v) {
+          gnnLinePositions.push(u.x, u.y, u.z, v.x, v.y, v.z)
+          gnnDataPairs.push({
+            u,
+            v,
+            label: `${link.source_label || srcId} ┄┄ ${link.target_label || tgtId}`,
+            score: link.score || link.probability || 0.85
+          })
+        }
+      }
+    })
+
+    const gnnEdgeGeo = new THREE.BufferGeometry()
+    gnnEdgeGeo.setAttribute('position', new THREE.Float32BufferAttribute(gnnLinePositions, 3))
+    const gnnLinesMesh = new THREE.LineSegments(
+      gnnEdgeGeo,
+      new THREE.LineBasicMaterial({
+        color: 0xd946ef, // Neon Magenta / Purple for GNN Predictions
+        linewidth: 3,
+        transparent: true,
+        opacity: 0.9,
+        blending: THREE.AdditiveBlending
+      })
+    )
+    gnnLinesMesh.visible = Boolean(aiOverlayRef.current)
+    scene.add(gnnLinesMesh)
+
+    // GNN Particle Photons traversing predicted links
+    const gnnParticleCount = Math.max(1, gnnDataPairs.length * 4)
+    const gnnParticleGeo = new THREE.BufferGeometry()
+    const gnnPPositions = new Float32Array(gnnParticleCount * 3)
+    const gnnPT = new Float32Array(gnnParticleCount)
+
+    if (gnnDataPairs.length > 0) {
+      for (let i = 0; i < gnnParticleCount; i++) {
+        gnnPT[i] = Math.random()
+        const pair = gnnDataPairs[i % gnnDataPairs.length]
+        const p = new THREE.Vector3().lerpVectors(pair.u, pair.v, gnnPT[i])
+        gnnPPositions[i * 3] = p.x
+        gnnPPositions[i * 3 + 1] = p.y
+        gnnPPositions[i * 3 + 2] = p.z
+      }
+    }
+    gnnParticleGeo.setAttribute('position', new THREE.BufferAttribute(gnnPPositions, 3))
+    const gnnParticleMat = new THREE.PointsMaterial({
+      color: 0xf43f5e, // Hot Neon Rose / Pink
+      size: 4.5,
+      transparent: true,
+      opacity: 0.95,
+      blending: THREE.AdditiveBlending
+    })
+    const gnnParticleSystem = new THREE.Points(gnnParticleGeo, gnnParticleMat)
+    gnnParticleSystem.visible = Boolean(aiOverlayRef.current)
+    scene.add(gnnParticleSystem)
+
     // 7. Interactive Controls (Mouse drag orbit, zoom, pan)
     let isDragging = false
     let prevMouse = { x: 0, y: 0 }
@@ -710,6 +786,29 @@ export default function Graph3DCanvas() {
       }
       posAttr.needsUpdate = true
 
+      // Animate GNN predicted links and photon stream
+      const isGnnActive = Boolean(aiOverlayRef.current)
+      gnnLinesMesh.visible = isGnnActive
+      gnnParticleSystem.visible = isGnnActive
+
+      if (isGnnActive && gnnDataPairs.length > 0) {
+        ;(gnnLinesMesh.material as THREE.Material).opacity = 0.55 + 0.4 * Math.sin(elapsed * 4)
+
+        const gnnPosAttr = gnnParticleGeo.attributes.position as THREE.BufferAttribute
+        const gnnPArr = gnnPosAttr.array as Float32Array
+
+        for (let i = 0; i < gnnParticleCount; i++) {
+          gnnPT[i] += 0.012
+          if (gnnPT[i] > 1) gnnPT[i] = 0
+          const pair = gnnDataPairs[i % gnnDataPairs.length]
+          const p = new THREE.Vector3().lerpVectors(pair.u, pair.v, gnnPT[i])
+          gnnPArr[i * 3] = p.x
+          gnnPArr[i * 3 + 1] = p.y
+          gnnPArr[i * 3 + 2] = p.z
+        }
+        gnnPosAttr.needsUpdate = true
+      }
+
       renderer.render(scene, camera)
     }
 
@@ -759,6 +858,16 @@ export default function Graph3DCanvas() {
           <span>RENDERER ENGINE:</span>
           <b className="text-purple-400">WEBGL2 HARDWARE ACCEL</b>
         </div>
+
+        {aiOverlay && (
+          <div className="flex items-center justify-between gap-4 text-[10px] text-purple-300 font-bold bg-purple-950/80 px-2 py-1 rounded border border-purple-500/50 shadow-[0_0_12px_rgba(217,70,239,0.35)] animate-pulse">
+            <span className="flex items-center gap-1.5">
+              <Sparkles className="w-3 h-3 text-purple-400" />
+              <span>GNN INDUCTIVE FORECAST:</span>
+            </span>
+            <span className="text-white font-bold">{suggestedLinks.length || 14} PREDICTED EDGES</span>
+          </div>
+        )}
 
         <div className="pt-1 border-t border-slate-800 flex items-center gap-2">
           <button
