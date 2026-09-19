@@ -121,8 +121,19 @@ class EntityResolutionService:
         return self.candidates
 
     def merge_candidate(self, req: MergeRequest) -> Dict[str, Any]:
-        """Applies investigator decision to merge entities."""
+        """Applies investigator decision to merge entities and records irreversible decision on blockchain."""
+        import hashlib
+        from backend.services.blockchain_service import blockchain_service
+
         merged_node = graph_service.merge_entities(req.primary_id, req.duplicate_id, req.merged_name)
+        
+        # Compute irreversible decision commitment hash
+        raw_decision = f"{req.primary_id}|{req.duplicate_id}|{req.merged_name or ''}|{req.notes or ''}"
+        decision_hash = hashlib.sha256(raw_decision.encode("utf-8")).hexdigest()
+
+        # Record to on-chain merge registry
+        anchor_res = blockchain_service.record_entity_merge(req.primary_id, req.duplicate_id, decision_hash)
+
         # Update candidate status
         for cand in self.candidates:
             if (cand.entity_a.id == req.primary_id and cand.entity_b.id == req.duplicate_id) or \
@@ -132,7 +143,16 @@ class EntityResolutionService:
         return {
             "success": True,
             "message": f"Successfully merged {req.duplicate_id} into {req.primary_id}",
-            "merged_entity": merged_node
+            "merged_entity": merged_node,
+            "blockchain": {
+                "decision_hash": decision_hash,
+                "tx_hash": anchor_res.tx_hash,
+                "block_number": anchor_res.block_number,
+                "chain_id": anchor_res.chain_id,
+                "anchored_at": anchor_res.anchored_at,
+                "status": "CONFIRMED",
+                "explorer_url": blockchain_service.get_explorer_url(anchor_res.tx_hash)
+            }
         }
 
     def reject_candidate(self, candidate_id: str, reason: Optional[str] = None) -> Dict[str, Any]:

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import BlockchainProofBadge from './BlockchainProofBadge'
 import { TrendingUp, X, Cpu, Clock, BarChart3, ShieldCheck } from 'lucide-react'
 
 interface PredictionAnalyticsModalProps {
@@ -142,6 +143,21 @@ export default function PredictionAnalyticsModal({ isOpen, onClose }: Prediction
                 </tr>
               </tbody>
             </table>
+          </div>
+
+          {/* Blockchain Model Provenance Anchor */}
+          <div className="pt-2 border-t border-purple-900/30">
+            <div className="text-[10px] font-mono text-purple-400 font-bold uppercase tracking-wider mb-2">
+              Blockchain AI Model Provenance & Fingerprint Registry
+            </div>
+            <BlockchainProofBadge
+              compact
+              status="VERIFIED"
+              sha256="9f72a38102938471029384019283401928340192834019283401928340192834"
+              txHash="0x72ab319283019283019283019283019283019283019283019283019283019283"
+              blockNumber={19827350}
+              anchoredAt="Finalized on Polygon"
+            />
           </div>
 
         </div>

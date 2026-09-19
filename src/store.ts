@@ -130,14 +130,7 @@ interface AppState {
   fetchExplain: (nodeId: string) => Promise<void>
 }
 
-function djb2(s: string): string {
-  let x = 5381
-  for (const c of s) {
-    x = ((x << 5) + x + c.charCodeAt(0)) >>> 0
-  }
-  return x.toString(16).padStart(8, '0')
-}
-
+import { sha256Sync } from '@/lib/sha256-sync'
 import graphData from '@/data/graphData.json'
 
 const API = '/api' // Next.js App Router API routes
@@ -156,7 +149,7 @@ export const useStore = create<AppState>((set, get) => ({
   suggestedLinks: (graphData.predict_links || []) as SuggestedLink[],
   anomalyFlags: (graphData.anomaly_flags || []) as AnomalyFlag[],
   auditEntries: [],
-  lastHash: '00000000',
+  lastHash: '0'.repeat(64),
   panelView: 'overview',
   explainData: null,
   centralityData: graphData.centrality || [],
@@ -270,7 +263,7 @@ export const useStore = create<AppState>((set, get) => ({
   addAudit: (action) => {
     const { auditEntries, lastHash } = get()
     const t = new Date().toLocaleTimeString('en-IN', { hour12: false })
-    const newHash = djb2(lastHash + action + t)
+    const newHash = sha256Sync(`${lastHash}|${action}|${t}`)
     const entry: AuditEntry = { timestamp: t, action, hash: newHash, user: get().role }
     set({ auditEntries: [...auditEntries, entry], lastHash: newHash })
   },

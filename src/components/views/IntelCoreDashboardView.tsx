@@ -282,7 +282,7 @@ export default function IntelCoreDashboardView({ onNavigate }: IntelCoreDashboar
                 time: '11:45:02',
                 level: 'INFO',
                 badgeBg: 'bg-emerald-950/90 text-emerald-300 border-emerald-500/60',
-                text: 'Cryptographic case vault re-anchored to Ethereum block #19827402',
+                text: 'Cryptographic case vault re-anchored to Polygon PoS block #19827402',
                 action: () => onNavigate('evidence'),
               },
             ].map((alert, i) => (

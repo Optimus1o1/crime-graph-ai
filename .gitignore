@@ -58,5 +58,6 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+*.tsbuildinfo
 AGENTS.md
 CLAUDE.md

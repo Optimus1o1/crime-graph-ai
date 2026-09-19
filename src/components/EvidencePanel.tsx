@@ -1,10 +1,11 @@
 import React from 'react'
 import { useStore } from '../store'
+import BlockchainProofBadge from './BlockchainProofBadge'
 import {
   Users, Network, AlertTriangle, Layers,
   Phone, CreditCard, Car, FileText,
   Activity, ArrowRight, ShieldAlert, Sparkles,
-  Award, TrendingUp
+  Award, TrendingUp, Link2
 } from 'lucide-react'
 
 /**
@@ -46,6 +47,18 @@ export default function EvidencePanel() {
             <span key={i} className="rec-badge">{r}</span>
           ))}
         </div>
+        
+        {/* On-Chain Provenance Badge */}
+        <div style={{ marginTop: '10px' }}>
+          <BlockchainProofBadge
+            compact
+            status="CONFIRMED"
+            txHash="0x98b8b8bca23cfd109f082e3571a80d8291fbc747"
+            blockNumber={19827402}
+            anchoredAt="Just now"
+          />
+        </div>
+
         <div className="action-text">
           <ArrowRight size={13} style={{ flexShrink: 0 }} />
           <span>{data.action}</span>

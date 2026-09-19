@@ -68,6 +68,16 @@ class CaseService:
                 notes="Cryptographically stamped; chain of custody intact."
             )
 
+        # Build initial Merkle batch and anchor on blockchain
+        from backend.services.evidence_anchor_service import evidence_anchor_service
+        for cid in self.cases.keys():
+            case_evidence = [e for e in self.evidence.values() if e.case_id == cid]
+            if case_evidence:
+                try:
+                    evidence_anchor_service.anchor_case_evidence(cid, case_evidence)
+                except Exception as ex:
+                    pass
+
     def get_cases(self) -> List[CaseModel]:
         return list(self.cases.values())
 
@@ -80,5 +90,25 @@ class CaseService:
     def get_all_evidence(self) -> List[EvidenceItem]:
         return list(self.evidence.values())
 
+    def get_evidence_by_id(self, evidence_id: str) -> Optional[EvidenceItem]:
+        return self.evidence.get(evidence_id)
+
+    def anchor_case(self, case_id: str):
+        from backend.services.evidence_anchor_service import evidence_anchor_service
+        items = self.get_evidence_for_case(case_id)
+        if not items:
+            items = self.get_all_evidence()
+        if not items:
+            return None
+        return evidence_anchor_service.anchor_case_evidence(case_id, items)
+
+    def verify_evidence(self, evidence_id: str, expected_sha256: Optional[str] = None):
+        from backend.services.evidence_anchor_service import evidence_anchor_service
+        item = self.get_evidence_by_id(evidence_id)
+        if not item:
+            return {"verified": False, "error": f"Evidence {evidence_id} not found"}
+        return evidence_anchor_service.verify_evidence(item.case_id, item, expected_sha256)
+
 
 case_service = CaseService()
+

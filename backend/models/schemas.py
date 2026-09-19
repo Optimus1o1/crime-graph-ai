@@ -238,6 +238,18 @@ class AIToolCall(BaseModel):
     status: str = "EXECUTED"
 
 
+class BlockchainProof(BaseModel):
+    """Blockchain anchoring proof for any on-chain verified item."""
+    sha256: str = ""
+    merkle_root: Optional[str] = None
+    tx_hash: Optional[str] = None
+    block_number: Optional[int] = None
+    chain_id: Optional[int] = None
+    anchored_at: Optional[str] = None
+    verification_status: str = "PENDING"  # PENDING, HASHED, ANCHORING, CONFIRMED, VERIFIED, FAILED
+    explorer_url: Optional[str] = None
+
+
 class EvidenceItem(BaseModel):
     id: str
     case_id: str
@@ -252,6 +264,7 @@ class EvidenceItem(BaseModel):
     related_edges: List[str] = Field(default_factory=list)
     file_path: Optional[str] = None
     notes: Optional[str] = None
+    blockchain: Optional[BlockchainProof] = None
 
 
 class AIOrchestratedResponse(BaseModel):
@@ -388,6 +401,11 @@ class AuditEntry(BaseModel):
     action: str
     hash: str
     user: str = "investigator"
+    previous_hash: Optional[str] = None
+    event_id: Optional[str] = None
+    resource_id: Optional[str] = None
+    checkpoint_tx: Optional[str] = None
+    checkpoint_block: Optional[int] = None
 
 
 class IngestResponse(BaseModel):

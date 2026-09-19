@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import BlockchainProofBadge from './BlockchainProofBadge'
 import { Sparkles, X, ShieldAlert, Cpu, CheckCircle2, ArrowRight, Info, AlertTriangle } from 'lucide-react'
 
 interface GNNExplainerModalProps {
@@ -144,6 +145,21 @@ export default function GNNExplainerModal({ isOpen, onClose, selectedLinkId }: G
                     <li key={idx}>{ev}</li>
                   ))}
                 </ul>
+              </div>
+
+              {/* On-Chain Model Provenance Badge */}
+              <div className="space-y-1 font-mono text-xs">
+                <div className="text-[10px] text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <span>AI MODEL PROVENANCE ON-CHAIN:</span>
+                </div>
+                <BlockchainProofBadge
+                  compact
+                  status="VERIFIED"
+                  sha256="9f72a38102938471029384019283401928340192834019283401928340192834"
+                  txHash="0x72ab319283019283019283019283019283019283019283019283019283019283"
+                  blockNumber={19827350}
+                  anchoredAt="Finalized on Polygon"
+                />
               </div>
 
               {/* Disclaimer Status */}

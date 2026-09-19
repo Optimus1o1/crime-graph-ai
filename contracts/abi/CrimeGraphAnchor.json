@@ -1,0 +1,189 @@
+{
+  "contractName": "CrimeGraphAnchor",
+  "abi": [
+    {
+      "name": "anchorEvidenceBatch",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        { "name": "caseIdHash", "type": "bytes32" },
+        { "name": "merkleRoot", "type": "bytes32" },
+        { "name": "evidenceCount", "type": "uint256" }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "evidenceAnchors",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [{ "name": "", "type": "bytes32" }],
+      "outputs": [
+        { "name": "merkleRoot", "type": "bytes32" },
+        { "name": "evidenceCount", "type": "uint256" },
+        { "name": "timestamp", "type": "uint256" },
+        { "name": "submitter", "type": "address" }
+      ]
+    },
+    {
+      "name": "checkpointAudit",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        { "name": "caseIdHash", "type": "bytes32" },
+        { "name": "auditHead", "type": "bytes32" },
+        { "name": "eventCount", "type": "uint256" }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "auditCheckpoints",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [{ "name": "", "type": "bytes32" }],
+      "outputs": [
+        { "name": "auditHead", "type": "bytes32" },
+        { "name": "eventCount", "type": "uint256" },
+        { "name": "timestamp", "type": "uint256" },
+        { "name": "submitter", "type": "address" }
+      ]
+    },
+    {
+      "name": "registerModel",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        { "name": "modelHash", "type": "bytes32" },
+        { "name": "datasetHash", "type": "bytes32" },
+        { "name": "configHash", "type": "bytes32" },
+        { "name": "versionHash", "type": "bytes32" }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "modelRegistry",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [{ "name": "", "type": "bytes32" }],
+      "outputs": [
+        { "name": "datasetHash", "type": "bytes32" },
+        { "name": "configHash", "type": "bytes32" },
+        { "name": "versionHash", "type": "bytes32" },
+        { "name": "timestamp", "type": "uint256" },
+        { "name": "submitter", "type": "address" }
+      ]
+    },
+    {
+      "name": "anchorVault",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        { "name": "caseIdHash", "type": "bytes32" },
+        { "name": "vaultRoot", "type": "bytes32" }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "vaultAnchors",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [{ "name": "", "type": "bytes32" }],
+      "outputs": [
+        { "name": "vaultRoot", "type": "bytes32" },
+        { "name": "timestamp", "type": "uint256" },
+        { "name": "submitter", "type": "address" }
+      ]
+    },
+    {
+      "name": "recordEntityMerge",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        { "name": "primaryEntity", "type": "bytes32" },
+        { "name": "mergedEntity", "type": "bytes32" },
+        { "name": "decisionHash", "type": "bytes32" }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "mergeRegistry",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [{ "name": "", "type": "bytes32" }],
+      "outputs": [
+        { "name": "mergedEntity", "type": "bytes32" },
+        { "name": "decisionHash", "type": "bytes32" },
+        { "name": "timestamp", "type": "uint256" },
+        { "name": "submitter", "type": "address" }
+      ]
+    },
+    {
+      "name": "owner",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [{ "name": "", "type": "address" }]
+    },
+    {
+      "name": "totalMerges",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [{ "name": "", "type": "uint256" }]
+    },
+    {
+      "name": "EvidenceAnchored",
+      "type": "event",
+      "inputs": [
+        { "name": "caseIdHash", "type": "bytes32", "indexed": true },
+        { "name": "merkleRoot", "type": "bytes32", "indexed": false },
+        { "name": "evidenceCount", "type": "uint256", "indexed": false },
+        { "name": "timestamp", "type": "uint256", "indexed": false },
+        { "name": "submitter", "type": "address", "indexed": true }
+      ]
+    },
+    {
+      "name": "AuditCheckpointed",
+      "type": "event",
+      "inputs": [
+        { "name": "caseIdHash", "type": "bytes32", "indexed": true },
+        { "name": "auditHead", "type": "bytes32", "indexed": false },
+        { "name": "eventCount", "type": "uint256", "indexed": false },
+        { "name": "timestamp", "type": "uint256", "indexed": false },
+        { "name": "submitter", "type": "address", "indexed": true }
+      ]
+    },
+    {
+      "name": "ModelRegistered",
+      "type": "event",
+      "inputs": [
+        { "name": "modelHash", "type": "bytes32", "indexed": true },
+        { "name": "datasetHash", "type": "bytes32", "indexed": false },
+        { "name": "configHash", "type": "bytes32", "indexed": false },
+        { "name": "versionHash", "type": "bytes32", "indexed": false },
+        { "name": "timestamp", "type": "uint256", "indexed": false },
+        { "name": "submitter", "type": "address", "indexed": true }
+      ]
+    },
+    {
+      "name": "VaultAnchored",
+      "type": "event",
+      "inputs": [
+        { "name": "caseIdHash", "type": "bytes32", "indexed": true },
+        { "name": "vaultRoot", "type": "bytes32", "indexed": false },
+        { "name": "timestamp", "type": "uint256", "indexed": false },
+        { "name": "submitter", "type": "address", "indexed": true }
+      ]
+    },
+    {
+      "name": "EntityMergeRecorded",
+      "type": "event",
+      "inputs": [
+        { "name": "primaryEntity", "type": "bytes32", "indexed": true },
+        { "name": "mergedEntity", "type": "bytes32", "indexed": false },
+        { "name": "decisionHash", "type": "bytes32", "indexed": false },
+        { "name": "timestamp", "type": "uint256", "indexed": false },
+        { "name": "submitter", "type": "address", "indexed": true }
+      ]
+    }
+  ]
+}

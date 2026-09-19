@@ -38,6 +38,8 @@ try:
     from backend.services.gnn_service import gnn_service
     from backend.services.auth_service import auth_service
     from backend.services.security_service import SecurityMiddleware
+    from backend.services.blockchain_service import blockchain_service
+    from backend.services.evidence_anchor_service import evidence_anchor_service
     from backend.models.schemas import AIChatRequest, MergeRequest, AIOrchestratedResponse
 except ImportError:
     from services.graph_service import graph_service
@@ -55,6 +57,8 @@ except ImportError:
     from services.gnn_service import gnn_service
     from services.auth_service import auth_service
     from services.security_service import SecurityMiddleware
+    from services.blockchain_service import blockchain_service
+    from services.evidence_anchor_service import evidence_anchor_service
     from models.schemas import AIChatRequest, MergeRequest, AIOrchestratedResponse
 
 app = FastAPI(
@@ -165,6 +169,53 @@ def get_case_evidence(case_id: str):
 @app.get("/evidence")
 def get_all_evidence():
     return case_service.get_all_evidence()
+
+
+# ============================================================
+# Blockchain Trust & Provenance Layer Endpoints
+# ============================================================
+
+@app.get("/blockchain/status")
+@app.get("/api/blockchain/status")
+def get_blockchain_status():
+    """Returns current blockchain connection mode (LIVE vs SIMULATION), contract, and block info."""
+    return blockchain_service.get_status()
+
+
+@app.get("/blockchain/history")
+@app.get("/api/blockchain/history")
+def get_blockchain_history():
+    """Returns session anchoring history."""
+    return blockchain_service.get_anchor_history()
+
+
+class AnchorEvidenceRequest(BaseModel):
+    case_id: str
+
+
+@app.post("/evidence/anchor")
+@app.post("/api/evidence/anchor")
+def anchor_evidence_batch(req: AnchorEvidenceRequest):
+    """Anchors all evidence for a case to the blockchain via Merkle root."""
+    res = case_service.anchor_case(req.case_id)
+    if not res:
+        raise HTTPException(status_code=404, detail=f"No evidence found for case {req.case_id}")
+    audit_service.log(f"Blockchain: Anchored evidence batch for {req.case_id} (Tx: {res.tx_hash[:16]}...)")
+    return res.to_dict()
+
+
+@app.get("/evidence/{evidence_id}/verify")
+@app.get("/api/evidence/{evidence_id}/verify")
+def verify_evidence_integrity(
+    evidence_id: str,
+    expected_sha256: Optional[str] = Query(None)
+):
+    """Cryptographically verifies evidence integrity using SHA-256 + Merkle proof + blockchain anchor."""
+    result = case_service.verify_evidence(evidence_id, expected_sha256)
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    return result
+
 
 
 # ============================================================
@@ -300,12 +351,25 @@ def post_query(body: QueryBody):
 # Audit & Provenance
 # ============================================================
 @app.get("/audit")
+@app.get("/api/audit")
 def get_audit():
+    head_info = audit_service.get_chain_head()
     return {
         "entries": audit_service.get_entries(),
         "chain_valid": audit_service.verify_chain(),
         "total": len(audit_service.entries),
+        "head_hash": head_info["head_hash"],
+        "latest_checkpoint": head_info["latest_checkpoint"]
     }
+
+
+@app.post("/audit/checkpoint")
+@app.post("/api/audit/checkpoint")
+def checkpoint_audit_log(case_id: str = Query("CG-GLOBAL-AUDIT")):
+    """Manually forces an audit chain checkpoint to the blockchain."""
+    res = audit_service.checkpoint_to_blockchain(case_id=case_id)
+    return res.to_dict()
+
 
 
 # ============================================================
@@ -338,6 +402,61 @@ def export_obsidian_vault():
         media_type="application/zip",
         headers={"Content-Disposition": "attachment; filename=CrimeGraph_Case_Vault.zip"}
     )
+
+
+class AnchorVaultRequest(BaseModel):
+    case_id: str = "CG-2024-0847"
+    component_hashes: Optional[Dict[str, str]] = None
+
+
+@app.post("/vault/anchor")
+@app.post("/api/vault/anchor")
+def anchor_case_vault(req: AnchorVaultRequest):
+    """
+    Computes a cryptographic Merkle root of all case artifacts
+    (evidence hashes, graph snapshot, audit checkpoint, model provenance)
+    and anchors the vault root to the blockchain.
+    """
+    from backend.utils.merkle import build_merkle_tree
+    import hashlib
+
+    # 1. Evidence hashes
+    case_evidence = case_service.get_evidence_for_case(req.case_id)
+    ev_hashes = [e.sha256 for e in case_evidence] if case_evidence else [hashlib.sha256(b"EMPTY_EVIDENCE").hexdigest()]
+
+    # 2. Graph snapshot hash
+    graph_data = f"NODES:{len(graph_service.nodes_dict)}|EDGES:{len(graph_service.edges_dict)}"
+    graph_hash = hashlib.sha256(graph_data.encode()).hexdigest()
+
+    # 3. Audit chain head hash
+    audit_hash = audit_service.last_hash
+
+    # 4. Model provenance hash
+    model_hash = gnn_service.model_metadata.get("weight_hash") or hashlib.sha256(b"GRAPHSAGE_V1").hexdigest()
+
+    components = ev_hashes + [graph_hash, audit_hash, model_hash]
+    if req.component_hashes:
+        components.extend(req.component_hashes.values())
+
+    tree = build_merkle_tree(components)
+    res = blockchain_service.anchor_vault(req.case_id, tree.root)
+    audit_service.log(f"Case Vault anchored to blockchain: {req.case_id} (Root: {tree.root[:16]}...)")
+
+    return {
+        "case_id": req.case_id,
+        "vault_version": "2.1.0-PROD",
+        "vault_merkle_root": tree.root,
+        "components_count": len(components),
+        "blockchain": {
+            "network": "Polygon PoS (Amoy Testnet)",
+            "chain_id": res.chain_id,
+            "status": res.status,
+            "tx_hash": res.tx_hash,
+            "block_number": res.block_number,
+            "anchored_at": res.anchored_at,
+            "explorer_url": blockchain_service.get_explorer_url(res.tx_hash)
+        }
+    }
 
 
 # ============================================================

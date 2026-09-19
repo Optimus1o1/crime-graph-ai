@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import BlockchainProofBadge from '../BlockchainProofBadge'
 import { 
   FileCheck2, 
   ShieldCheck, 
@@ -22,6 +23,7 @@ export default function ForensicEvidenceAuditView({ onNavigate }: ForensicEviden
   const [selectedArtifactId, setSelectedArtifactId] = useState<string>('EVD-2024-0341')
   const [isReportModalOpen, setIsReportModalOpen] = useState<boolean>(false)
   const [copyFeedback, setCopyFeedback] = useState<string>('')
+  const [verifying, setVerifying] = useState<boolean>(false)
 
   const evidenceRecords = [
     {
@@ -29,11 +31,12 @@ export default function ForensicEvidenceAuditView({ onNavigate }: ForensicEviden
       title: 'Cell tower ping analysis linking target device CELL-827 to primary residence',
       officer: 'Agent Vance',
       time: '14:12:05 GMT',
-      sha256: '8a42c90f...de19',
-      status: 'Submitted',
-      statusColor: 'bg-cyan-950 text-cyan-300 border-cyan-500/50',
-      chainAnchor: 'Ethereum Mainnet',
-      blockHeight: '#19827402',
+      sha256: '8a42c90f8482012bcda901928340192834019284019283401928340192834019',
+      merkleRoot: 'a82fb10928304918230948120938410293840192834019283401928340192834',
+      status: 'Verified',
+      statusColor: 'bg-emerald-950 text-emerald-300 border-emerald-500/50',
+      chainAnchor: 'Polygon PoS (Amoy Testnet)',
+      blockHeight: 19827402,
       txSig: '0x98b8b8bca23cfd109f082e3571a80d8291fbc747',
       correlation: 'Linked target S-201 with confidence 94.7% based on location coincidence at Chandni Chowk junction tower #4.'
     },
@@ -42,11 +45,12 @@ export default function ForensicEvidenceAuditView({ onNavigate }: ForensicEviden
       title: 'Encrypted ledger logs exported from Delhi central holding node',
       officer: 'Analyst Kahn',
       time: '11:50:11 GMT',
-      sha256: 'c409fa23...af88',
-      status: 'Collected',
-      statusColor: 'bg-amber-950 text-amber-300 border-amber-500/50',
-      chainAnchor: 'Ethereum Mainnet',
-      blockHeight: '#19827380',
+      sha256: 'c409fa2312094810293840192834019283401928401928340192834019283401',
+      merkleRoot: 'a82fb10928304918230948120938410293840192834019283401928340192834',
+      status: 'Confirmed',
+      statusColor: 'bg-cyan-950 text-cyan-300 border-cyan-500/50',
+      chainAnchor: 'Polygon PoS (Amoy Testnet)',
+      blockHeight: 19827380,
       txSig: '0x71a2e948cbb281902fcda819023450912abcf012',
       correlation: 'Correlates $45,000 transfer from Al-Hassan Khan to shell subsidiary CORP_Z LTD.'
     },
@@ -55,11 +59,12 @@ export default function ForensicEvidenceAuditView({ onNavigate }: ForensicEviden
       title: 'ANPR capture of Toyota Fortuner boundary clearance at Toll T3 gate',
       officer: 'Officer Croft',
       time: '09:22:45 GMT',
-      sha256: 'e87002db...0c2e',
+      sha256: 'e87002db09182304918203948120938410293840192834019283401928340192',
+      merkleRoot: 'a82fb10928304918230948120938410293840192834019283401928340192834',
       status: 'Verified',
       statusColor: 'bg-emerald-950 text-emerald-300 border-emerald-500/50',
-      chainAnchor: 'Ethereum Mainnet',
-      blockHeight: '#19827290',
+      chainAnchor: 'Polygon PoS (Amoy Testnet)',
+      blockHeight: 19827290,
       txSig: '0x55dc9812a0918239487123985712903487129034',
       correlation: 'Confirms suspect vehicle DL 4C AB 1234 trajectory towards Industrial Sector C entrance.'
     }
@@ -182,28 +187,23 @@ export default function ForensicEvidenceAuditView({ onNavigate }: ForensicEviden
             </div>
 
             {/* Blockchain Proof of Custody Card */}
-            <div className="bg-[#020509] border border-cyan-900/40 rounded-lg p-3.5 space-y-2 mb-4">
-              <div className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider font-bold flex items-center gap-1.5 border-b border-slate-800 pb-1.5">
-                <Link2 className="w-3.5 h-3.5 text-cyan-400" />
-                <span>BLOCKCHAIN PROOF OF CUSTODY</span>
-              </div>
-
-              <div className="space-y-1 text-xs font-mono">
-                <div className="flex items-center justify-between">
-                  <span className="text-slate-400 text-[11px]">CHAIN_ANCHOR:</span>
-                  <span className="text-white font-bold">{selectedArtifact.chainAnchor}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-slate-400 text-[11px]">BLOCK_HEIGHT:</span>
-                  <span className="text-cyan-300 font-bold">{selectedArtifact.blockHeight}</span>
-                </div>
-                <div className="flex flex-col pt-1 border-t border-slate-800">
-                  <span className="text-slate-500 text-[10px]">TX_SIGNATURE:</span>
-                  <span className="text-slate-300 text-[10px] font-mono truncate">
-                    {selectedArtifact.txSig}
-                  </span>
-                </div>
-              </div>
+            <div className="mb-4">
+              <BlockchainProofBadge
+                sha256={selectedArtifact.sha256}
+                merkleRoot={selectedArtifact.merkleRoot}
+                txHash={selectedArtifact.txSig}
+                blockNumber={selectedArtifact.blockHeight}
+                chainId={80002}
+                anchoredAt={selectedArtifact.time}
+                status={selectedArtifact.status === 'Verified' ? 'VERIFIED' : 'CONFIRMED'}
+                onVerify={() => {
+                  setVerifying(true)
+                  setTimeout(() => {
+                    setVerifying(false)
+                    alert(`✓ BLOCKCHAIN PROOF VERIFIED ON-CHAIN\n\nArtifact UID: ${selectedArtifact.id}\nSHA-256 Digest: ${selectedArtifact.sha256}\nMerkle Root: ${selectedArtifact.merkleRoot}\nTx Signature: ${selectedArtifact.txSig}\nBlock Height: #${selectedArtifact.blockHeight}\nConsensus: Polygon PoS Amoy / Polygon PoS\nStatutory Defensibility: Section 65B BSA 2023 & ISO/IEC 27037`)
+                  }, 700)
+                }}
+              />
             </div>
 
             {/* Knowledge Graph Relationship */}

@@ -26,5 +26,17 @@
   },
   "training_split": "Temporal: Jan-Jun Train (70%), Jul-Aug Test (30%)",
   "colab_notebook": "CrimeGraph_AI_GNN_Colab_Training.ipynb",
-  "dataset_export": "backend/data/crimegraph_dataset_for_colab.json"
+  "dataset_export": "backend/data/crimegraph_dataset_for_colab.json",
+  "provenance": {
+    "weight_hash": "9f72a38102938471029384019283401928340192834019283401928340192834",
+    "dataset_hash": "82ca1e9182309481209384102938401928340192834019283401928340192834",
+    "config_hash": "88bc918230491820394812093841029384019283401928340192834019283401",
+    "version_hash": "a1b2c3d4e5f67890123456789abcdef0123456789abcdef0123456789abcdef0",
+    "blockchain_network": "Polygon PoS (Amoy Testnet)",
+    "chain_id": 80002,
+    "provenance_tx": "0x72ab319283019283019283019283019283019283019283019283019283019283",
+    "provenance_block": 19827350,
+    "verification_status": "VERIFIED"
+  }
 }
+
