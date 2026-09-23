@@ -317,23 +317,25 @@ export default function AuthView({ onAuthenticated, onClose, asModal = false }: 
       {/* ============================================================ */}
       {/* 2. TOP STATUS HEADER (Tactical System Telemetry Bar)         */}
       {/* ============================================================ */}
-      <div className="absolute top-0 left-0 right-0 px-6 sm:px-12 py-5 flex items-center justify-between z-20 anim-top-status-header pointer-events-none">
+      <div className="absolute top-0 left-0 right-0 px-4 sm:px-12 py-3.5 sm:py-5 flex items-center justify-between z-20 anim-top-status-header pointer-events-none">
         {/* Status Tag Pill */}
-        <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-sm bg-[#11161D] border border-[#1E2530] shadow-[0_0_12px_rgba(0,255,102,0.1)] pointer-events-auto">
+        <div className="flex items-center gap-2 sm:gap-2.5 px-2.5 sm:px-3 py-1.5 rounded-sm bg-[#11161D] border border-[#1E2530] shadow-[0_0_12px_rgba(0,255,102,0.1)] pointer-events-auto">
           <span className="w-2 h-2 rounded-full bg-[#00FF66] animate-pulse shadow-[0_0_8px_#00FF66]" />
-          <span className="text-[11px] font-mono font-bold tracking-widest text-[#00FF66] uppercase">
+          <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-widest text-[#00FF66] uppercase">
             SYS_STATUS: ONLINE
           </span>
         </div>
 
-        {/* Command Node Telemetry */}
-        <div className="hidden sm:flex items-center gap-4 text-[11px] font-mono text-[#475569] tracking-wider pointer-events-auto">
-          <span>COMMAND NODE: INTEL-CG-S4 // ADDR: 10.244.82.11</span>
-          <span className="text-[#00F0FF]/80">{currentTime}</span>
+        {/* Command Node Telemetry & Close Action */}
+        <div className="flex items-center gap-2.5 sm:gap-4 text-[11px] font-mono text-[#475569] tracking-wider pointer-events-auto">
+          <span className="hidden md:inline">COMMAND NODE: INTEL-CG-S4 // ADDR: 10.244.82.11</span>
+          <span className="hidden sm:inline text-[#00F0FF]/80">{currentTime}</span>
           {asModal && onClose && (
             <button 
               onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-white rounded bg-[#11161D] border border-[#1E2530] transition-colors"
+              className="p-1.5 text-slate-300 hover:text-white rounded-lg bg-[#11161D] border border-cyan-500/50 hover:border-cyan-400 transition-colors shadow-[0_0_8px_rgba(0,240,255,0.2)] cursor-pointer"
+              title="Close modal"
+              aria-label="Close modal"
             >
               <X className="w-4 h-4" />
             </button>
@@ -344,7 +346,7 @@ export default function AuthView({ onAuthenticated, onClose, asModal = false }: 
       {/* ============================================================ */}
       {/* 3. CORE LOGIN FLOW (Centered 480px Column)                   */}
       {/* ============================================================ */}
-      <div className="relative z-10 w-full max-w-[480px] my-auto py-16 flex flex-col items-center gap-5">
+      <div className="relative z-10 w-full max-w-[480px] my-auto py-10 sm:py-16 flex flex-col items-center gap-5">
         
         {/* Brand Header with Eagle Emblem & Typography */}
         <div id="logo-container" className="anim-logo-container flex flex-col items-center text-center">

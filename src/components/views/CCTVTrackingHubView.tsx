@@ -112,19 +112,19 @@ export default function CCTVTrackingHubView({ onNavigate }: CCTVTrackingHubViewP
   const activeCam = cameraFeeds.find(c => c.id === selectedCamId) || cameraFeeds[0]
 
   return (
-    <div className="flex-1 flex flex-col p-3.5 gap-3.5 overflow-y-auto bg-[#04070D] text-slate-100 font-sans select-none">
+    <div className="flex-1 flex flex-col p-3 sm:p-3.5 gap-3 sm:gap-3.5 overflow-y-auto bg-[#04070D] text-slate-100 font-sans select-none pb-20 md:pb-0">
       
       {/* ============================================================ */}
-      {/* 1. TOP 5-CAM MATRIX GRID */}
+      {/* 1. TOP 5-CAM MATRIX GRID (Touch Scroll Carousel on Mobile) */}
       {/* ============================================================ */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+      <div className="flex sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 overflow-x-auto sm:overflow-visible no-scrollbar touch-momentum pb-1 shrink-0">
         {cameraFeeds.map(cam => {
           const isSelected = selectedCamId === cam.id
           return (
             <div
               key={cam.id}
               onClick={() => setSelectedCamId(cam.id)}
-              className={`cyber-panel rounded-lg p-2.5 flex flex-col justify-between cursor-pointer transition relative overflow-hidden ${
+              className={`cyber-panel rounded-lg p-2.5 flex flex-col justify-between cursor-pointer transition relative overflow-hidden shrink-0 w-[210px] sm:w-auto ${
                 isSelected ? 'border-cyan-400 shadow-[0_0_15px_rgba(0,229,255,0.25)] bg-[#09111e]' : 'hover:border-cyan-500/40'
               }`}
             >

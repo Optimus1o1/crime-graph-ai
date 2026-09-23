@@ -94,6 +94,7 @@ export default function Home() {
   const [isCopilotOpen, setIsCopilotOpen] = useState(false)
   const [isExplainerOpen, setIsExplainerOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false)
 
   // Authentication state
   const [currentUser, setCurrentUser] = useState<any>(null)
@@ -232,10 +233,10 @@ export default function Home() {
       {/* ============================================================ */}
       {/* UNIFIED TACTICAL CYBER HEADER (Matching Specification Screens) */}
       {/* ============================================================ */}
-      <header className="h-16 bg-[#050814] border-b border-cyan-900/40 px-5 flex items-center justify-between z-40 shrink-0 select-none shadow-[0_4px_25px_rgba(0,0,0,0.8)]">
+      <header className="h-16 bg-[#050814] border-b border-cyan-900/40 px-3 sm:px-5 flex items-center justify-between z-40 shrink-0 select-none shadow-[0_4px_25px_rgba(0,0,0,0.8)]">
         
         {/* Left: CG_AI Emblem & View Title / Subtitle */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
           <CrimeGraphLogo 
             size="sm" 
             variant="emblem" 
@@ -246,7 +247,7 @@ export default function Home() {
           />
 
           <div className="flex flex-col justify-center min-w-0">
-            <h1 className="text-sm sm:text-base font-bold tracking-wider text-white uppercase leading-tight truncate max-w-[170px] sm:max-w-[320px] md:max-w-none">
+            <h1 className="text-xs sm:text-base font-bold tracking-wider text-white uppercase leading-tight truncate max-w-[130px] xs:max-w-[200px] sm:max-w-[320px] md:max-w-none">
               {currentTitle.title}
             </h1>
             <span className="hidden sm:block text-xs font-mono text-cyan-400 tracking-wider uppercase mt-0.5 truncate">
@@ -255,7 +256,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Center: Global Entity Search Bar */}
+        {/* Center: Global Entity Search Bar (Desktop) */}
         <form 
           onSubmit={handleSearchSubmit}
           className="hidden md:flex items-center w-full max-w-md mx-6"
@@ -272,9 +273,20 @@ export default function Home() {
           </div>
         </form>
 
-        {/* Right: Operation Badge, Notification Pill & User Clearance Card */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        {/* Right: Mobile Search, Operation Badge, Notification Pill & User Clearance Card */}
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           
+          {/* Mobile Search Bar Trigger (<md) */}
+          <button
+            type="button"
+            onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
+            className="md:hidden p-2 rounded-lg bg-slate-900/90 text-cyan-400 border border-cyan-900/60 hover:bg-slate-800 transition cursor-pointer"
+            title="Search criminal entities"
+            aria-label="Toggle search input"
+          >
+            <Search className="w-4 h-4" />
+          </button>
+
           {/* Operation Classification Pill */}
           <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-950/60 border border-cyan-500/40 text-cyan-300 text-xs font-bold tracking-wide">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse-dot shadow-[0_0_8px_#00e5ff]" />
@@ -284,17 +296,17 @@ export default function Home() {
           {/* Red Alert Notification Pill (9+) */}
           <div 
             onClick={() => setActiveView('dashboard')}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-950/90 border border-red-500/60 text-red-300 text-xs font-bold cursor-pointer shadow-[0_0_10px_rgba(239,68,68,0.35)] hover:scale-105 transition"
+            className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg bg-red-950/90 border border-red-500/60 text-red-300 text-xs font-bold cursor-pointer shadow-[0_0_10px_rgba(239,68,68,0.35)] hover:scale-105 transition"
             title="9+ Critical Intel Telemetry Alerts"
           >
             <Bell className="w-3.5 h-3.5 text-red-400 animate-bounce" />
-            <span>9+ ALERTS</span>
+            <span>9+<span className="hidden sm:inline"> ALERTS</span></span>
           </div>
 
           {/* Quick AI Copilot Trigger */}
           <button
             onClick={() => setIsCopilotOpen(true)}
-            className="px-3.5 py-1.5 bg-indigo-950/90 hover:bg-indigo-900 border border-indigo-500/50 rounded-lg text-indigo-200 text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-[0_0_14px_rgba(129,140,248,0.35)] cyber-btn-glow hover:scale-105"
+            className="px-2.5 sm:px-3.5 py-1.5 bg-indigo-950/90 hover:bg-indigo-900 border border-indigo-500/50 rounded-lg text-indigo-200 text-xs font-bold transition flex items-center gap-1.5 sm:gap-2 cursor-pointer shadow-[0_0_14px_rgba(129,140,248,0.35)] cyber-btn-glow hover:scale-105"
             title="Launch AI Investigation Copilot"
           >
             <Bot className="w-4 h-4 text-indigo-400 animate-pulse" />
@@ -302,7 +314,7 @@ export default function Home() {
           </button>
 
           {/* User Profile / Supabase Auth Badge */}
-          <div className="flex items-center gap-2.5 pl-2.5 border-l border-cyan-900/40">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 pl-1.5 sm:pl-2.5 border-l border-cyan-900/40">
             <div 
               onClick={() => setIsAuthModalOpen(true)}
               className="hidden lg:flex flex-col text-right cursor-pointer hover:opacity-80 transition"
@@ -353,6 +365,36 @@ export default function Home() {
 
       </header>
 
+      {/* Collapsible Mobile Search Bar (<md) */}
+      {isMobileSearchOpen && (
+        <form 
+          onSubmit={(e) => {
+            handleSearchSubmit(e)
+            setIsMobileSearchOpen(false)
+          }}
+          className="md:hidden bg-[#070c18] border-b border-cyan-500/50 p-2.5 px-4 flex items-center gap-2 z-30 shadow-lg animate-in slide-in-from-top-2 duration-150 shrink-0"
+        >
+          <div className="relative w-full">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Query entity [UID, codename, plate, phone]..."
+              autoFocus
+              className="w-full h-9 bg-[#020509] border border-cyan-500/60 focus:border-cyan-400 rounded-lg px-3 pl-9 text-xs font-sans text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 transition"
+            />
+            <Search className="w-3.5 h-3.5 text-cyan-400 absolute left-3 top-2.5" />
+          </div>
+          <button
+            type="button"
+            onClick={() => setIsMobileSearchOpen(false)}
+            className="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 text-xs font-mono shrink-0 cursor-pointer"
+          >
+            Cancel
+          </button>
+        </form>
+      )}
+
       {/* ============================================================ */}
       {/* MAIN WORKSPACE FRAME (Left Navigation Rail + View Router) */}
       {/* ============================================================ */}
@@ -366,7 +408,7 @@ export default function Home() {
         />
 
         {/* Primary View Workspace */}
-        <main className="flex-1 flex flex-col overflow-hidden relative pb-14 md:pb-0">
+        <main className="flex-1 flex flex-col overflow-hidden relative pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] md:pb-0">
           {activeView === 'dashboard' && (
             <IntelCoreDashboardView onNavigate={setActiveView} />
           )}

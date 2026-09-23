@@ -137,21 +137,21 @@ export default function ManagementPlatformView({ onNavigate }: ManagementPlatfor
   ]
 
   return (
-    <div className="flex-1 flex flex-col p-3.5 gap-3.5 overflow-y-auto bg-[#04070D] text-slate-100 font-sans select-none">
+    <div className="flex-1 flex flex-col p-3 sm:p-3.5 gap-3 sm:gap-3.5 overflow-y-auto bg-[#04070D] text-slate-100 font-sans select-none pb-20 md:pb-0">
       
       {/* ============================================================ */}
       {/* 1. TOP SPLIT: SETTINGS SIDEBAR vs. ACTIVE SUB-VIEW */}
       {/* ============================================================ */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 flex-1 min-h-[420px]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-3.5 flex-1 min-h-0">
         
-        {/* Left Sidebar Menu (3 cols) */}
-        <div className="lg:col-span-3 cyber-panel rounded-lg p-3 flex flex-col gap-1.5 font-mono text-xs shrink-0">
+        {/* Left Sidebar Menu / Horizontal Tab Bar on Mobile (3 cols) */}
+        <div className="lg:col-span-3 cyber-panel rounded-lg p-2.5 sm:p-3 flex flex-col gap-1.5 font-mono text-xs shrink-0">
           <div className="text-[10px] text-cyan-400 uppercase tracking-wider px-2 py-1 border-b border-cyan-900/40 font-bold flex items-center justify-between">
             <span>SYSTEM SETTINGS</span>
             <Settings className="w-3.5 h-3.5 text-cyan-400" />
           </div>
 
-          <div className="space-y-1 mt-1">
+          <div className="flex lg:flex-col overflow-x-auto lg:overflow-visible no-scrollbar touch-momentum gap-1 mt-1 pb-1 lg:pb-0 shrink-0">
             {sidebarLinks.map(link => {
               const Icon = link.icon
               const isActive = activeTab === link.id
@@ -159,7 +159,7 @@ export default function ManagementPlatformView({ onNavigate }: ManagementPlatfor
                 <button
                   key={link.id}
                   onClick={() => setActiveTab(link.id)}
-                  className={`w-full text-left px-3 py-2 rounded-lg transition cursor-pointer flex items-center justify-between ${
+                  className={`shrink-0 lg:w-full text-left px-3 py-2 rounded-lg transition cursor-pointer flex items-center justify-between gap-2 whitespace-nowrap ${
                     isActive
                       ? 'bg-cyan-950 text-cyan-300 font-bold border border-cyan-500/50 shadow-[0_0_12px_rgba(0,229,255,0.25)]'
                       : 'text-slate-400 hover:text-white hover:bg-slate-900/60 border border-transparent'
@@ -169,13 +169,13 @@ export default function ManagementPlatformView({ onNavigate }: ManagementPlatfor
                     <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-cyan-300' : 'text-slate-500'}`} />
                     <span>{link.label}</span>
                   </div>
-                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#00e5ff]" />}
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#00e5ff] hidden lg:inline-block" />}
                 </button>
               )
             })}
           </div>
 
-          <div className="mt-auto p-2 rounded bg-[#020509] border border-cyan-900/30 text-[10px] text-slate-400 space-y-1">
+          <div className="hidden lg:block mt-auto p-2 rounded bg-[#020509] border border-cyan-900/30 text-[10px] text-slate-400 space-y-1">
             <div className="flex items-center justify-between text-cyan-300 font-bold">
               <span>ACTIVE SESSION:</span>
               <span className="text-emerald-400">ENCRYPTED</span>

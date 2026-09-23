@@ -73,26 +73,26 @@ export default function ForensicEvidenceAuditView({ onNavigate }: ForensicEviden
   const selectedArtifact = evidenceRecords.find(e => e.id === selectedArtifactId) || evidenceRecords[0]
 
   return (
-    <div className="flex-1 flex flex-col p-3.5 gap-3.5 overflow-y-auto bg-[#04070D] text-slate-100 font-sans select-none">
+    <div className="flex-1 flex flex-col p-3 sm:p-3.5 gap-3 sm:gap-3.5 overflow-y-auto bg-[#04070D] text-slate-100 font-sans select-none pb-20 md:pb-0">
       
       {/* ============================================================ */}
       {/* 1. TOP CASE CONTEXT STRIP */}
       {/* ============================================================ */}
-      <div className="cyber-panel p-3 rounded-lg flex items-center justify-between border-l-4 border-l-emerald-400">
-        <div className="flex items-center gap-3 font-mono text-xs">
+      <div className="cyber-panel p-2.5 sm:p-3 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between border-l-4 border-l-emerald-400 gap-2.5">
+        <div className="flex items-center gap-2.5 sm:gap-3 font-mono text-xs flex-wrap">
           <div className="w-8 h-8 rounded-lg overflow-hidden border border-emerald-400/80 shadow-[0_0_12px_rgba(16,185,129,0.35)] shrink-0 bg-[#060A14] flex items-center justify-center">
             <img src="/images/crimegraph_logo_emblem.jpg" alt="CrimeGraph Forensic Seal" className="w-full h-full object-cover" />
           </div>
           <span className="text-slate-400">CASE FILE:</span>
-          <span className="text-white font-bold bg-[#020509] px-2.5 py-1 rounded border border-cyan-500/40">
+          <span className="text-white font-bold bg-[#020509] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded border border-cyan-500/40 text-[11px] sm:text-xs">
             CG-2024-0847 (Hawala Western Corridor)
           </span>
         </div>
 
-        <div className="flex items-center gap-2 font-mono text-xs">
+        <div className="flex items-center gap-2 font-mono text-xs shrink-0">
           <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 font-bold shadow-[0_0_10px_rgba(16,185,129,0.3)]">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            <span>EVIDENCE INTEGRITY: VERIFIED</span>
+            <span>INTEGRITY: VERIFIED</span>
           </span>
         </div>
       </div>

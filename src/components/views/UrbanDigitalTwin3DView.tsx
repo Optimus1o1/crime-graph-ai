@@ -42,15 +42,15 @@ export default function UrbanDigitalTwin3DView({ onNavigate }: UrbanDigitalTwin3
   const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} GMT`
 
   return (
-    <div className="flex-1 flex flex-col p-3.5 gap-3.5 overflow-hidden bg-[#04070D] text-slate-100 font-sans select-none">
+    <div className="flex-1 flex flex-col p-3 sm:p-3.5 gap-3 sm:gap-3.5 overflow-y-auto lg:overflow-hidden bg-[#04070D] text-slate-100 font-sans select-none pb-20 md:pb-0">
       
       {/* ============================================================ */}
       {/* 1. MAIN METROPOLITAN SPATIAL MESH & TELEMETRY SPLIT */}
       {/* ============================================================ */}
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-3.5 min-h-[460px] overflow-hidden">
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-3.5 min-h-0">
         
         {/* Left Panel (4 cols): Active Intel Tracks & Location Intel Summary */}
-        <div className="lg:col-span-4 cyber-panel rounded-lg p-3.5 flex flex-col gap-3.5 overflow-y-auto">
+        <div className="lg:col-span-4 cyber-panel rounded-lg p-3 sm:p-3.5 flex flex-col gap-3.5 overflow-y-auto max-h-80 lg:max-h-none">
           
           {/* Active Intel Tracks (2) */}
           <div>
@@ -151,7 +151,7 @@ export default function UrbanDigitalTwin3DView({ onNavigate }: UrbanDigitalTwin3
         </div>
 
         {/* Center / Right Panel (8 cols): True 3D WebGL Metropolitan Digital Twin Canvas */}
-        <div className="lg:col-span-8 cyber-panel rounded-lg flex flex-col justify-between relative overflow-hidden bg-[#020509] min-h-[440px]">
+        <div className="lg:col-span-8 cyber-panel rounded-lg flex flex-col justify-between relative overflow-hidden bg-[#020509] min-h-[350px] sm:min-h-[440px]">
           <Metropolitan3DCanvas 
             activeTrack={activeTrack}
             isPlaying={isPlaying}
@@ -166,13 +166,13 @@ export default function UrbanDigitalTwin3DView({ onNavigate }: UrbanDigitalTwin3
       {/* ============================================================ */}
       {/* 2. BOTTOM 24H REPLAY MODE CONTROLLER */}
       {/* ============================================================ */}
-      <div className="cyber-panel p-3 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-xs border-t-2 border-t-cyan-400">
+      <div className="cyber-panel p-2.5 sm:p-3 rounded-lg flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 font-mono text-xs border-t-2 border-t-cyan-400 shrink-0">
         
         {/* Title */}
         <div className="flex items-center gap-2 shrink-0">
           <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-          <span className="text-white font-bold uppercase tracking-wider">
-            REPLAY TIME INDEX: <span className="text-cyan-300 font-mono">{formattedTime}</span> (LAST 24H TRACKING)
+          <span className="text-white font-bold uppercase tracking-wider text-[11px] sm:text-xs">
+            TIME: <span className="text-cyan-300 font-mono">{formattedTime}</span> <span className="hidden sm:inline">(LAST 24H)</span>
           </span>
         </div>
 
@@ -191,22 +191,24 @@ export default function UrbanDigitalTwin3DView({ onNavigate }: UrbanDigitalTwin3
         </div>
 
         {/* Playback Controls */}
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            onClick={() => setIsPlaying(!isPlaying)}
-            className="p-1.5 rounded bg-cyan-950 hover:bg-cyan-900 border border-cyan-500/50 text-cyan-300 transition cursor-pointer"
-            title={isPlaying ? 'Pause Replay' : 'Play Replay'}
-          >
-            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-          </button>
+        <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto shrink-0">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsPlaying(!isPlaying)}
+              className="p-1.5 rounded bg-cyan-950 hover:bg-cyan-900 border border-cyan-500/50 text-cyan-300 transition cursor-pointer"
+              title={isPlaying ? 'Pause Replay' : 'Play Replay'}
+            >
+              {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+            </button>
 
-          <button
-            onClick={() => setTimeOffset(0)}
-            className="p-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition cursor-pointer"
-            title="Rewind to start of 24h cycle"
-          >
-            <RotateCcw className="w-4 h-4" />
-          </button>
+            <button
+              onClick={() => setTimeOffset(0)}
+              className="p-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition cursor-pointer"
+              title="Rewind to start of 24h cycle"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </button>
+          </div>
 
           {/* Speed Pills */}
           <div className="flex items-center gap-1 bg-[#020509] p-0.5 rounded border border-slate-800">

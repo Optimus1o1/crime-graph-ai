@@ -106,23 +106,30 @@ export default function NavigationRail({ activeView, setActiveView, onOpenCopilo
 
       </aside>
 
-      {/* Mobile Bottom Navigation Bar (<md screens) */}
-      <div className="flex md:hidden fixed bottom-0 left-0 right-0 h-16 bg-[#050814]/95 backdrop-blur-md border-t border-cyan-900/60 items-center justify-between px-3 z-50 shadow-[0_-4px_25px_rgba(0,0,0,0.9)] overflow-x-auto gap-2">
+      {/* Mobile Bottom Navigation Bar (<md screens) with Safe-Area & Auto-Centering */}
+      <nav 
+        aria-label="Mobile Navigation"
+        className="flex md:hidden fixed bottom-0 left-0 right-0 h-[calc(4rem+env(safe-area-inset-bottom,0px))] pb-[env(safe-area-inset-bottom,0px)] bg-[#050814]/95 backdrop-blur-xl border-t border-cyan-900/60 items-center justify-between px-2.5 z-50 shadow-[0_-8px_30px_rgba(0,0,0,0.9)] overflow-x-auto no-scrollbar gap-1.5 touch-momentum"
+      >
         {navItems.map((item) => {
           const Icon = item.icon
           const isActive = activeView === item.id
           return (
             <button
               key={item.id}
-              onClick={() => setActiveView(item.id)}
-              className={`shrink-0 flex flex-col items-center justify-center px-2.5 py-1.5 rounded-lg transition-all ${
+              onClick={(e) => {
+                setActiveView(item.id)
+                e.currentTarget.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+              }}
+              className={`shrink-0 min-w-[58px] min-h-[44px] flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all duration-200 cursor-pointer active:scale-95 ${
                 isActive 
-                  ? 'bg-cyan-950/90 text-cyan-300 border border-cyan-400/80 shadow-[0_0_10px_rgba(0,229,255,0.3)] font-bold' 
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-cyan-950/90 text-cyan-300 border border-cyan-400 shadow-[0_0_12px_rgba(0,229,255,0.4)] font-bold' 
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 border border-transparent'
               }`}
+              title={item.tooltip}
             >
-              <Icon className={`w-4 h-4 ${isActive ? 'text-cyan-300' : 'text-slate-400'}`} />
-              <span className="text-xs font-sans mt-0.5 whitespace-nowrap">
+              <Icon className={`w-4 h-4 transition-transform ${isActive ? 'text-cyan-300 scale-110' : 'text-slate-400'}`} />
+              <span className={`text-[10px] font-sans mt-0.5 whitespace-nowrap tracking-tight ${isActive ? 'font-bold text-cyan-300' : 'text-slate-400'}`}>
                 {item.label}
               </span>
             </button>
@@ -132,14 +139,14 @@ export default function NavigationRail({ activeView, setActiveView, onOpenCopilo
         {onOpenCopilot && (
           <button
             onClick={onOpenCopilot}
-            className="shrink-0 flex flex-col items-center justify-center px-2.5 py-1.5 rounded-lg bg-indigo-950/80 border border-indigo-500/50 text-indigo-300"
+            className="shrink-0 min-w-[58px] min-h-[44px] flex flex-col items-center justify-center px-2 py-1 rounded-xl bg-indigo-950/90 border border-indigo-500/60 text-indigo-300 shadow-[0_0_10px_rgba(129,140,248,0.3)] cursor-pointer active:scale-95 ml-0.5"
             title="AI Copilot"
           >
-            <Bot className="w-4 h-4 text-indigo-300" />
-            <span className="text-xs font-sans mt-0.5">Copilot</span>
+            <Bot className="w-4 h-4 text-indigo-300 animate-pulse" />
+            <span className="text-[10px] font-sans mt-0.5 font-bold">Copilot</span>
           </button>
         )}
-      </div>
+      </nav>
     </>
   )
 }

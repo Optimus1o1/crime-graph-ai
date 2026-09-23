@@ -26,13 +26,13 @@ export default function CrimeAnalyticsIntelView({ onNavigate }: CrimeAnalyticsIn
   const [exportFeedback, setExportFeedback] = useState<string>('')
 
   return (
-    <div className="flex-1 flex flex-col p-3.5 gap-3.5 overflow-y-auto bg-[#04070D] text-slate-100 font-sans select-none">
+    <div className="flex-1 flex flex-col p-3 sm:p-3.5 gap-3 sm:gap-3.5 overflow-y-auto bg-[#04070D] text-slate-100 font-sans select-none pb-20 md:pb-0">
       
       {/* ============================================================ */}
       {/* 1. TOP TIME FILTER & EXPORT BAR */}
       {/* ============================================================ */}
-      <div className="flex items-center justify-between border-b border-cyan-900/40 pb-2">
-        <div className="flex items-center gap-2 font-mono text-xs">
+      <div className="flex items-center justify-between border-b border-cyan-900/40 pb-2 flex-wrap gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 font-mono text-xs overflow-x-auto no-scrollbar touch-momentum">
           <div className="w-8 h-8 rounded-lg overflow-hidden border border-cyan-400/80 shadow-[0_0_10px_rgba(0,229,255,0.35)] shrink-0 bg-[#060A14] flex items-center justify-center">
             <img src="/images/crimegraph_logo_emblem.jpg" alt="CrimeGraph Analytics" className="w-full h-full object-cover" />
           </div>
@@ -40,7 +40,7 @@ export default function CrimeAnalyticsIntelView({ onNavigate }: CrimeAnalyticsIn
             <button
               key={range}
               onClick={() => setTimeRange(range)}
-              className={`px-3 py-1 rounded transition ${
+              className={`px-2.5 sm:px-3 py-1 rounded transition shrink-0 ${
                 timeRange === range
                   ? 'bg-cyan-950 text-cyan-300 border border-cyan-500/60 font-bold shadow-[0_0_8px_rgba(0,229,255,0.3)]'
                   : 'text-slate-400 hover:text-white bg-slate-900/40 border border-slate-800'
@@ -51,7 +51,7 @@ export default function CrimeAnalyticsIntelView({ onNavigate }: CrimeAnalyticsIn
           ))}
           <button 
             onClick={() => setTimeRange('30D')}
-            className="px-3 py-1 rounded text-slate-500 hover:text-slate-300 bg-slate-900/40 border border-slate-800 cursor-pointer"
+            className="px-2.5 sm:px-3 py-1 rounded text-slate-500 hover:text-slate-300 bg-slate-900/40 border border-slate-800 cursor-pointer shrink-0"
           >
             CUSTOM
           </button>
@@ -59,7 +59,7 @@ export default function CrimeAnalyticsIntelView({ onNavigate }: CrimeAnalyticsIn
 
         <button 
           onClick={() => setIsExportModalOpen(true)}
-          className="px-3 py-1 rounded bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/60 text-cyan-200 font-mono text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-[0_0_10px_rgba(0,229,255,0.2)] hover:scale-105"
+          className="px-3 py-1 rounded bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/60 text-cyan-200 font-mono text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-[0_0_10px_rgba(0,229,255,0.2)] hover:scale-105 shrink-0"
         >
           <DownloadCloud className="w-3.5 h-3.5 text-cyan-400" />
           <span>EXPORT REPORTS</span>
@@ -73,7 +73,7 @@ export default function CrimeAnalyticsIntelView({ onNavigate }: CrimeAnalyticsIn
         
         {/* Left (7 cols): Crime Incident Trends (Overview Model) */}
         <div className="lg:col-span-7 cyber-panel rounded-lg p-3.5 flex flex-col justify-between relative overflow-hidden">
-          <div className="flex items-center justify-between border-b border-cyan-500/20 pb-2 mb-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-cyan-500/20 pb-2 mb-2 gap-2">
             <div className="flex items-center gap-2">
               <TrendingUp className="w-3.5 h-3.5 text-cyan-400" />
               <h3 className="text-xs font-mono font-bold tracking-wider text-white uppercase">
@@ -82,9 +82,9 @@ export default function CrimeAnalyticsIntelView({ onNavigate }: CrimeAnalyticsIn
             </div>
             
             {/* Week 3 Anomaly Callout Badge */}
-            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-red-950/90 border border-red-500/50 text-[10px] font-mono text-red-300 font-bold animate-pulse">
-              <AlertTriangle className="w-3 h-3 text-red-400" />
-              <span>WEEK 3 ANOMALY: Cyber Fraud: +41% SPIKE | Financial Flow: $1.2M</span>
+            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-red-950/90 border border-red-500/50 text-[10px] font-mono text-red-300 font-bold animate-pulse max-w-full">
+              <AlertTriangle className="w-3 h-3 text-red-400 shrink-0" />
+              <span className="truncate">WEEK 3 ANOMALY: Cyber Fraud +41% | $1.2M</span>
             </div>
           </div>
 
@@ -94,8 +94,8 @@ export default function CrimeAnalyticsIntelView({ onNavigate }: CrimeAnalyticsIn
           </div>
 
           {/* Graph Legend */}
-          <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-slate-800 text-[10px] font-mono text-slate-400">
-            <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-2 pt-1.5 border-t border-slate-800 text-[10px] font-mono text-slate-400 gap-1.5">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-4">
               <span className="flex items-center gap-1">
                 <span className="w-2.5 h-1 bg-red-500 inline-block" /> Cyber Fraud (+41%)
               </span>
@@ -106,7 +106,7 @@ export default function CrimeAnalyticsIntelView({ onNavigate }: CrimeAnalyticsIn
                 <span className="w-2.5 h-1 bg-cyan-400 inline-block" /> Comms Correlation
               </span>
             </div>
-            <span className="text-cyan-300">W1 → W2 → W3 (PEAK) → W4</span>
+            <span className="text-cyan-300 shrink-0">W1 → W2 → W3 (PEAK) → W4</span>
           </div>
         </div>
 

@@ -612,4 +612,40 @@ html, body {
   animation: kf_cursor-blink 1s steps(2, start) infinite;
 }
 
+/* ============================================================
+   Mobile Compatibility & Touch Optimizations
+   ============================================================ */
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* iOS Momentum Scrolling */
+.touch-momentum {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Safe area padding utilities for iOS bottom home indicator and notch */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Fast tap response and touch manipulation */
+button, a, input, select, textarea {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
 

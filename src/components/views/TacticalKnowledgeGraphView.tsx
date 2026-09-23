@@ -79,6 +79,7 @@ export default function TacticalKnowledgeGraphView({ onNavigate }: TacticalKnowl
   const [isLayoutOpen, setIsLayoutOpen] = useState(false)
   const [isEdgeOpen, setIsEdgeOpen] = useState(false)
   const [isTimelineOpen, setIsTimelineOpen] = useState(false)
+  const [mobileTab, setMobileTab] = useState<'graph' | 'inspector'>('graph')
 
   // Search and filter state
   const [searchQuery, setSearchQuery] = useState('')
@@ -502,10 +503,10 @@ export default function TacticalKnowledgeGraphView({ onNavigate }: TacticalKnowl
       {/* ============================================================ */}
       {/* 2. SECONDARY CONTROLS STRIP: Filters, Layouts & Quick Focus */}
       {/* ============================================================ */}
-      <div className="border-b border-slate-800/60 bg-[#070b16] px-5 py-2 flex flex-wrap items-center justify-between gap-3 text-xs z-20 shrink-0">
+      <div className="border-b border-slate-800/60 bg-[#070b16] px-3 sm:px-5 py-2 flex flex-wrap lg:flex-nowrap items-center justify-between gap-2.5 sm:gap-3 text-xs z-20 shrink-0 overflow-x-auto no-scrollbar touch-momentum">
         
         {/* Left: Category Filters */}
-        <div className="flex items-center gap-1.5 overflow-x-auto">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar touch-momentum shrink-0">
           <span className="text-slate-400 text-xs font-mono font-bold uppercase mr-1 hidden sm:inline">
             ENTITIES:
           </span>
@@ -720,7 +721,7 @@ export default function TacticalKnowledgeGraphView({ onNavigate }: TacticalKnowl
 
           {/* Horizontal Traverser Chips for All Direct 1-Hop Connections */}
           {directConnections.length > 0 && (
-            <div className="flex items-center gap-2 overflow-x-auto py-1 scrollbar-thin">
+            <div className="flex items-center gap-2 overflow-x-auto py-1 no-scrollbar touch-momentum">
               <span className="text-xs font-mono text-slate-400 uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1.5">
                 <Network className="w-3.5 h-3.5 text-cyan-400" />
                 <span>PIVOT TO ASSOCIATE:</span>
@@ -750,13 +751,44 @@ export default function TacticalKnowledgeGraphView({ onNavigate }: TacticalKnowl
         </div>
       )}
 
+      {/* Mobile Screen Workbench Mode Toggle (<lg) */}
+      <div className="lg:hidden flex items-center bg-[#070b16] border-b border-slate-800/80 p-2 px-3 gap-2 shrink-0 z-20">
+        <button
+          onClick={() => setMobileTab('graph')}
+          className={`flex-1 py-2 px-3 rounded-lg text-xs font-mono font-bold flex items-center justify-center gap-2 transition cursor-pointer ${
+            mobileTab === 'graph'
+              ? 'bg-cyan-950 text-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,229,255,0.3)]'
+              : 'bg-[#0d1426] text-slate-400 border border-slate-800'
+          }`}
+        >
+          <Network className="w-3.5 h-3.5" />
+          <span>GRAPH ({graphMode})</span>
+        </button>
+        <button
+          onClick={() => setMobileTab('inspector')}
+          className={`flex-1 py-2 px-3 rounded-lg text-xs font-mono font-bold flex items-center justify-center gap-2 transition cursor-pointer relative ${
+            mobileTab === 'inspector'
+              ? 'bg-purple-950 text-purple-300 border border-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.3)]'
+              : 'bg-[#0d1426] text-slate-400 border border-slate-800'
+          }`}
+        >
+          <User className="w-3.5 h-3.5" />
+          <span>DOSSIER & GNN</span>
+          {activeNode && (
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse ml-1" />
+          )}
+        </button>
+      </div>
+
       {/* ============================================================ */}
       {/* 4. MAIN WORKBENCH SPLIT: Graph Canvas vs. Suspect Inspector */}
       {/* ============================================================ */}
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
         
         {/* Central Graph Workbench Area */}
-        <div className="flex-1 relative flex flex-col overflow-hidden bg-[#020509] min-h-[380px]">
+        <div className={`flex-1 relative flex flex-col overflow-hidden bg-[#020509] min-h-[350px] ${
+          mobileTab === 'inspector' ? 'hidden lg:flex' : 'flex'
+        }`}>
           {/* Floating GNN Active Notification Banner */}
           {aiOverlay && (
             <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-[#0c081e]/95 border border-purple-500/80 rounded-xl px-4 py-2 shadow-[0_0_30px_rgba(168,85,247,0.45)] z-30 flex items-center gap-3 font-mono text-xs backdrop-blur-md animate-in fade-in zoom-in duration-200">
@@ -771,7 +803,10 @@ export default function TacticalKnowledgeGraphView({ onNavigate }: TacticalKnowl
                 </div>
               </div>
               <button
-                onClick={() => setActiveInspectorTab('gnn')}
+                onClick={() => {
+                  setActiveInspectorTab('gnn')
+                  setMobileTab('inspector')
+                }}
                 className="px-2.5 py-1 rounded bg-purple-900/80 hover:bg-purple-800 text-purple-200 border border-purple-400 text-xs font-bold transition cursor-pointer shrink-0"
               >
                 VIEW FORECASTS
@@ -819,7 +854,9 @@ export default function TacticalKnowledgeGraphView({ onNavigate }: TacticalKnowl
         </div>
 
         {/* Right Inspector Panel (Spacious Width w-96) */}
-        <div className="w-full lg:w-96 bg-[#070b16]/98 border-t lg:border-t-0 lg:border-l border-slate-800/80 p-5 flex flex-col gap-4 overflow-y-auto shrink-0 z-20 max-h-[50vh] lg:max-h-none scrollbar-thin">
+        <div className={`w-full lg:w-96 bg-[#070b16]/98 border-t lg:border-t-0 lg:border-l border-slate-800/80 p-4 sm:p-5 flex flex-col gap-4 overflow-y-auto shrink-0 z-20 max-h-none scrollbar-thin ${
+          mobileTab === 'graph' ? 'hidden lg:flex' : 'flex'
+        }`}>
           
           {/* Executive Inspector Tab Switcher */}
           <div className="flex items-center gap-1.5 p-1 bg-[#0b1122] rounded-xl border border-slate-800 shrink-0">

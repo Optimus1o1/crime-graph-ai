@@ -42,33 +42,33 @@ export default function VehicleJourneyModal({ isOpen, onClose }: VehicleJourneyM
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 select-none">
-      <div className="w-full max-w-3xl bg-[#0d0e17] border border-purple-500/70 rounded-xl shadow-[0_0_35px_rgba(124,58,237,0.35)] flex flex-col max-h-[90vh] overflow-hidden font-sans">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-2.5 sm:p-4 select-none">
+      <div className="w-full max-w-3xl bg-[#0d0e17] border border-purple-500/70 rounded-xl shadow-[0_0_35px_rgba(124,58,237,0.35)] flex flex-col max-h-[95vh] sm:max-h-[90vh] overflow-hidden font-sans">
         
         {/* Header */}
-        <div className="h-14 border-b border-purple-900/40 px-5 flex items-center justify-between bg-[#111320] shrink-0">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-purple-950/80 border border-purple-500/60 flex items-center justify-center text-purple-300 shadow-[0_0_10px_rgba(168,85,247,0.4)]">
+        <div className="min-h-14 py-2.5 border-b border-purple-900/40 px-4 sm:px-5 flex items-center justify-between bg-[#111320] shrink-0 gap-2">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-8 h-8 rounded-lg bg-purple-950/80 border border-purple-500/60 flex items-center justify-center text-purple-300 shadow-[0_0_10px_rgba(168,85,247,0.4)] shrink-0">
               <Car className="w-4 h-4" />
             </div>
-            <div>
-              <h3 className="text-sm font-semibold text-slate-100">Cross-Camera Vehicle Re-Identification & Journey Reconstructor</h3>
-              <p className="text-[11px] text-slate-400 font-mono">Probabilistic Multi-Signal Spatio-Temporal Association</p>
+            <div className="min-w-0">
+              <h3 className="text-xs sm:text-sm font-semibold text-slate-100 truncate max-w-[220px] sm:max-w-none">Vehicle Re-Identification & Journey Reconstructor</h3>
+              <p className="text-[10px] sm:text-[11px] text-slate-400 font-mono truncate">Probabilistic Multi-Signal Spatio-Temporal Association</p>
             </div>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-800">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-800 shrink-0 cursor-pointer">
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Vehicle Selection Chips */}
-        <div className="px-5 py-3 border-b border-purple-900/30 bg-[#090a12] flex items-center gap-2">
-          <span className="text-xs font-mono text-slate-400">Tracked Vehicles:</span>
+        <div className="px-4 sm:px-5 py-2.5 border-b border-purple-900/30 bg-[#090a12] flex items-center gap-2 overflow-x-auto no-scrollbar touch-momentum shrink-0">
+          <span className="text-xs font-mono text-slate-400 shrink-0">Tracked:</span>
           {sampleVehicles.map(v => (
             <button
               key={v.id}
               onClick={() => setVehicleId(v.id)}
-              className={`px-3 py-1 rounded text-xs font-mono transition ${
+              className={`px-3 py-1 rounded text-xs font-mono transition shrink-0 whitespace-nowrap cursor-pointer ${
                 vehicleId === v.id
                   ? 'bg-purple-900/80 text-purple-200 border border-purple-500/60 font-bold shadow-[0_0_10px_rgba(168,85,247,0.3)]'
                   : 'bg-[#141624] text-slate-400 hover:text-slate-200 border border-slate-800'

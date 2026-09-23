@@ -109,23 +109,23 @@ export default function AICopilotModal({ isOpen, onClose }: AICopilotModalProps)
   ]
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 sm:p-6 animate-in fade-in duration-200">
-      <div className="w-full max-w-4xl xl:max-w-5xl bg-[#090c16] border border-purple-500/50 rounded-2xl shadow-[0_0_50px_rgba(124,58,237,0.3)] flex flex-col max-h-[90vh] overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-2.5 sm:p-6 animate-in fade-in duration-200">
+      <div className="w-full max-w-4xl xl:max-w-5xl bg-[#090c16] border border-purple-500/50 rounded-2xl shadow-[0_0_50px_rgba(124,58,237,0.3)] flex flex-col max-h-[95vh] sm:max-h-[90vh] overflow-hidden">
         
         {/* Modal Header */}
-        <div className="h-16 border-b border-purple-900/40 px-6 flex items-center justify-between bg-[#0e1222] shrink-0 flex-wrap gap-3">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-purple-950/90 border border-purple-500/60 flex items-center justify-center text-purple-300 shadow-[0_0_12px_rgba(168,85,247,0.4)]">
+        <div className="min-h-16 py-3 border-b border-purple-900/40 px-4 sm:px-6 flex items-center justify-between bg-[#0e1222] shrink-0 flex-wrap gap-2.5 sm:gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="w-9 h-9 rounded-xl bg-purple-950/90 border border-purple-500/60 flex items-center justify-center text-purple-300 shadow-[0_0_12px_rgba(168,85,247,0.4)] shrink-0">
               <Bot className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2.5">
-                <h3 className="text-base font-bold text-white tracking-wide">AI Investigation Copilot</h3>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/40 font-mono font-bold">
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm sm:text-base font-bold text-white tracking-wide">AI Investigation Copilot</h3>
+                <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/40 font-mono font-bold">
                   GEMINI 3.6 FLASH
                 </span>
               </div>
-              <p className="text-xs text-slate-400 font-sans mt-0.5">
+              <p className="text-[11px] sm:text-xs text-slate-400 font-sans mt-0.5">
                 Multi-Modal Graph & Cryptographic Evidence Orchestrator
               </p>
             </div>
