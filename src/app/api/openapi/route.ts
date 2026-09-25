@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 
 export async function GET() {
   const openApiSpec = {
-    openapi: '3.1.0',
+    openapi: '3.0.3',
     info: {
       title: 'CrimeGraph AI — Investigative Intelligence Platform API',
       version: '2.1.0',

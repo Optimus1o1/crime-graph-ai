@@ -737,7 +737,7 @@ export default function APIEngineView({ onNavigate }: APIEngineViewProps) {
           <div className="h-10 bg-[#050813] border-b border-cyan-900/40 px-4 flex items-center justify-between text-xs font-mono">
             <span className="text-slate-400 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-cyan-400" />
-              INTERACTIVE REDOC RUNTIME SPECIFICATION (OAS 3.1.0)
+              INTERACTIVE REDOC RUNTIME SPECIFICATION (OAS 3.0.3)
             </span>
             <a
               href="/redoc"
@@ -754,6 +754,7 @@ export default function APIEngineView({ onNavigate }: APIEngineViewProps) {
           <iframe
             src="/redoc"
             title="ReDoc Interactive Documentation"
+            allow="clipboard-write"
             className="w-full flex-1 border-0 bg-[#050813]"
           />
 
