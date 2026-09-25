@@ -12,7 +12,8 @@ import {
   Layers, 
   Settings,
   ShieldAlert,
-  Bot
+  Bot,
+  Terminal
 } from 'lucide-react'
 import CrimeGraphLogo from './CrimeGraphLogo'
 
@@ -32,6 +33,7 @@ export default function NavigationRail({ activeView, setActiveView, onOpenCopilo
     { id: 'analytics', label: 'Analytics', tooltip: 'Crime Analytics & Predictive Intel', icon: BarChart3 },
     { id: 'evidence', label: 'Evidence', tooltip: 'Forensic Evidence & Audit Trail', icon: FileCheck2 },
     { id: 'digital_twin', label: 'Digital Twin', tooltip: '3D Urban Digital Twin', icon: Layers },
+    { id: 'api_engine', label: 'API Engine', tooltip: 'API Engine & ReDoc Documentation', icon: Terminal },
     { id: 'settings', label: 'System', tooltip: 'Management Platform & Settings', icon: Settings },
   ]
 

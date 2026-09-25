@@ -67,6 +67,11 @@ const ManagementPlatformView = dynamic(() => import('@/components/views/Manageme
   ssr: false,
 })
 
+const APIEngineView = dynamic(() => import('@/components/views/APIEngineView'), {
+  loading: () => <ViewLoadingSkeleton label="API ENGINE & REDOC SPECIFICATION" />,
+  ssr: false,
+})
+
 const VehicleJourneyModal = dynamic(() => import('@/components/VehicleJourneyModal'), { ssr: false })
 const PredictionAnalyticsModal = dynamic(() => import('@/components/PredictionAnalyticsModal'), { ssr: false })
 const AICopilotModal = dynamic(() => import('@/components/AICopilotModal'), { ssr: false })
@@ -84,7 +89,8 @@ import {
   Sparkles,
   Layers,
   Radio,
-  UserCheck
+  UserCheck,
+  Terminal
 } from 'lucide-react'
 
 export default function Home() {
@@ -139,6 +145,15 @@ export default function Home() {
         }
       }).catch(err => console.warn('Supabase session check:', err))
     }
+
+    // Check URL parameters for view navigation
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search)
+      const requestedView = urlParams.get('view')
+      if (requestedView) {
+        setActiveView(requestedView)
+      }
+    }
   }, [])
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -174,7 +189,7 @@ export default function Home() {
     }
   }
 
-  // Titles mapping matching the 9 specification screens
+  // Titles mapping matching the 10 specification screens
   const viewTitles: Record<string, { title: string; subtitle: string }> = {
     dashboard: {
       title: 'INTEL-CORE DASHBOARD',
@@ -207,6 +222,10 @@ export default function Home() {
     digital_twin: {
       title: '3D URBAN DIGITAL TWIN',
       subtitle: 'METROPOLITAN CORRELATION GRID & REAL TIME SENSOR SPATIAL MAPPING'
+    },
+    api_engine: {
+      title: 'API ENGINE & REDOC SPECIFICATION',
+      subtitle: 'HIGH-THROUGHPUT GRAPH ANALYTICS GATEWAY & REST RUNTIME SPECIFICATION'
     },
     settings: {
       title: 'CRIMEGRAPH AI MANAGEMENT PLATFORM',
@@ -273,8 +292,8 @@ export default function Home() {
           </div>
         </form>
 
-        {/* Right: Mobile Search, Operation Badge, Notification Pill & User Clearance Card */}
-        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        {/* Right: API Engine Launcher, Copilot, Alerts & User Clearance Card */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           
           {/* Mobile Search Bar Trigger (<md) */}
           <button
@@ -288,33 +307,47 @@ export default function Home() {
           </button>
 
           {/* Operation Classification Pill */}
-          <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-950/60 border border-cyan-500/40 text-cyan-300 text-xs font-bold tracking-wide">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse-dot shadow-[0_0_8px_#00e5ff]" />
-            <span>OP: RED CORRIDOR</span>
+          <div className="hidden 2xl:flex items-center gap-2 px-2.5 py-1 rounded-lg bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-bold tracking-wide">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_6px_#00e5ff]" />
+            <span>RED CORRIDOR</span>
           </div>
 
-          {/* Red Alert Notification Pill (9+) */}
-          <div 
-            onClick={() => setActiveView('dashboard')}
-            className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg bg-red-950/90 border border-red-500/60 text-red-300 text-xs font-bold cursor-pointer shadow-[0_0_10px_rgba(239,68,68,0.35)] hover:scale-105 transition"
-            title="9+ Critical Intel Telemetry Alerts"
+          {/* Quick API Engine Launcher */}
+          <button
+            onClick={() => setActiveView('api_engine')}
+            className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition flex items-center gap-1.5 cursor-pointer ${
+              activeView === 'api_engine'
+                ? 'bg-cyan-950 text-cyan-300 border border-cyan-400 shadow-[0_0_12px_rgba(0,229,255,0.35)]'
+                : 'bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-cyan-300 border border-cyan-900/50 hover:border-cyan-500/50'
+            }`}
+            title="Launch API Engine & ReDoc Documentation"
           >
-            <Bell className="w-3.5 h-3.5 text-red-400 animate-bounce" />
-            <span>9+<span className="hidden sm:inline"> ALERTS</span></span>
-          </div>
+            <Terminal className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="hidden sm:inline">API ENGINE</span>
+          </button>
 
           {/* Quick AI Copilot Trigger */}
           <button
             onClick={() => setIsCopilotOpen(true)}
-            className="px-2.5 sm:px-3.5 py-1.5 bg-indigo-950/90 hover:bg-indigo-900 border border-indigo-500/50 rounded-lg text-indigo-200 text-xs font-bold transition flex items-center gap-1.5 sm:gap-2 cursor-pointer shadow-[0_0_14px_rgba(129,140,248,0.35)] cyber-btn-glow hover:scale-105"
+            className="px-2.5 sm:px-3 py-1.5 bg-indigo-950/80 hover:bg-indigo-900/90 border border-indigo-500/40 rounded-lg text-indigo-200 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-sm hover:border-indigo-400"
             title="Launch AI Investigation Copilot"
           >
-            <Bot className="w-4 h-4 text-indigo-400 animate-pulse" />
-            <span className="hidden sm:inline font-sans">AI COPILOT</span>
+            <Bot className="w-3.5 h-3.5 text-indigo-400" />
+            <span className="hidden sm:inline font-sans">COPILOT</span>
           </button>
 
-          {/* User Profile / Supabase Auth Badge */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 pl-1.5 sm:pl-2.5 border-l border-cyan-900/40">
+          {/* Clean Alert Notification Pill */}
+          <div 
+            onClick={() => setActiveView('dashboard')}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-red-950/80 border border-red-500/50 text-red-300 text-xs font-bold cursor-pointer hover:border-red-400 transition"
+            title="9+ Critical Intel Telemetry Alerts"
+          >
+            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+            <span>9+<span className="hidden xl:inline"> ALERTS</span></span>
+          </div>
+
+          {/* User Profile / Security Clearance Card */}
+          <div className="flex items-center gap-2 pl-2 border-l border-cyan-900/40">
             <div 
               onClick={() => setIsAuthModalOpen(true)}
               className="hidden lg:flex flex-col text-right cursor-pointer hover:opacity-80 transition"
@@ -323,26 +356,18 @@ export default function Home() {
               <span className="text-xs font-bold text-white leading-tight">
                 {currentUser?.username || 'ANALYST_KAHN'}
               </span>
-              <span className="text-[11px] font-mono text-cyan-400 font-medium tracking-wider">
+              <span className="text-[10px] font-mono text-cyan-400 font-medium tracking-wider">
                 {currentUser?.badge_id || 'SEC_LEVEL_4'}
               </span>
             </div>
 
             <div 
               onClick={() => setIsAuthModalOpen(true)}
-              className="w-8 h-8 rounded-lg bg-cyan-950 border border-cyan-400 flex items-center justify-center text-cyan-200 font-black text-xs shadow-[0_0_10px_#00e5ff] cursor-pointer hover:scale-110 transition shrink-0 animate-breathe-glow"
-              title="Open Supabase Account & Registration Modal"
+              className="w-8 h-8 rounded-lg bg-cyan-950 border border-cyan-400/80 flex items-center justify-center text-cyan-200 font-black text-xs shadow-[0_0_8px_rgba(0,229,255,0.25)] cursor-pointer hover:scale-105 transition shrink-0"
+              title="Open Security Clearance & Account Modal"
             >
               {currentUser?.username ? currentUser.username[0].toUpperCase() : 'K'}
             </div>
-
-            <button
-              onClick={() => setIsAuthModalOpen(true)}
-              className="hidden sm:inline-flex px-3 py-1 bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/50 hover:border-cyan-400 rounded-lg text-xs font-mono text-cyan-300 font-bold transition cursor-pointer cyber-btn-glow"
-              title="Sign In / Register with Supabase"
-            >
-              AUTH
-            </button>
 
             <button
               onClick={() => {
@@ -354,7 +379,7 @@ export default function Home() {
                 setCurrentUser(null)
                 setIsAuthenticated(false)
               }}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-950/40 transition cursor-pointer ml-0.5"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-950/40 transition cursor-pointer"
               title="Sign Out to Login Screen"
             >
               <LogOut className="w-4 h-4" />
@@ -439,6 +464,10 @@ export default function Home() {
 
           {activeView === 'digital_twin' && (
             <UrbanDigitalTwin3DView onNavigate={setActiveView} />
+          )}
+
+          {activeView === 'api_engine' && (
+            <APIEngineView onNavigate={setActiveView} />
           )}
 
           {activeView === 'settings' && (
