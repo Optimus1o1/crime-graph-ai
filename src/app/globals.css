@@ -36,8 +36,8 @@
   --glow-red: 0 0 12px rgba(239, 68, 68, 0.3);
 
   /* Typography */
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-sans: var(--font-sans), 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-mono), 'JetBrains Mono', ui-monospace, monospace;
 }
 
 * {
@@ -52,7 +52,10 @@ html, body {
   background-color: var(--bg-deep);
   color: #f1f5f9;
   font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
   overflow-x: hidden;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

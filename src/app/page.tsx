@@ -77,6 +77,7 @@ const PredictionAnalyticsModal = dynamic(() => import('@/components/PredictionAn
 const AICopilotModal = dynamic(() => import('@/components/AICopilotModal'), { ssr: false })
 const GNNExplainerModal = dynamic(() => import('@/components/GNNExplainerModal'), { ssr: false })
 const AuthView = dynamic(() => import('@/components/AuthView'), { ssr: false })
+import GlobalSearchCommand from '@/components/GlobalSearchCommand'
 import { supabase, isSupabaseConfigured } from '@/lib/supabase'
 import { useStore } from '@/store'
 import { 
@@ -99,7 +100,6 @@ export default function Home() {
   const [isPredictionsOpen, setIsPredictionsOpen] = useState(false)
   const [isCopilotOpen, setIsCopilotOpen] = useState(false)
   const [isExplainerOpen, setIsExplainerOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false)
 
   // Authentication state
@@ -156,80 +156,47 @@ export default function Home() {
     }
   }, [])
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!searchQuery.trim()) return
-    const q = searchQuery.toLowerCase().trim()
-
-    // Match suspect/entity
-    if (q.includes('sayed') || q.includes('kahn') || q.includes('alpha') || q.includes('201')) {
-      setActiveView('suspects')
-      return
-    }
-
-    // Match cases
-    if (q.includes('case') || q.includes('hawala') || q.includes('0847') || q.includes('falcon')) {
-      setActiveView('cases')
-      return
-    }
-
-    // Match camera / anpr
-    if (q.includes('cam') || q.includes('plate') || q.includes('fortuner') || q.includes('vehicle')) {
-      setActiveView('camera')
-      return
-    }
-
-    // Default search in graph
-    const match = nodes.find(n => n.label.toLowerCase().includes(q) || n.id.toLowerCase().includes(q))
-    if (match) {
-      selectNode(match.id)
-      setActiveView('network')
-    } else {
-      setActiveView('network')
-    }
-  }
-
-  // Titles mapping matching the 10 specification screens
+  // Professional, authoritative Title & Subtitle Hierarchy for all 10 core views
   const viewTitles: Record<string, { title: string; subtitle: string }> = {
     dashboard: {
-      title: 'INTEL-CORE DASHBOARD',
-      subtitle: 'SURVEILLANCE OVERVIEW & THREAT TELEMETRY'
+      title: 'Intel Core Dashboard',
+      subtitle: 'Surveillance overview & active threat telemetry'
     },
     network: {
-      title: 'TACTICAL KNOWLEDGE GRAPH',
-      subtitle: 'FORCE DIRECTED NETWORK MODELING & NEURAL RELATION PREDICTIONS'
+      title: 'Tactical Knowledge Graph',
+      subtitle: 'Force-directed network analysis & relation modeling'
     },
     camera: {
-      title: 'CCTV LIVE TRACKING HUB',
-      subtitle: 'LIVE ANPR DEPLOYMENT & METROPOLITAN CORRELATION GRID'
+      title: 'CCTV Live Tracking Hub',
+      subtitle: 'ANPR camera matrix & optical plate recognition'
     },
     cases: {
-      title: 'CASE FILES HUB & DOSSIER RETRIEVAL',
-      subtitle: 'ACTIVE CRIMINAL ENTERPRISE RECORDS & COURT READINESS ASSESSMENT'
+      title: 'Case Files & Dossiers',
+      subtitle: 'Syndicate investigation records & court readiness'
     },
     suspects: {
-      title: 'CRIMINAL ENTITY DOSSIER',
-      subtitle: 'TACTICAL INTEL REPORT & INTERCONNECTION PROFILE'
+      title: 'Criminal Entity Dossier',
+      subtitle: 'Tactical profile, behavioral telemetry & network links'
     },
     analytics: {
-      title: 'CRIME ANALYTICS & PREDICTIVE INTEL',
-      subtitle: 'TELEMETRY ANALYSIS, THREAT TRENDING & GRAPH LINK FORECASTING'
+      title: 'Crime Analytics & GNN',
+      subtitle: 'Graph neural network predictions & threat forecasts'
     },
     evidence: {
-      title: 'FORENSIC EVIDENCE & AUDIT TRAIL',
-      subtitle: 'COURT ADMISSIBLE INTEGRITY TIMELINE & BLOCKCHAIN ANCHOR COMPLIANCE'
+      title: 'Forensic Audit Trail',
+      subtitle: 'Chain of custody timeline & SHA-256 evidence integrity'
     },
     digital_twin: {
-      title: '3D URBAN DIGITAL TWIN',
-      subtitle: 'METROPOLITAN CORRELATION GRID & REAL TIME SENSOR SPATIAL MAPPING'
+      title: '3D Urban Digital Twin',
+      subtitle: 'Metropolitan spatial correlation & sensor telemetry'
     },
     api_engine: {
-      title: 'API ENGINE & REDOC SPECIFICATION',
-      subtitle: 'HIGH-THROUGHPUT GRAPH ANALYTICS GATEWAY & REST RUNTIME SPECIFICATION'
+      title: 'API Engine & ReDoc',
+      subtitle: 'REST runtime gateway & OpenAPI 3.1.0 specification'
     },
     settings: {
-      title: 'CRIMEGRAPH AI MANAGEMENT PLATFORM',
-      subtitle: 'SYSTEM CONFIGURATION, DATA PIPELINES & MODEL COMPLIANCE'
+      title: 'System Management',
+      subtitle: 'Platform configuration, data pipelines & compliance'
     }
   }
 
@@ -266,31 +233,22 @@ export default function Home() {
           />
 
           <div className="flex flex-col justify-center min-w-0">
-            <h1 className="text-xs sm:text-base font-bold tracking-wider text-white uppercase leading-tight truncate max-w-[130px] xs:max-w-[200px] sm:max-w-[320px] md:max-w-none">
+            <h1 className="text-sm sm:text-base font-bold text-white tracking-normal font-sans leading-tight truncate max-w-[150px] xs:max-w-[200px] sm:max-w-[280px] md:max-w-[340px]">
               {currentTitle.title}
             </h1>
-            <span className="hidden sm:block text-xs font-mono text-cyan-400 tracking-wider uppercase mt-0.5 truncate">
+            <span className="hidden sm:block text-xs font-sans text-slate-400 tracking-normal truncate mt-0.5">
               {currentTitle.subtitle}
             </span>
           </div>
         </div>
 
-        {/* Center: Global Entity Search Bar (Desktop) */}
-        <form 
-          onSubmit={handleSearchSubmit}
-          className="hidden md:flex items-center w-full max-w-md mx-6"
-        >
-          <div className="relative w-full">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Query entity [UID, codename, plate, phone]..."
-              className="w-full h-10 bg-[#020509]/90 border border-cyan-900/50 focus:border-cyan-400 rounded-lg px-4 pl-10 text-sm font-sans text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 transition shadow-inner"
-            />
-            <Search className="w-4 h-4 text-cyan-500/70 absolute left-3.5 top-3" />
-          </div>
-        </form>
+        {/* Center: Global Search Command Center */}
+        <div className="hidden md:flex flex-1 max-w-xs lg:max-w-sm xl:max-w-md mx-3 lg:mx-6 justify-center">
+          <GlobalSearchCommand 
+            onNavigate={setActiveView} 
+            onSelectNode={selectNode} 
+          />
+        </div>
 
         {/* Right: API Engine Launcher, Copilot, Alerts & User Clearance Card */}
         <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
@@ -390,34 +348,29 @@ export default function Home() {
 
       </header>
 
-      {/* Collapsible Mobile Search Bar (<md) */}
+      {/* Mobile Search Overlay Bar (<md) */}
       {isMobileSearchOpen && (
-        <form 
-          onSubmit={(e) => {
-            handleSearchSubmit(e)
-            setIsMobileSearchOpen(false)
-          }}
-          className="md:hidden bg-[#070c18] border-b border-cyan-500/50 p-2.5 px-4 flex items-center gap-2 z-30 shadow-lg animate-in slide-in-from-top-2 duration-150 shrink-0"
-        >
-          <div className="relative w-full">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Query entity [UID, codename, plate, phone]..."
-              autoFocus
-              className="w-full h-9 bg-[#020509] border border-cyan-500/60 focus:border-cyan-400 rounded-lg px-3 pl-9 text-xs font-sans text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 transition"
+        <div className="md:hidden bg-[#070c18] border-b border-cyan-500/50 p-2.5 px-3 flex items-center justify-between gap-2 z-30 shadow-lg animate-in slide-in-from-top-2 duration-150 shrink-0">
+          <div className="flex-1">
+            <GlobalSearchCommand 
+              onNavigate={(v) => {
+                setActiveView(v)
+                setIsMobileSearchOpen(false)
+              }} 
+              onSelectNode={(nodeId) => {
+                if (selectNode) selectNode(nodeId)
+                setIsMobileSearchOpen(false)
+              }} 
             />
-            <Search className="w-3.5 h-3.5 text-cyan-400 absolute left-3 top-2.5" />
           </div>
           <button
             type="button"
             onClick={() => setIsMobileSearchOpen(false)}
             className="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 text-xs font-mono shrink-0 cursor-pointer"
           >
-            Cancel
+            Close
           </button>
-        </form>
+        </div>
       )}
 
       {/* ============================================================ */}

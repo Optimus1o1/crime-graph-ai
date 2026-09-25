@@ -19,8 +19,8 @@
   --color-purple: #A78BFA;     /* Model AI Purple */
   --color-teal: #00E5FF;
   --color-blue: #38BDF8;
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  --font-sans: var(--font-sans), 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-mono), 'JetBrains Mono', ui-monospace, Menlo, monospace;
 }
 
 * {
@@ -40,10 +40,11 @@ body {
     radial-gradient(ellipse 50% 30% at 100% 100%, rgba(167, 139, 250, 0.04), transparent 60%);
   color: var(--color-tx);
   font-family: var(--font-sans);
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.5;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Scrollbar styling */
@@ -135,6 +136,7 @@ body {
   font-size: 14.5px;
   background: linear-gradient(135deg, #FFFFFF 40%, var(--color-cyan) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
